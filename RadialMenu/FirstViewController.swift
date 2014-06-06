@@ -11,14 +11,10 @@ import UIKit
 class FirstViewController: UIViewController {
     
     @IBOutlet var addButton:UIImageView
-    
     @IBOutlet var radialMenu:RadialMenu
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        var radialMenu = RadialMenu(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-//        self.view.addSubview(radialMenu)
     }
 
     override func didReceiveMemoryWarning() {

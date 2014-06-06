@@ -8,7 +8,10 @@
 
 import UIKit
 
+@IBDesignable
 class RadialMenu: UIView {
+    
+    @IBInspectable var radius: Int = 50
 
     init(frame: CGRect) {
         super.init(frame: frame)
@@ -17,12 +20,21 @@ class RadialMenu: UIView {
     
     init(coder decoder: NSCoder!) {
         super.init(coder: decoder)
+        self.backgroundColor = UIColor.redColor()
         self.setup()
     }
     
     func setup() {
         println("Setting RadialMenu up...")
+        
         self.backgroundColor = UIColor.redColor()
+    }
+    
+    // Doesn't work for some reason...
+    override func prepareForInterfaceBuilder()
+    {
+        self.backgroundColor = UIColor.redColor()
+        self.alpha = 0.5
     }
     
     
