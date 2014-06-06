@@ -13,6 +13,7 @@
 		A205B8B919415FDE00C0E5A3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A205B8B719415FDE00C0E5A3 /* Main.storyboard */; };
 		A205B8BB19415FDE00C0E5A3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A205B8BA19415FDE00C0E5A3 /* Images.xcassets */; };
 		A205B8C719415FDF00C0E5A3 /* RadialMenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A205B8C619415FDF00C0E5A3 /* RadialMenuTests.swift */; };
+		A244F3D11941625B0081DCB6 /* RadialMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A244F3D01941625B0081DCB6 /* RadialMenu.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		A205B8C019415FDF00C0E5A3 /* RadialMenuTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RadialMenuTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A205B8C519415FDF00C0E5A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A205B8C619415FDF00C0E5A3 /* RadialMenuTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadialMenuTests.swift; sourceTree = "<group>"; };
+		A244F3D01941625B0081DCB6 /* RadialMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadialMenu.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 		A205B8AE19415FDE00C0E5A3 /* RadialMenu */ = {
 			isa = PBXGroup;
 			children = (
+				A244F3D01941625B0081DCB6 /* RadialMenu.swift */,
 				A205B8B119415FDE00C0E5A3 /* AppDelegate.swift */,
 				A205B8B319415FDE00C0E5A3 /* FirstViewController.swift */,
 				A205B8B519415FDE00C0E5A3 /* SecondViewController.swift */,
@@ -212,6 +215,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A205B8B619415FDE00C0E5A3 /* SecondViewController.swift in Sources */,
+				A244F3D11941625B0081DCB6 /* RadialMenu.swift in Sources */,
 				A205B8B219415FDE00C0E5A3 /* AppDelegate.swift in Sources */,
 				A205B8B419415FDE00C0E5A3 /* FirstViewController.swift in Sources */,
 			);
@@ -403,6 +407,7 @@
 				A205B8CC19415FDF00C0E5A3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A205B8CD19415FDF00C0E5A3 /* Build configuration list for PBXNativeTarget "RadialMenuTests" */ = {
 			isa = XCConfigurationList;
@@ -411,6 +416,7 @@
 				A205B8CF19415FDF00C0E5A3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
