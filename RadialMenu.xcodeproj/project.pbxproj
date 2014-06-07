@@ -17,6 +17,7 @@
 		A23919811943607F00822BD9 /* CircleHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23919801943607F00822BD9 /* CircleHelpers.swift */; };
 		A24289B719436310008DA89C /* CircleHelpersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24289B619436310008DA89C /* CircleHelpersTests.swift */; };
 		A244F3D11941625B0081DCB6 /* RadialMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A244F3D01941625B0081DCB6 /* RadialMenu.swift */; };
+		A2C35FB119436C34005B3D24 /* CircleHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23919801943607F00822BD9 /* CircleHelpers.swift */; };
 		BFD7D541F1DB49F8840D1355 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94D3AA863A764DF0A5EE5918 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -108,7 +109,6 @@
 			isa = PBXGroup;
 			children = (
 				A244F3D01941625B0081DCB6 /* RadialMenu.swift */,
-				A24289B619436310008DA89C /* CircleHelpersTests.swift */,
 				A23919801943607F00822BD9 /* CircleHelpers.swift */,
 				A2030289194282F1000FF9D1 /* RadialSubMenu.swift */,
 				A203028B1942939C000FF9D1 /* RadialMenuPlayground.playground */,
@@ -134,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				A205B8C619415FDF00C0E5A3 /* RadialMenuTests.swift */,
+				A24289B619436310008DA89C /* CircleHelpersTests.swift */,
 				A205B8C419415FDF00C0E5A3 /* Supporting Files */,
 			);
 			path = RadialMenuTests;
@@ -297,6 +298,7 @@
 			files = (
 				A205B8C719415FDF00C0E5A3 /* RadialMenuTests.swift in Sources */,
 				A24289B719436310008DA89C /* CircleHelpersTests.swift in Sources */,
+				A2C35FB119436C34005B3D24 /* CircleHelpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
