@@ -8,31 +8,37 @@
 
 import UIKit
 
+protocol RadialSubMenuDelegate {
+    func subMenuDidOpen(subMenu: RadialSubMenu)
+    func subMenuDidHighlight(subMenu: RadialSubMenu)
+    func subMenuDidSelect(subMenu: RadialSubMenu)
+    func subMenuDidUnhighlight(subMenu: RadialSubMenu)
+    func subMenuDidClose(subMenu: RadialSubMenu)
+}
+
 class RadialSubMenu: UIView {
     
     enum State: Int {
         case Closed = 1, Opening, Opened, Highlighting, Highlighted, Selected, Unhighlighting, Closing
     }
     
+    var delegate: RadialSubMenuDelegate?
     var state: State = State.Closed {
-        willSet(newValue) {
-            switch newValue {
-                case .Closed:
-                    println("Submenu state is closed")
-                case .Opening:
-                    println("Submenu state is opening")
+        didSet {
+            if oldValue == state { return }
+            switch state {
                 case .Opened:
-                    println("Submenu state is opened")
-                case .Highlighting:
-                    println("Submenu state is highlighting")
+                    delegate?.subMenuDidOpen(self)
                 case .Highlighted:
-                    println("Submenu state is highlighted")
+                    delegate?.subMenuDidHighlight(self)
                 case .Selected:
-                    println("Submenu state is selected")
+                    delegate?.subMenuDidSelect(self)
                 case .Unhighlighting:
-                    println("Submenu state is Unhighlighting")
-                case .Closing:
-                    println("Submenu state is closing")
+                    delegate?.subMenuDidUnhighlight(self)
+                case .Closed:
+                    delegate?.subMenuDidClose(self)
+                default:
+                    break
             }
         }
     }

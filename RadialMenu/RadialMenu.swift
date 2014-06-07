@@ -9,7 +9,7 @@
 import UIKit
 
 @IBDesignable
-class RadialMenu: UIView {
+class RadialMenu: UIView, RadialSubMenuDelegate {
     
     @IBInspectable var radius: Double = 50
     @IBInspectable var radiusStep: Double = 0
@@ -20,17 +20,15 @@ class RadialMenu: UIView {
     @IBInspectable var maxAngle: Int = 540
     @IBInspectable var allowMultipleHighlights: Bool = false
     
-    var subMenus: Array<RadialSubMenu> {
-        didSet(newValue) {
-            for subMenu in newValue {
-                println("Adding subview")
-                self.addSubview(subMenu)
-            }
-            
-        }
-    }
+    // FIXME: shorter syntax?
+    var onOpen: () -> () = {}
+    var onClose: () -> () = {}
+    
+    var subMenus: Array<RadialSubMenu>
     
     var numOpeningSubMenus = 0
+    var numOpenedSubMenus = 0
+    
     var position = CGPointZero
     
     enum State: Int {
@@ -38,14 +36,17 @@ class RadialMenu: UIView {
     }
     
     var state: State = State.Closed {
-        willSet(newValue) {
-            switch newValue {
+        didSet {
+            if oldValue == state { return }
+            switch state {
                 case .Closed:
                     println("State is closed")
+                    onClose()
                 case .Opening:
                     println("State is opening")
                 case .Opened:
-                    println("State is opened")
+                    println("RadialMenu is opened")
+                    onOpen()
                 case .Highlighted:
                     println("State is highlighted")
                 case .Selected:
@@ -55,16 +56,30 @@ class RadialMenu: UIView {
             }
         }
     }
+    
+    // MARK: Init
 
     init(coder decoder: NSCoder!) {
         subMenus = []
+        println("InitWithCoder")
         super.init(coder: decoder)
     }
     
-    init(menus : Array<RadialSubMenu>) {
-        subMenus = menus
+    init(text: Array<String>) {
+        subMenus = text.map { itemText in
+            let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+            return RadialSubMenu(frame: frame)
+        }
+        
         // FIXME: hrmm... this doesn't seem right...
         super.init(coder: nil)
+        
+        for subMenu in subMenus {
+            self.addSubview(subMenu)
+            subMenu.delegate = self
+        }
+        
+        println("InitWithMenus = \(subMenus)")
     }
     
     // After: Swift
@@ -84,7 +99,7 @@ class RadialMenu: UIView {
         for (idx, subMenu) in enumerate(subMenus) {
             let subMenuPos = getPositionForSubMenu(idx, max: max, overlap: fullCircle)
             let delay = openDelayStep * Double(idx)
-            numOpeningSubMenus += 1
+            numOpeningSubMenus++
             subMenu.openAt(subMenuPos, delay: delay)
         }
         
@@ -105,14 +120,39 @@ class RadialMenu: UIView {
     func close() {
         state = State.Closing
         
-        // Animations closed....
+        // FIXME: Animations closed....
         state = State.Closed
     }
     
     func moveAtPosition(position:CGPoint) {
         println("Moving")
+        
     }
     
+    // MARK: RadialSubMenuDelegate
+    func subMenuDidOpen(subMenu: RadialSubMenu) {
+        if (++numOpenedSubMenus == numOpeningSubMenus) {
+            state = State.Opened
+        }
+    }
+    
+    func subMenuDidClose(subMenu: RadialSubMenu) {
+        if (--numOpenedSubMenus == 0) {
+            state = State.Closed
+        }
+    }
+    
+    func subMenuDidHighlight(subMenu: RadialSubMenu) {
+        
+    }
+    
+    func subMenuDidUnhighlight(subMenu: RadialSubMenu) {
+        
+    }
+    
+    func subMenuDidSelect(subMenu: RadialSubMenu) {
+        
+    }
     
     // FIXME: Why doesn't this update in IB?
     override func prepareForInterfaceBuilder() {
