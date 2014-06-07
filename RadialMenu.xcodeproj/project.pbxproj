@@ -54,7 +54,7 @@
 		A205B8C519415FDF00C0E5A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A205B8C619415FDF00C0E5A3 /* RadialMenuTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadialMenuTests.swift; sourceTree = "<group>"; };
 		A23919801943607F00822BD9 /* CircleHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleHelpers.swift; sourceTree = "<group>"; };
-		A24289B619436310008DA89C /* CircleHelpersTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CircleHelpersTests.swift; path = RadialMenuTests/CircleHelpersTests.swift; sourceTree = SOURCE_ROOT; };
+		A24289B619436310008DA89C /* CircleHelpersTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleHelpersTests.swift; sourceTree = "<group>"; };
 		A244F3D01941625B0081DCB6 /* RadialMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadialMenu.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -88,6 +88,7 @@
 		A205B8A319415FDE00C0E5A3 = {
 			isa = PBXGroup;
 			children = (
+				A2C35FB219436CDD005B3D24 /* RadialMenuExample */,
 				A205B8AE19415FDE00C0E5A3 /* RadialMenu */,
 				A205B8C319415FDF00C0E5A3 /* RadialMenuTests */,
 				A205B8AD19415FDE00C0E5A3 /* Products */,
@@ -111,13 +112,6 @@
 				A244F3D01941625B0081DCB6 /* RadialMenu.swift */,
 				A23919801943607F00822BD9 /* CircleHelpers.swift */,
 				A2030289194282F1000FF9D1 /* RadialSubMenu.swift */,
-				A203028B1942939C000FF9D1 /* RadialMenuPlayground.playground */,
-				A205B8B119415FDE00C0E5A3 /* AppDelegate.swift */,
-				A205B8B319415FDE00C0E5A3 /* FirstViewController.swift */,
-				A205B8B519415FDE00C0E5A3 /* SecondViewController.swift */,
-				A205B8B719415FDE00C0E5A3 /* Main.storyboard */,
-				A205B8BA19415FDE00C0E5A3 /* Images.xcassets */,
-				A205B8AF19415FDE00C0E5A3 /* Supporting Files */,
 			);
 			path = RadialMenu;
 			sourceTree = "<group>";
@@ -127,7 +121,7 @@
 			children = (
 				A205B8B019415FDE00C0E5A3 /* Info.plist */,
 			);
-			name = "Supporting Files";
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		A205B8C319415FDF00C0E5A3 /* RadialMenuTests */ = {
@@ -145,7 +139,37 @@
 			children = (
 				A205B8C519415FDF00C0E5A3 /* Info.plist */,
 			);
-			name = "Supporting Files";
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A2C35FB219436CDD005B3D24 /* RadialMenuExample */ = {
+			isa = PBXGroup;
+			children = (
+				A203028B1942939C000FF9D1 /* RadialMenuPlayground.playground */,
+				A205B8B119415FDE00C0E5A3 /* AppDelegate.swift */,
+				A2C35FB419436D09005B3D24 /* View Controllers */,
+				A2C35FB319436CFB005B3D24 /* Resources */,
+				A205B8AF19415FDE00C0E5A3 /* Supporting Files */,
+			);
+			path = RadialMenuExample;
+			sourceTree = "<group>";
+		};
+		A2C35FB319436CFB005B3D24 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A205B8BA19415FDE00C0E5A3 /* Images.xcassets */,
+				A205B8B719415FDE00C0E5A3 /* Main.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		A2C35FB419436D09005B3D24 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				A205B8B319415FDE00C0E5A3 /* FirstViewController.swift */,
+				A205B8B519415FDE00C0E5A3 /* SecondViewController.swift */,
+			);
+			path = "View Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -414,7 +438,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				INFOPLIST_FILE = RadialMenu/Info.plist;
+				INFOPLIST_FILE = "RadialMenuExample/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -426,7 +450,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				INFOPLIST_FILE = RadialMenu/Info.plist;
+				INFOPLIST_FILE = "RadialMenuExample/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -444,7 +468,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = RadialMenuTests/Info.plist;
+				INFOPLIST_FILE = "RadialMenuTests/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				METAL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -460,7 +484,7 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = RadialMenuTests/Info.plist;
+				INFOPLIST_FILE = "RadialMenuTests/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				METAL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";

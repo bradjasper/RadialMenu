@@ -42,7 +42,7 @@ class CircleHelpersTests: XCTestCase {
         let max = 10, minAngle = 0.0, maxAngle = 360.0, radius = 100.0
         
         let firstPoint = getPointAlongCircle(0, max, minAngle, maxAngle, radius)
-        XCTAssertEqual(firstPoint.x, radius)
+        XCTAssertEqual(firstPoint.x, 100.0)
         XCTAssertEqual(firstPoint.y, 0)
         
         // better way to check this?
