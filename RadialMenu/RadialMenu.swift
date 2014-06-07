@@ -38,7 +38,7 @@ class RadialMenu: UIView {
     }
     
     var state: State = State.Closed {
-        didSet(newValue) {
+        willSet(newValue) {
             switch newValue {
                 case .Closed:
                     println("State is closed")
@@ -47,7 +47,7 @@ class RadialMenu: UIView {
                 case .Opened:
                     println("State is opened")
                 case .Highlighted:
-                    println("State is opened")
+                    println("State is highlighted")
                 case .Selected:
                     println("State is selected")
                 case .Closing:

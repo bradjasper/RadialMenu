@@ -6,30 +6,33 @@
 //  Copyright (c) 2014 Brad Jasper. All rights reserved.
 //
 
+import UIKit
 import XCTest
 
 class RadialMenuTests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock() {
-            // Put the code you want to measure the time of here.
+    func testOpenAtPosition() {
+        
+        // Setup radial menu
+        let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+        let radialMenu = RadialMenu(menus: [
+            RadialSubMenu(frame: frame),
+            RadialSubMenu(frame: frame),
+            RadialSubMenu(frame: frame),
+            RadialSubMenu(frame: frame),
+        ])
+        
+        // Verify initial state
+        XCTAssertEqual(radialMenu.subMenus.count, 4, "Unknown number of subMenus")
+        XCTAssertEqual(radialMenu.state, RadialMenu.State.Closed)
+        
+        // Open. Verify state of menu & submenus is opening
+        radialMenu.openAtPosition(CGPoint(x: 100, y: 100))
+        XCTAssertEqual(radialMenu.state, RadialMenu.State.Opening)
+        
+        for subMenu in radialMenu.subMenus {
+            XCTAssertEqual(subMenu.state, RadialSubMenu.State.Opening)
         }
+        
     }
-    
 }

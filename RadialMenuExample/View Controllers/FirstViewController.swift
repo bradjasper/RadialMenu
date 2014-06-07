@@ -16,6 +16,7 @@ class FirstViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        println("Setting up radialMenu")
         self.radialMenu.frame = self.view.frame
         self.radialMenu.subMenus = [
             self.createSubMenu(),

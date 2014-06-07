@@ -10,14 +10,6 @@ import XCTest
 
 class CircleHelpersTests: XCTestCase {
 
-    override func setUp() {
-        super.setUp()
-    }
-    
-    override func tearDown() {
-        super.tearDown()
-    }
-    
     func testDeegreesToRadians() {
         XCTAssertEqual(degreesToRadians(0), 0)
         XCTAssertEqual(degreesToRadians(180), M_PI)
