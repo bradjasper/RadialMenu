@@ -1,0 +1,37 @@
+PODS:
+  - pop (1.0.5)
+  - POP+MCAnimate (1.1):
+    - pop (~> 1.0)
+    - POP+MCAnimate/Animations
+    - POP+MCAnimate/Group
+    - POP+MCAnimate/Internal
+    - POP+MCAnimate/Shorthand
+    - POP+MCAnimate/Velocity
+  - POP+MCAnimate/Animations (1.1):
+    - pop (~> 1.0)
+    - POP+MCAnimate/Group
+    - POP+MCAnimate/Internal
+    - POP+MCAnimate/Shorthand
+    - POP+MCAnimate/Velocity
+  - POP+MCAnimate/Group (1.1):
+    - pop (~> 1.0)
+  - POP+MCAnimate/Internal (1.1):
+    - pop (~> 1.0)
+  - POP+MCAnimate/Shorthand (1.1):
+    - pop (~> 1.0)
+  - POP+MCAnimate/Velocity (1.1):
+    - pop (~> 1.0)
+    - POP+MCAnimate/Internal
+  - Tweaks (1.1.0)
+
+DEPENDENCIES:
+  - pop
+  - POP+MCAnimate
+  - Tweaks
+
+SPEC CHECKSUMS:
+  pop: 75fa2b33934200a8a68abb449ac1726fcf7e43b9
+  POP+MCAnimate: 3ad540606cbf21547f79585c8d5b63f9da69d52b
+  Tweaks: 05b197d4a1247288f576587546bc1932189d8c98
+
+COCOAPODS: 0.33.1

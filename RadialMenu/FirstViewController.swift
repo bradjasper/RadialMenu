@@ -15,12 +15,44 @@ class FirstViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.radialMenu.frame = self.view.frame
+        self.radialMenu.subMenus = [
+            self.createSubMenu(),
+            self.createSubMenu(),
+            self.createSubMenu(),
+            self.createSubMenu(),
+        ]
+        
+        let longPress = UILongPressGestureRecognizer(target: self, action: "pressedButton:")
+        self.addButton.addGestureRecognizer(longPress)
+        
+        // How else to get button to trigger?
+        self.view.bringSubviewToFront(self.addButton)
+        
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+    
+    func createSubMenu() -> RadialSubMenu {
+        let radius = 50
+        let subMenu = RadialSubMenu(frame: CGRect(x: 0, y: 0, width: radius*2, height: radius*2))
+        subMenu.backgroundColor = UIColor.orangeColor()
+        subMenu.layer.zPosition = -1
+        subMenu.userInteractionEnabled = true
+        self.radialMenu.addSubview(subMenu)
+        return subMenu
     }
-
-
+    
+    func pressedButton(gesture:UIGestureRecognizer) {
+        switch(gesture.state) {
+            case .Began:
+                self.radialMenu.openAtPosition(gesture.locationInView(self.view))
+            case .Ended:
+                self.radialMenu.close()
+            case .Changed:
+                self.radialMenu.moveAtPosition(gesture.locationInView(self.view))
+            default:
+                break
+        }
+    }
 }
 
