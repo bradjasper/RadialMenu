@@ -46,6 +46,20 @@
 			remoteGlobalIDString = A205B8AB19415FDE00C0E5A3;
 			remoteInfo = RadialMenu;
 		};
+		A2A950DF194B781C00B9CC8C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A205B8A419415FDE00C0E5A3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A205B8AB19415FDE00C0E5A3;
+			remoteInfo = RadialMenu;
+		};
+		A2A950E1194B781C00B9CC8C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A205B8A419415FDE00C0E5A3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A205B8AB19415FDE00C0E5A3;
+			remoteInfo = RadialMenu;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +80,8 @@
 		A23919801943607F00822BD9 /* CircleHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleHelpers.swift; sourceTree = "<group>"; };
 		A24289B619436310008DA89C /* CircleHelpersTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleHelpersTests.swift; sourceTree = "<group>"; };
 		A244F3D01941625B0081DCB6 /* RadialMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadialMenu.swift; sourceTree = "<group>"; };
+		A2695FF6194B51F4004FB4FF /* RadialMenu-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RadialMenu-Bridging-Header.h"; sourceTree = "<group>"; };
+		A292FE83194B795600F437DA /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		A2A23B451946437600DDAE4F /* RadialSubMenuTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadialSubMenuTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -91,6 +107,7 @@
 		6C35E8CE8878416EA78E2631 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A292FE83194B795600F437DA /* libPods.a */,
 				94D3AA863A764DF0A5EE5918 /* libPods.a */,
 			);
 			name = Frameworks;
@@ -171,6 +188,7 @@
 			children = (
 				A205B8BA19415FDE00C0E5A3 /* Images.xcassets */,
 				A205B8B719415FDE00C0E5A3 /* Main.storyboard */,
+				A2695FF6194B51F4004FB4FF /* RadialMenu-Bridging-Header.h */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -220,6 +238,8 @@
 				A205B8C219415FDF00C0E5A3 /* PBXTargetDependency */,
 				A24289B91943632F008DA89C /* PBXTargetDependency */,
 				A2074500194ABBE000188433 /* PBXTargetDependency */,
+				A2A950E0194B781C00B9CC8C /* PBXTargetDependency */,
+				A2A950E2194B781C00B9CC8C /* PBXTargetDependency */,
 			);
 			name = RadialMenuTests;
 			productName = RadialMenuTests;
@@ -360,6 +380,16 @@
 			target = A205B8AB19415FDE00C0E5A3 /* RadialMenu */;
 			targetProxy = A24289B81943632F008DA89C /* PBXContainerItemProxy */;
 		};
+		A2A950E0194B781C00B9CC8C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A205B8AB19415FDE00C0E5A3 /* RadialMenu */;
+			targetProxy = A2A950DF194B781C00B9CC8C /* PBXContainerItemProxy */;
+		};
+		A2A950E2194B781C00B9CC8C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A205B8AB19415FDE00C0E5A3 /* RadialMenu */;
+			targetProxy = A2A950E1194B781C00B9CC8C /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -412,6 +442,7 @@
 				METAL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "RadialMenuExample/Resources/RadialMenu-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -448,6 +479,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				METAL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "RadialMenuExample/Resources/RadialMenu-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -479,6 +511,7 @@
 		};
 		A205B8CE19415FDF00C0E5A3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 696BA227E8D745F988E911E4 /* Pods.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/RadialMenu.app/RadialMenu";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -491,6 +524,7 @@
 				);
 				INFOPLIST_FILE = "RadialMenuTests/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				METAL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
@@ -499,6 +533,7 @@
 		};
 		A205B8CF19415FDF00C0E5A3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 696BA227E8D745F988E911E4 /* Pods.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/RadialMenu.app/RadialMenu";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -507,6 +542,7 @@
 				);
 				INFOPLIST_FILE = "RadialMenuTests/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				METAL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";

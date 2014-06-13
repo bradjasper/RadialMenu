@@ -24,7 +24,7 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     var onOpen: () -> () = {}
     var onClose: () -> () = {}
     
-    var subMenus: RadialSubMenu[]
+    let subMenus: RadialSubMenu[]
     
     var numOpeningSubMenus = 0
     var numOpenedSubMenus = 0
@@ -73,11 +73,12 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     
     init(menus: RadialSubMenu[]) {
         subMenus = menus
-        // TODO: FIX
         super.init(frame: CGRectZero)
         
-        for menu in subMenus {
+        for (i, menu) in enumerate(subMenus) {
             menu.delegate = self
+            menu.tag = i
+            self.addSubview(menu)
         }
     }
     
@@ -108,7 +109,7 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
             let subMenuPos = getPositionForSubMenu(idx, max: max, overlap: fullCircle)
             let delay = openDelayStep * Double(idx)
             numOpeningSubMenus++
-            subMenu.openAt(subMenuPos, delay: delay)
+            subMenu.openAt(subMenuPos, fromPosition: position, delay: delay)
         }
         
         

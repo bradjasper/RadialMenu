@@ -11,19 +11,24 @@ import UIKit
 class FirstViewController: UIViewController {
     
     @IBOutlet var addButton:UIImageView
-    @IBOutlet var radialMenu:RadialMenu
+    
+    var radialMenu = RadialMenu()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        println("Setting up radialMenu")
+        self.radialMenu = RadialMenu(menus: [
+            self.createSubMenu(),
+            self.createSubMenu(),
+            self.createSubMenu(),
+            self.createSubMenu()
+        ])
+        
+        self.radialMenu.center = self.view.center
         self.radialMenu.frame = self.view.frame
-        self.radialMenu.subMenus = [
-            self.createSubMenu(),
-            self.createSubMenu(),
-            self.createSubMenu(),
-            self.createSubMenu(),
-        ]
+        self.radialMenu.backgroundColor = UIColor.redColor()
+        
+        self.view.addSubview(self.radialMenu)
         
         let longPress = UILongPressGestureRecognizer(target: self, action: "pressedButton:")
         self.addButton.addGestureRecognizer(longPress)
@@ -37,9 +42,9 @@ class FirstViewController: UIViewController {
         let radius = 50
         let subMenu = RadialSubMenu(frame: CGRect(x: 0, y: 0, width: radius*2, height: radius*2))
         subMenu.backgroundColor = UIColor.orangeColor()
-        subMenu.layer.zPosition = -1
         subMenu.userInteractionEnabled = true
-        self.radialMenu.addSubview(subMenu)
+        // TODO: FIX
+        subMenu.center = self.radialMenu.center
         return subMenu
     }
     
