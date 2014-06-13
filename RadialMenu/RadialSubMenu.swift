@@ -8,35 +8,38 @@
 
 import UIKit
 
-protocol RadialSubMenuDelegate {
-    func subMenuDidOpen(subMenu: RadialSubMenu)
-    func subMenuDidHighlight(subMenu: RadialSubMenu)
-    func subMenuDidSelect(subMenu: RadialSubMenu)
-    func subMenuDidUnhighlight(subMenu: RadialSubMenu)
-    func subMenuDidClose(subMenu: RadialSubMenu)
+// Using @objc here because we want to specify @optional methods which
+// you can only do on classes, which you specify with the @objc modifier
+@objc protocol RadialSubMenuDelegate {
+    @optional func subMenuDidOpen(subMenu: RadialSubMenu)
+    @optional func subMenuDidHighlight(subMenu: RadialSubMenu)
+    @optional func subMenuDidSelect(subMenu: RadialSubMenu)
+    @optional func subMenuDidUnhighlight(subMenu: RadialSubMenu)
+    @optional func subMenuDidClose(subMenu: RadialSubMenu)
 }
 
 class RadialSubMenu: UIView {
     
-    enum State: Int {
-        case Closed = 1, Opening, Opened, Highlighting, Highlighted, Selected, Unhighlighting, Closing
+    enum State {
+        case Closed, Opening, Opened, Highlighting, Highlighted, Selected, Unhighlighting, Closing
     }
-    
+
     var delegate: RadialSubMenuDelegate?
-    var state: State = State.Closed {
+    var state: State = .Closed {
         didSet {
             if oldValue == state { return }
             switch state {
                 case .Opened:
-                    delegate?.subMenuDidOpen(self)
+                    println("OPENED")
+                    delegate?.subMenuDidOpen?(self)
                 case .Highlighted:
-                    delegate?.subMenuDidHighlight(self)
+                    delegate?.subMenuDidHighlight?(self)
                 case .Selected:
-                    delegate?.subMenuDidSelect(self)
+                    delegate?.subMenuDidSelect?(self)
                 case .Unhighlighting:
-                    delegate?.subMenuDidUnhighlight(self)
+                    delegate?.subMenuDidUnhighlight?(self)
                 case .Closed:
-                    delegate?.subMenuDidClose(self)
+                    delegate?.subMenuDidClose?(self)
                 default:
                     break
             }
@@ -45,12 +48,28 @@ class RadialSubMenu: UIView {
     
     init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.redColor()
-        
+    }
+    
+    init(text: String) {
+        super.init(frame: frame)
     }
     
     func openAt(position: CGPoint, delay: Double) {
         println("Opening at position=\(position) with delay=\(delay)")
-        self.state = State.Opening
+        
+        state = .Opening
+        
+        dispatch_after(1, dispatch_get_main_queue(), {
+            self.state = .Opened
+        })
+    }
+    
+    func close() {
+        
+        state = .Closing
+        
+        dispatch_after(1, dispatch_get_main_queue(), {
+            self.state = .Closed
+        })
     }
 }

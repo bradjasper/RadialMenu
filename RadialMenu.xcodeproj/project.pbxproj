@@ -19,12 +19,20 @@
 		A23919811943607F00822BD9 /* CircleHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23919801943607F00822BD9 /* CircleHelpers.swift */; };
 		A24289B719436310008DA89C /* CircleHelpersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24289B619436310008DA89C /* CircleHelpersTests.swift */; };
 		A244F3D11941625B0081DCB6 /* RadialMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A244F3D01941625B0081DCB6 /* RadialMenu.swift */; };
+		A2A23B461946437600DDAE4F /* RadialSubMenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A23B451946437600DDAE4F /* RadialSubMenuTests.swift */; };
 		A2C35FB119436C34005B3D24 /* CircleHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23919801943607F00822BD9 /* CircleHelpers.swift */; };
 		BFD7D541F1DB49F8840D1355 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94D3AA863A764DF0A5EE5918 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		A205B8C119415FDF00C0E5A3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A205B8A419415FDE00C0E5A3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A205B8AB19415FDE00C0E5A3;
+			remoteInfo = RadialMenu;
+		};
+		A20744FF194ABBE000188433 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A205B8A419415FDE00C0E5A3 /* Project object */;
 			proxyType = 1;
@@ -58,6 +66,7 @@
 		A23919801943607F00822BD9 /* CircleHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleHelpers.swift; sourceTree = "<group>"; };
 		A24289B619436310008DA89C /* CircleHelpersTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleHelpersTests.swift; sourceTree = "<group>"; };
 		A244F3D01941625B0081DCB6 /* RadialMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadialMenu.swift; sourceTree = "<group>"; };
+		A2A23B451946437600DDAE4F /* RadialSubMenuTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadialSubMenuTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				A205B8C619415FDF00C0E5A3 /* RadialMenuTests.swift */,
+				A2A23B451946437600DDAE4F /* RadialSubMenuTests.swift */,
 				A24289B619436310008DA89C /* CircleHelpersTests.swift */,
 				A205B8C419415FDF00C0E5A3 /* Supporting Files */,
 			);
@@ -209,6 +219,7 @@
 			dependencies = (
 				A205B8C219415FDF00C0E5A3 /* PBXTargetDependency */,
 				A24289B91943632F008DA89C /* PBXTargetDependency */,
+				A2074500194ABBE000188433 /* PBXTargetDependency */,
 			);
 			name = RadialMenuTests;
 			productName = RadialMenuTests;
@@ -322,6 +333,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2A23B461946437600DDAE4F /* RadialSubMenuTests.swift in Sources */,
 				A205B8C719415FDF00C0E5A3 /* RadialMenuTests.swift in Sources */,
 				A24289B719436310008DA89C /* CircleHelpersTests.swift in Sources */,
 				A2C35FB119436C34005B3D24 /* CircleHelpers.swift in Sources */,
@@ -337,6 +349,11 @@
 			isa = PBXTargetDependency;
 			target = A205B8AB19415FDE00C0E5A3 /* RadialMenu */;
 			targetProxy = A205B8C119415FDF00C0E5A3 /* PBXContainerItemProxy */;
+		};
+		A2074500194ABBE000188433 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A205B8AB19415FDE00C0E5A3 /* RadialMenu */;
+			targetProxy = A20744FF194ABBE000188433 /* PBXContainerItemProxy */;
 		};
 		A24289B91943632F008DA89C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

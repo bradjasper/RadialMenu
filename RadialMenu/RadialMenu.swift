@@ -24,18 +24,18 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     var onOpen: () -> () = {}
     var onClose: () -> () = {}
     
-    var subMenus: Array<RadialSubMenu>
+    var subMenus: RadialSubMenu[]
     
     var numOpeningSubMenus = 0
     var numOpenedSubMenus = 0
     
     var position = CGPointZero
     
-    enum State: Int {
-        case Closed = 1, Opening, Opened, Highlighted, Selected, Closing
+    enum State {
+        case Closed, Opening, Opened, Highlighted, Selected, Closing
     }
     
-    var state: State = State.Closed {
+    var state: State = .Closed {
         didSet {
             if oldValue == state { return }
             switch state {
@@ -61,25 +61,33 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
 
     init(coder decoder: NSCoder!) {
         subMenus = []
-        println("InitWithCoder")
+        println("InitWithDACoder")
         super.init(coder: decoder)
     }
     
-    init(text: Array<String>) {
-        subMenus = text.map { itemText in
-            let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-            return RadialSubMenu(frame: frame)
+    init(frame: CGRect) {
+        subMenus = []
+        println("InitWithFrame")
+        super.init(frame: frame)
+    }
+    
+    init(menus: RadialSubMenu[]) {
+        subMenus = menus
+        // TODO: FIX
+        super.init(frame: CGRectZero)
+        
+        for menu in subMenus {
+            menu.delegate = self
+        }
+    }
+    
+    convenience init(text: String[]) {
+        var menus: RadialSubMenu[] = []
+        for string in text {
+            menus.append(RadialSubMenu(text: string))
         }
         
-        // FIXME: hrmm... this doesn't seem right...
-        super.init(coder: nil)
-        
-        for subMenu in subMenus {
-            self.addSubview(subMenu)
-            subMenu.delegate = self
-        }
-        
-        println("InitWithMenus = \(subMenus)")
+        self.init(menus: menus)
     }
     
     // After: Swift
@@ -89,9 +97,9 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         let max = subMenus.count
         
         if max == 0              { return println("No submenus to open")        }
-        if state != State.Closed { return println("Can only open closed menus") }
+        if state != .Closed { return println("Can only open closed menus") }
         
-        state = State.Opening
+        state = .Opening
         self.position = position
         
         let fullCircle = isFullCircle(minAngle, maxAngle)
@@ -118,10 +126,12 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     
     
     func close() {
-        state = State.Closing
+        state = .Closing
         
-        // FIXME: Animations closed....
-        state = State.Closed
+        for subMenu in subMenus {
+            subMenu.close()
+        }
+        
     }
     
     func moveAtPosition(position:CGPoint) {
@@ -131,14 +141,14 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     
     // MARK: RadialSubMenuDelegate
     func subMenuDidOpen(subMenu: RadialSubMenu) {
-        if (++numOpenedSubMenus == numOpeningSubMenus) {
-            state = State.Opened
+        if ++numOpenedSubMenus == numOpeningSubMenus {
+            state = .Opened
         }
     }
     
     func subMenuDidClose(subMenu: RadialSubMenu) {
-        if (--numOpenedSubMenus == 0) {
-            state = State.Closed
+        if --numOpenedSubMenus == 0 {
+            state = .Closed
         }
     }
     

@@ -3,15 +3,17 @@
 import UIKit
 
 var str = "Hello, playground"
+["1", "3", "5"]
+[1, 3, 5].map { blah in "HEY" }
+["1", "3", "5"]
 
-
-let minAngle = 180
-let maxAngle = 540
-let spreadAngle = maxAngle - minAngle
-let idx = 1
-let max = 10
-let floatIdx = Float(idx)
-let floatMax = Float(max)
-floatIdx / floatMax
-let x = 10 * sin(180)
+let x = [[1], [2]]
+x[0]
+x[0].append(3)
 x
+
+let y = UILabel()
+y
+let z = [UILabel(), UILabel(), UILabel()]
+z.count
+

@@ -11,75 +11,81 @@ import XCTest
 
 class RadialMenuTests: XCTestCase {
     
-    // TODO: Break this up into smaller tests
-    func testOpenAtPosition() {
+    func testEventStateTransitions() {
         
-        // test expectations (async)
+        // Setup radial menu
+        let radialMenu = RadialMenu(text: ["1", "2", "3", "4"])
+        
+        // Setup expectations
         let openExpectation = self.expectationWithDescription("opens")
         let closeExpectation = self.expectationWithDescription("closes")
     
-        // Setup radial menu
-        let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-        let radialMenu = RadialMenu(text: ["1", "2", "3", "4"])
-        
+        // Setup event handlers for open/close
         radialMenu.onOpen = {
-            println("radialMenu opened")
+            XCTAssertEqual(radialMenu.state, .Opened)
+            for subMenu in radialMenu.subMenus { XCTAssertEqual(subMenu.state, .Opened) }
             openExpectation.fulfill()
+            
+            radialMenu.close()
+            XCTAssertEqual(radialMenu.state, .Closing)
         }
         
         radialMenu.onClose = {
-            println("BLAH radialMenu closed")
+            XCTAssertEqual(radialMenu.state, .Closed)
+            for subMenu in radialMenu.subMenus { XCTAssertEqual(subMenu.state, .Closed) }
             closeExpectation.fulfill()
         }
+        
+        
         
         // Verify initial state
         XCTAssertEqual(radialMenu.subMenus.count, 4, "Unknown number of subMenus")
         XCTAssertEqual(radialMenu.state, .Closed)
         
-        // Open. Verify state of menu & submenus is opening
-        radialMenu.openAtPosition(CGPoint(x: 100, y: 100))
+        // Open & verify opening state
+        radialMenu.openAtPosition(CGPointZero)
         XCTAssertEqual(radialMenu.state, .Opening)
+        for subMenu in radialMenu.subMenus { XCTAssertEqual(subMenu.state, .Opening) }
         
-        for subMenu in radialMenu.subMenus {
-            XCTAssertEqual(subMenu.state, .Opening)
-        }
-        
-        // FIXME: This is a temp fix until real animation is working
-        for subMenu in radialMenu.subMenus {
-            subMenu.state = .Opened
-        }
-        
-        // OPENED
-        
-        // FIXME: This is a temp fix until real animation is working
-        for subMenu in radialMenu.subMenus {
-            subMenu.state = .Closed
-        }
-        
-        // Set it again
-        radialMenu.state = .Closed
-        radialMenu.state = .Closed
-        radialMenu.state = .Closed
-        radialMenu.state = .Closed
-        
-        self.waitForExpectationsWithTimeout(1, handler: nil)
+        // Wait for expectations & verify final state
+        self.waitForExpectationsWithTimeout(2, handler: { _ in
+            XCTAssertEqual(radialMenu.state, .Closed)
+            for subMenu in radialMenu.subMenus { XCTAssertEqual(subMenu.state, .Closed) }
+        })
     }
     
-    func testEventsOnlyFireOnce() {
-        let radialMenu = RadialMenu(text: ["1", "2"])
-        var numTimesClosed = 0
+    func testStateChangeEventsFireOnce() {
         
-        radialMenu.onClose = {
-            println("CLOSED")
-            numTimesClosed++
-        }
+        let radialMenu = RadialMenu(text: ["1", "2", "3", "4"])
+        
+        var opened = 0, closed = 0
+        radialMenu.onOpen  = { opened += 1}
+        radialMenu.onClose = { closed += 1}
+        
+        XCTAssertEqual(radialMenu.state, .Closed)
+        
+        radialMenu.state = .Closed
+        
+        XCTAssertEqual(closed, 0)
+        XCTAssertEqual(opened, 0)
         
         radialMenu.state = .Opened
+        
+        XCTAssertEqual(closed, 0)
+        XCTAssertEqual(opened, 1)
+        
+        radialMenu.state = .Closed
+        
+        XCTAssertEqual(closed, 1)
+        XCTAssertEqual(opened, 1)
+        
+        // Calling the same state many times shouldn't trigger a state change
         radialMenu.state = .Closed
         radialMenu.state = .Closed
         radialMenu.state = .Closed
         
-        XCTAssertEqual(numTimesClosed, 1)
+        XCTAssertEqual(closed, 1)
+        XCTAssertEqual(opened, 1)
     }
 
 }
