@@ -15,6 +15,8 @@ class RadialMenuTests: XCTestCase {
         
         // Setup radial menu
         let radialMenu = RadialMenu(text: ["1", "2", "3", "4"])
+        radialMenu.openDelayStep = 0.01
+        radialMenu.closeDelayStep = 0.01
         
         // Setup expectations
         let openExpectation = self.expectationWithDescription("opens")
@@ -48,7 +50,7 @@ class RadialMenuTests: XCTestCase {
         for subMenu in radialMenu.subMenus { XCTAssertEqual(subMenu.state, .Opening) }
         
         // Wait for expectations & verify final state
-        self.waitForExpectationsWithTimeout(2, handler: { _ in
+        self.waitForExpectationsWithTimeout(4, handler: { _ in
             XCTAssertEqual(radialMenu.state, .Closed)
             for subMenu in radialMenu.subMenus { XCTAssertEqual(subMenu.state, .Closed) }
         })
