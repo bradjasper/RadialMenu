@@ -40,19 +40,17 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
             if oldValue == state { return }
             switch state {
                 case .Closed:
-                    println("State is closed")
                     onClose()
                 case .Opening:
-                    println("State is opening")
+                    break
                 case .Opened:
-                    println("RadialMenu is opened")
                     onOpen()
                 case .Highlighted:
-                    println("State is highlighted")
+                    break
                 case .Selected:
-                    println("State is selected")
+                    break
                 case .Closing:
-                    println("State is closing")
+                    break
             }
         }
     }
@@ -61,13 +59,11 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
 
     init(coder decoder: NSCoder!) {
         subMenus = []
-        println("InitWithDACoder")
         super.init(coder: decoder)
     }
     
     init(frame: CGRect) {
         subMenus = []
-        println("InitWithFrame")
         super.init(frame: frame)
     }
     
@@ -97,11 +93,13 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         
         let max = subMenus.count
         
-        if max == 0              { return println("No submenus to open")        }
+        if max == 0         { return println("No submenus to open")        }
         if state != .Closed { return println("Can only open closed menus") }
         
         state = .Opening
         self.position = position
+        numOpenedSubMenus = 0
+        numOpeningSubMenus = 0
         
         let fullCircle = isFullCircle(minAngle, maxAngle)
         
@@ -127,6 +125,9 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     
     
     func close() {
+        
+        if (state == .Closed) { return println("Menu is already closed") }
+        
         state = .Closing
         
         for subMenu in subMenus {
@@ -136,11 +137,11 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     }
     
     func moveAtPosition(position:CGPoint) {
-        println("Moving")
         
     }
     
     // MARK: RadialSubMenuDelegate
+    
     func subMenuDidOpen(subMenu: RadialSubMenu) {
         if ++numOpenedSubMenus == numOpeningSubMenus {
             state = .Opened
@@ -164,10 +165,4 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     func subMenuDidSelect(subMenu: RadialSubMenu) {
         
     }
-    
-    // FIXME: Why doesn't this update in IB?
-    override func prepareForInterfaceBuilder() {
-        self.backgroundColor = UIColor.greenColor()
-    }
-    
 }
