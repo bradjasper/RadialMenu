@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import QuartzCore
 
 let RadialSubMenuOpenAnimation = "openAnimation"
 let RadialSubMenuCloseAnimation = "closeAnimation"
@@ -28,12 +29,18 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
     }
 
     var delegate: RadialSubMenuDelegate?
-    var origPosition = CGPointZero
-    var currPosition = CGPointZero
-    var origBounds   = CGRectZero
-    var origFrame    = CGRectZero
-    var openDelay    = 0.0
-    var closeDelay   = 0.0
+    var origPosition         = CGPointZero
+    var currPosition         = CGPointZero
+    var origBounds           = CGRectZero
+    var origFrame            = CGRectZero
+    
+    var openDelay            = 0.0
+    var closeDelay           = 0.0
+    
+    var closeDuration        = 1.0
+    var openSpringSpeed      = 12.0
+    var openSpringBounciness = 4.0
+    
     var state: State = .Closed {
         didSet {
             if oldValue == state { return }
@@ -106,6 +113,9 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
             anim.name = RadialSubMenuOpenAnimation
             anim.toValue = NSValue(CGPoint: currPosition)
             anim.delegate = self
+            anim.beginTime = CACurrentMediaTime() + openDelay
+            anim.springBounciness = openSpringBounciness
+            anim.springSpeed = openSpringSpeed
             self.pop_addAnimation(anim, forKey: RadialSubMenuOpenAnimation)
         }
         
@@ -118,7 +128,8 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
             anim.name = RadialSubMenuCloseAnimation
             anim.toValue = NSValue(CGPoint: origPosition)
             anim.delegate = self
-            anim.duration = 2.5
+            anim.duration = closeDuration
+            anim.beginTime = CACurrentMediaTime() + closeDelay
             self.pop_addAnimation(anim, forKey: RadialSubMenuCloseAnimation)
         }
         

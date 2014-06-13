@@ -43,15 +43,14 @@ class FirstViewController: UIViewController {
         let subMenu = RadialSubMenu(frame: CGRect(x: 0, y: 0, width: radius*2, height: radius*2))
         subMenu.backgroundColor = UIColor.orangeColor()
         subMenu.userInteractionEnabled = true
-        // TODO: FIX
-        subMenu.center = self.radialMenu.center
         return subMenu
     }
     
     func pressedButton(gesture:UIGestureRecognizer) {
         switch(gesture.state) {
             case .Began:
-                self.radialMenu.openAtPosition(gesture.locationInView(self.view))
+                self.radialMenu.openAtPosition(self.addButton.center)
+                //self.radialMenu.openAtPosition(gesture.locationInView(self.view))
             case .Ended:
                 self.radialMenu.close()
             case .Changed:

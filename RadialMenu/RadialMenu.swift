@@ -13,8 +13,8 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     
     @IBInspectable var radius: Double = 50
     @IBInspectable var radiusStep: Double = 0
-    @IBInspectable var openDelayStep: Double = 0
-    @IBInspectable var closeDelayStep: Double = 0
+    @IBInspectable var openDelayStep: Double = 0.5
+    @IBInspectable var closeDelayStep: Double = 0.25
     @IBInspectable var selectedDelay: Double = 50
     @IBInspectable var minAngle: Int = 180
     @IBInspectable var maxAngle: Int = 540
@@ -41,15 +41,9 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
             switch state {
                 case .Closed:
                     onClose()
-                case .Opening:
-                    break
                 case .Opened:
                     onOpen()
-                case .Highlighted:
-                    break
-                case .Selected:
-                    break
-                case .Closing:
+                default:
                     break
             }
         }
@@ -103,9 +97,9 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         
         let fullCircle = isFullCircle(minAngle, maxAngle)
         
-        for (idx, subMenu) in enumerate(subMenus) {
-            let subMenuPos = getPositionForSubMenu(idx, max: max, overlap: fullCircle)
-            let delay = openDelayStep * Double(idx)
+        for (i, subMenu) in enumerate(subMenus) {
+            let subMenuPos = getPositionForSubMenu(i, max: max, overlap: fullCircle)
+            let delay = openDelayStep * Double(i)
             numOpeningSubMenus++
             subMenu.openAt(subMenuPos, fromPosition: position, delay: delay)
         }
@@ -117,7 +111,7 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         
         let absMax = overlap ? max : max - 1
         let absRadius = radius + (radiusStep * Double(idx))
-        let relPos = getPointAlongCircle(idx, max, 80, 540, 50)
+        let relPos = getPointAlongCircle(idx, max, Double(minAngle), Double(maxAngle), radius)
         let posX = position.x + relPos.x
         let posY = position.y + relPos.y
         return CGPoint(x: posX, y: posY)
@@ -130,8 +124,9 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         
         state = .Closing
         
-        for subMenu in subMenus {
-            subMenu.close()
+        for (i, subMenu) in enumerate(subMenus) {
+            let delay = closeDelayStep * Double(i)
+            subMenu.close(delay)
         }
         
     }
