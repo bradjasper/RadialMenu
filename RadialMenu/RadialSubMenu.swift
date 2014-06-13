@@ -114,8 +114,8 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
             anim.name = RadialSubMenuOpenAnimation
             anim.toValue = NSValue(CGPoint: currPosition)
             anim.beginTime = CACurrentMediaTime() + openDelay
-            anim.springBounciness = openSpringBounciness
-            anim.springSpeed = openSpringSpeed
+            anim.springBounciness = Float(openSpringBounciness)
+            anim.springSpeed = Float(openSpringSpeed)
             anim.delegate = self
             self.pop_addAnimation(anim, forKey: RadialSubMenuOpenAnimation)
         }
