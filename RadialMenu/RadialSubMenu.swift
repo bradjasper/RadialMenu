@@ -107,29 +107,30 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
     // MARK - Animations
     
     func openAnimation() {
-        if let existingAnim = self.pop_animationForKey(RadialSubMenuOpenAnimation) as? POPAnimation {
-        } else {
+        // Is there a way to do the opposite of "if let"? Make these two statements one?
+        let existingAnim = self.pop_animationForKey(RadialSubMenuOpenAnimation) as? POPAnimation
+        if !existingAnim {
             let anim = POPSpringAnimation(propertyNamed:kPOPViewCenter)
             anim.name = RadialSubMenuOpenAnimation
             anim.toValue = NSValue(CGPoint: currPosition)
-            anim.delegate = self
             anim.beginTime = CACurrentMediaTime() + openDelay
             anim.springBounciness = openSpringBounciness
             anim.springSpeed = openSpringSpeed
+            anim.delegate = self
             self.pop_addAnimation(anim, forKey: RadialSubMenuOpenAnimation)
         }
         
     }
     
     func closeAnimation() {
-        if let existingAnim = self.pop_animationForKey(RadialSubMenuCloseAnimation) as? POPAnimation {
-        } else {
+        let existingAnim = self.pop_animationForKey(RadialSubMenuCloseAnimation) as? POPAnimation
+        if !existingAnim {
             let anim = POPBasicAnimation(propertyNamed:kPOPViewCenter)
             anim.name = RadialSubMenuCloseAnimation
             anim.toValue = NSValue(CGPoint: origPosition)
-            anim.delegate = self
             anim.duration = closeDuration
             anim.beginTime = CACurrentMediaTime() + closeDelay
+            anim.delegate = self
             self.pop_addAnimation(anim, forKey: RadialSubMenuCloseAnimation)
         }
         
@@ -151,7 +152,7 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
     
     func pop_animationDidStop(anim: POPAnimation!, finished: Bool) {
         
-        if finished == false { return }
+        if !finished { return }
         
         switch (anim.name!, state) {
             case (RadialSubMenuOpenAnimation, _):
