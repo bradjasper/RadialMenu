@@ -11,6 +11,8 @@ import QuartzCore
 
 let RadialSubMenuOpenAnimation = "openAnimation"
 let RadialSubMenuCloseAnimation = "closeAnimation"
+let RadialSubMenuFadeInAnimation = "fadeInAnimation"
+let RadialSubMenuFadeOutAnimation = "fadeOutAnimation"
 
 // Using @objc here because we want to specify @optional methods which
 // you can only do on classes, which you specify with the @objc modifier
@@ -31,8 +33,6 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
     var delegate: RadialSubMenuDelegate?
     var origPosition         = CGPointZero
     var currPosition         = CGPointZero
-    var origBounds           = CGRectZero
-    var origFrame            = CGRectZero
     
     var openDelay            = 0.0
     var closeDelay           = 0.0
@@ -65,9 +65,8 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
     
     init(frame: CGRect) {
         super.init(frame: frame)
-        origFrame = self.frame
-        origBounds = self.bounds
         origPosition = self.center
+        self.alpha = 0
     }
     
     convenience init(text: String) {
@@ -77,7 +76,8 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
     // MARK - Main interface
     
     func openAt(position: CGPoint, fromPosition: CGPoint, delay: Double) {
-        println("Opening at position=\(position) with delay=\(delay)")
+        println("Opening at \(position) from \(fromPosition) with delay=\(delay)")
+        
         
         state = .Opening
         openDelay = delay
@@ -107,7 +107,7 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
     // MARK - Animations
     
     func openAnimation() {
-        // Is there a way to do the opposite of "if let"? Make these two statements one?
+        // FIXME: Is there a way to do the opposite of "if let"? Make these two statements one?
         let existingAnim = self.pop_animationForKey(RadialSubMenuOpenAnimation) as? POPAnimation
         if !existingAnim {
             let anim = POPSpringAnimation(propertyNamed:kPOPViewCenter)
@@ -117,12 +117,13 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
             anim.springBounciness = CGFloat(openSpringBounciness)
             anim.springSpeed = CGFloat(openSpringSpeed)
             anim.delegate = self
-            self.pop_addAnimation(anim, forKey: RadialSubMenuOpenAnimation)
+            self.pop_addAnimation(anim, forKey:RadialSubMenuOpenAnimation)
         }
         
     }
     
     func closeAnimation() {
+        // FIXME: Is there a way to do the opposite of "if let"? Make these two statements one?
         let existingAnim = self.pop_animationForKey(RadialSubMenuCloseAnimation) as? POPAnimation
         if !existingAnim {
             let anim = POPBasicAnimation(propertyNamed:kPOPViewCenter)
@@ -131,9 +132,43 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
             anim.duration = closeDuration
             anim.beginTime = CACurrentMediaTime() + closeDelay
             anim.delegate = self
-            self.pop_addAnimation(anim, forKey: RadialSubMenuCloseAnimation)
+            self.pop_addAnimation(anim, forKey:RadialSubMenuCloseAnimation)
         }
         
+    }
+    
+    func fadeInAnimation() {
+        
+        let toValue = NSNumber(float: 1.0)
+        
+        if let existingAnim = self.pop_animationForKey(RadialSubMenuFadeInAnimation) as? POPSpringAnimation {
+            existingAnim.toValue = toValue
+        } else {
+            let anim = POPSpringAnimation(propertyNamed:kPOPViewAlpha)
+            anim.name = RadialSubMenuFadeInAnimation
+            anim.toValue = toValue
+            anim.springBounciness = CGFloat(openSpringBounciness)
+            anim.springSpeed = CGFloat(openSpringSpeed)
+            anim.delegate = self
+            self.pop_addAnimation(anim, forKey:RadialSubMenuFadeInAnimation)
+        }
+    }
+    
+    func fadeOutAnimation() {
+        
+        let toValue = NSNumber(float: 0.0)
+        
+        if let existingAnim = self.pop_animationForKey(RadialSubMenuFadeOutAnimation) as? POPBasicAnimation {
+            existingAnim.toValue = toValue
+        } else {
+            let anim = POPBasicAnimation(propertyNamed:kPOPViewAlpha)
+            anim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
+            anim.name = RadialSubMenuFadeOutAnimation
+            anim.toValue = toValue
+            anim.duration = closeDuration
+            anim.delegate = self
+            self.pop_addAnimation(anim, forKey:RadialSubMenuFadeOutAnimation)
+        }
     }
     
     // MARK - POP animation delegates
@@ -141,9 +176,9 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
     func pop_animationDidStart(anim: POPAnimation!) {
         switch anim.name {
             case RadialSubMenuOpenAnimation:
-                break
+                self.fadeInAnimation()
             case RadialSubMenuCloseAnimation:
-                break
+                self.fadeOutAnimation()
             default:
                 break
         }

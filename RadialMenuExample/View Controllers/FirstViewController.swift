@@ -24,8 +24,9 @@ class FirstViewController: UIViewController {
             self.createSubMenu()
         ])
         
+        self.radialMenu.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
         self.radialMenu.center = self.view.center
-        self.radialMenu.frame = self.view.frame
+        self.radialMenu.radius = 100
         self.radialMenu.backgroundColor = UIColor.redColor()
         
         self.view.addSubview(self.radialMenu)

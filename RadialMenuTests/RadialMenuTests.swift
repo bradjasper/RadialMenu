@@ -15,8 +15,9 @@ class RadialMenuTests: XCTestCase {
         
         // Setup radial menu
         let radialMenu = RadialMenu(text: ["1", "2", "3", "4"])
-        radialMenu.openDelayStep = 0.01
-        radialMenu.closeDelayStep = 0.01
+        
+        radialMenu.openDelayStep = 0.0
+        radialMenu.closeDelayStep = 0.0
         
         // Setup expectations
         let openExpectation = self.expectationWithDescription("opens")

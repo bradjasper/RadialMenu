@@ -13,14 +13,13 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     
     @IBInspectable var radius: Double = 50
     @IBInspectable var radiusStep: Double = 0
-    @IBInspectable var openDelayStep: Double = 0.5
-    @IBInspectable var closeDelayStep: Double = 0.25
+    @IBInspectable var openDelayStep: Double = 0.25
+    @IBInspectable var closeDelayStep: Double = 0.15
     @IBInspectable var selectedDelay: Double = 50
     @IBInspectable var minAngle: Int = 180
     @IBInspectable var maxAngle: Int = 540
     @IBInspectable var allowMultipleHighlights: Bool = false
     
-    // FIXME: shorter syntax?
     var onOpen: () -> () = {}
     var onClose: () -> () = {}
     
@@ -96,27 +95,25 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         numOpeningSubMenus = 0
         
         let fullCircle = isFullCircle(minAngle, maxAngle)
+        let relPos = self.convertPoint(position, fromView:self.superview)
         
         for (i, subMenu) in enumerate(subMenus) {
             let subMenuPos = getPositionForSubMenu(i, max: max, overlap: fullCircle)
             let delay = openDelayStep * Double(i)
             numOpeningSubMenus++
-            subMenu.openAt(subMenuPos, fromPosition: position, delay: delay)
+            subMenu.openAt(subMenuPos, fromPosition: relPos, delay: delay)
         }
         
         
     }
     
     func getPositionForSubMenu(idx: Int, max: Int, overlap: Bool) -> CGPoint {
-        
         let absMax = overlap ? max : max - 1
         let absRadius = radius + (radiusStep * Double(idx))
-        let relPos = getPointAlongCircle(idx, max, Double(minAngle), Double(maxAngle), radius)
-        let posX = position.x + relPos.x
-        let posY = position.y + relPos.y
-        return CGPoint(x: posX, y: posY)
+        let circlePos = getPointAlongCircle(idx, max, Double(minAngle), Double(maxAngle), radius)
+        let relPos = CGPoint(x: position.x + circlePos.x, y: position.y + circlePos.y)
+        return self.convertPoint(relPos, fromView:self.superview)
     }
-    
     
     func close() {
         
