@@ -37,9 +37,9 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
     var openDelay            = 0.0
     var closeDelay           = 0.0
     
-    var closeDuration        = 1.0
+    var closeDuration        = 0.25
     var openSpringSpeed      = 12.0
-    var openSpringBounciness = 4.0
+    var openSpringBounciness = 12.0
     
     var state: State = .Closed {
         didSet {
@@ -55,6 +55,11 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
                     delegate?.subMenuDidUnhighlight?(self)
                 case .Closed:
                     delegate?.subMenuDidClose?(self)
+                    
+                    // A race condition exists where an open could get triggered after
+                    // a close due to a long delay. So cancel any open animations once closed
+                    self.pop_removeAnimationForKey(RadialSubMenuOpenAnimation)
+                    self.pop_removeAnimationForKey(RadialSubMenuFadeInAnimation)
                 default:
                     break
             }
@@ -91,10 +96,16 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
     }
     
     func openAt(position: CGPoint, fromPosition: CGPoint) {
+        
+        // Race condition
         self.openAt(position, fromPosition: fromPosition, delay: 0)
     }
     
     func close(delay: Double) {
+        
+        if (state == .Opening) {
+        }
+        
         state = .Closing
         closeDelay = delay
         self.closeAnimation()
@@ -171,6 +182,14 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
         }
     }
     
+    func removeAllAnimations() {
+        self.pop_removeAnimationForKey(RadialSubMenuOpenAnimation)
+        self.pop_removeAnimationForKey(RadialSubMenuCloseAnimation)
+        self.pop_removeAnimationForKey(RadialSubMenuFadeInAnimation)
+        self.pop_removeAnimationForKey(RadialSubMenuFadeOutAnimation)
+    }
+    
+    
     // MARK - POP animation delegates
     
     func pop_animationDidStart(anim: POPAnimation!) {
@@ -191,12 +210,16 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
         
         switch (anim.name!, state) {
             case (RadialSubMenuOpenAnimation, _):
+                println("\(tag) OPENED")
                 state = .Opened
             case (RadialSubMenuCloseAnimation, _):
+                println("\(tag) CLOSED")
                 state = .Closed
             case (RadialSubMenuOpenAnimation, .Closing):
+                println("\(tag) OPENED -> CLOSE")
                 self.closeAnimation()
             case (RadialSubMenuCloseAnimation, .Opening):
+                println("\(tag) CLOSED -> OPEN")
                 self.openAnimation()
             default:
                 break

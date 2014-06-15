@@ -7,3 +7,6 @@
 //
 
 #import <POP.h>
+#import <Tweaks/FBTweakInline.h>
+#import <Tweaks/FBTweakShakeWindow.h>
+

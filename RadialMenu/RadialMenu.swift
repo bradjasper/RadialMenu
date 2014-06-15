@@ -11,18 +11,21 @@ import UIKit
 @IBDesignable
 class RadialMenu: UIView, RadialSubMenuDelegate {
     
-    @IBInspectable var radius: Double = 50
-    @IBInspectable var radiusStep: Double = 0
-    @IBInspectable var openDelayStep: Double = 0.25
-    @IBInspectable var closeDelayStep: Double = 0.15
+    // configurable properties
+    @IBInspectable var radius: Double = 10
+    @IBInspectable var radiusStep: Double = 1
+    @IBInspectable var openDelayStep: Double = 0.035
+    @IBInspectable var closeDelayStep: Double = 0.035
     @IBInspectable var selectedDelay: Double = 50
     @IBInspectable var minAngle: Int = 180
-    @IBInspectable var maxAngle: Int = 540
+    @IBInspectable var maxAngle: Int = 7540
     @IBInspectable var allowMultipleHighlights: Bool = false
     
+    // callbacks
     var onOpen: () -> () = {}
     var onClose: () -> () = {}
     
+    // private
     let subMenus: RadialSubMenu[]
     
     var numOpeningSubMenus = 0
@@ -80,7 +83,12 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         self.init(menus: menus)
     }
     
-    // After: Swift
+    func cleanup() {
+        println("CLEANING UP")
+        for subMenu in subMenus {
+            subMenu.removeAllAnimations()
+        }
+    }
     
     func openAtPosition(position: CGPoint) {
         
@@ -89,6 +97,7 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         if max == 0         { return println("No submenus to open")        }
         if state != .Closed { return println("Can only open closed menus") }
         
+        self.cleanup()
         state = .Opening
         self.position = position
         numOpenedSubMenus = 0
@@ -110,14 +119,16 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     func getPositionForSubMenu(idx: Int, max: Int, overlap: Bool) -> CGPoint {
         let absMax = overlap ? max : max - 1
         let absRadius = radius + (radiusStep * Double(idx))
-        let circlePos = getPointAlongCircle(idx, max, Double(minAngle), Double(maxAngle), radius)
+        let circlePos = getPointAlongCircle(idx, max, Double(minAngle), Double(maxAngle), absRadius)
         let relPos = CGPoint(x: position.x + circlePos.x, y: position.y + circlePos.y)
         return self.convertPoint(relPos, fromView:self.superview)
     }
     
     func close() {
         
-        if (state == .Closed) { return println("Menu is already closed") }
+        if (state == .Closed || state == .Closing) {
+            return println("Menu is already closed/closing")
+        }
         
         state = .Closing
         
@@ -141,7 +152,7 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     }
     
     func subMenuDidClose(subMenu: RadialSubMenu) {
-        if --numOpenedSubMenus == 0 {
+        if --numOpeningSubMenus == 0 || --numOpenedSubMenus == 0 {
             state = .Closed
         }
     }

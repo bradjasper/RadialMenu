@@ -15,19 +15,25 @@ class FirstViewController: UIViewController {
     var radialMenu = RadialMenu()
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
-        self.radialMenu = RadialMenu(menus: [
-            self.createSubMenu(),
-            self.createSubMenu(),
-            self.createSubMenu(),
-            self.createSubMenu()
-        ])
+        var subMenus: RadialSubMenu[] = []
+        for i in 1...100 {
+            subMenus.append(self.createSubMenu())
+        }
+        self.radialMenu = RadialMenu(menus: subMenus)
         
         self.radialMenu.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
         self.radialMenu.center = self.view.center
-        self.radialMenu.radius = 100
-        self.radialMenu.backgroundColor = UIColor.redColor()
+        self.radialMenu.layer.cornerRadius = 100
+        self.radialMenu.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.5)
+        self.radialMenu.onOpen = {
+            println("RADIAL MENU OPENED")
+        }
+        self.radialMenu.onClose = {
+            println("RADIAL MENU CLOSED")
+        }
         
         self.view.addSubview(self.radialMenu)
         
@@ -40,9 +46,10 @@ class FirstViewController: UIViewController {
     }
     
     func createSubMenu() -> RadialSubMenu {
-        let radius = 50
+        let radius = 10
         let subMenu = RadialSubMenu(frame: CGRect(x: 0, y: 0, width: radius*2, height: radius*2))
-        subMenu.backgroundColor = UIColor.orangeColor()
+        subMenu.backgroundColor = UIColor.lightGrayColor()
+        subMenu.layer.cornerRadius = CGFloat(radius)
         subMenu.userInteractionEnabled = true
         return subMenu
     }
