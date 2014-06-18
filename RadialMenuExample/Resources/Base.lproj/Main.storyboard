@@ -21,7 +21,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="480" height="44"/>
                                 <items/>
                             </toolbar>
-                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plus" translatesAutoresizingMaskIntoConstraints="NO" id="pL3-BC-0tS">
+                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plus-white" translatesAutoresizingMaskIntoConstraints="NO" id="pL3-BC-0tS">
                                 <rect key="frame" x="211" y="224" width="59" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="59" id="11O-HE-miL"/>
@@ -135,7 +135,7 @@
     </scenes>
     <resources>
         <image name="first" width="30" height="30"/>
-        <image name="plus" width="246" height="246"/>
+        <image name="plus-white" width="246" height="246"/>
         <image name="second" width="30" height="30"/>
     </resources>
 </document>

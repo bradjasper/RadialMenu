@@ -19,6 +19,7 @@
 		A23919811943607F00822BD9 /* CircleHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23919801943607F00822BD9 /* CircleHelpers.swift */; };
 		A24289B719436310008DA89C /* CircleHelpersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24289B619436310008DA89C /* CircleHelpersTests.swift */; };
 		A244F3D11941625B0081DCB6 /* RadialMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A244F3D01941625B0081DCB6 /* RadialMenu.swift */; };
+		A26632FA194E990000F28D06 /* UIColor+helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26632F9194E990000F28D06 /* UIColor+helpers.swift */; };
 		A2A23B461946437600DDAE4F /* RadialSubMenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A23B451946437600DDAE4F /* RadialSubMenuTests.swift */; };
 		A2C35FB119436C34005B3D24 /* CircleHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23919801943607F00822BD9 /* CircleHelpers.swift */; };
 		BFD7D541F1DB49F8840D1355 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94D3AA863A764DF0A5EE5918 /* libPods.a */; };
@@ -80,6 +81,7 @@
 		A23919801943607F00822BD9 /* CircleHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleHelpers.swift; sourceTree = "<group>"; };
 		A24289B619436310008DA89C /* CircleHelpersTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleHelpersTests.swift; sourceTree = "<group>"; };
 		A244F3D01941625B0081DCB6 /* RadialMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadialMenu.swift; sourceTree = "<group>"; };
+		A26632F9194E990000F28D06 /* UIColor+helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+helpers.swift"; sourceTree = "<group>"; };
 		A2695FF6194B51F4004FB4FF /* RadialMenu-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RadialMenu-Bridging-Header.h"; sourceTree = "<group>"; };
 		A292FE83194B795600F437DA /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		A2A23B451946437600DDAE4F /* RadialSubMenuTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadialSubMenuTests.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 			children = (
 				A203028B1942939C000FF9D1 /* RadialMenuPlayground.playground */,
 				A205B8B119415FDE00C0E5A3 /* AppDelegate.swift */,
+				A26632F9194E990000F28D06 /* UIColor+helpers.swift */,
 				A2C35FB419436D09005B3D24 /* View Controllers */,
 				A2C35FB319436CFB005B3D24 /* Resources */,
 				A205B8AF19415FDE00C0E5A3 /* Supporting Files */,
@@ -346,6 +349,7 @@
 				A205B8B219415FDE00C0E5A3 /* AppDelegate.swift in Sources */,
 				A205B8B419415FDE00C0E5A3 /* FirstViewController.swift in Sources */,
 				A23919811943607F00822BD9 /* CircleHelpers.swift in Sources */,
+				A26632FA194E990000F28D06 /* UIColor+helpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

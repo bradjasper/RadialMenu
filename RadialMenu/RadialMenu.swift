@@ -12,18 +12,26 @@ import UIKit
 class RadialMenu: UIView, RadialSubMenuDelegate {
     
     // configurable properties
-    @IBInspectable var radius: Double = 10
-    @IBInspectable var radiusStep: Double = 1
-    @IBInspectable var openDelayStep: Double = 0.035
+    @IBInspectable var radius: Double = 100
+    @IBInspectable var radiusStep: Double = 0
+    @IBInspectable var openDelayStep: Double = 0.05
     @IBInspectable var closeDelayStep: Double = 0.035
-    @IBInspectable var selectedDelay: Double = 50
+    @IBInspectable var activatedDelay: Double = 1
     @IBInspectable var minAngle: Int = 180
-    @IBInspectable var maxAngle: Int = 7540
+    @IBInspectable var maxAngle: Int = 540
     @IBInspectable var allowMultipleHighlights: Bool = false
     
-    // callbacks
-    var onOpen: () -> () = {}
-    var onClose: () -> () = {}
+    
+    // Callbacks
+    // FIXME: Easier way to handle optional callbacks?
+    typealias RadialMenuCallback = () -> ()
+    typealias RadialSubMenuCallback = (subMenu: RadialSubMenu) -> ()
+    
+    var onOpen: RadialMenuCallback?
+    var onClose: RadialMenuCallback?
+    var onHighlight: RadialSubMenuCallback?
+    var onUnhighlight: RadialSubMenuCallback?
+    var onActivate: RadialSubMenuCallback?
     
     // private
     let subMenus: RadialSubMenu[]
@@ -34,17 +42,20 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     var position = CGPointZero
     
     enum State {
-        case Closed, Opening, Opened, Highlighted, Selected, Closing
+        case Closed, Opening, Opened, Highlighted, Unhighlighted, Activated, Closing
     }
     
     var state: State = .Closed {
         didSet {
             if oldValue == state { return }
+            // FIXME: open/close callbacks are called up here but (un)highlight/activate are called below
+            // we're abusing the fact that state changes are only called once here
+            // but can't pass submenu context without ugly global state
             switch state {
                 case .Closed:
-                    onClose()
+                    onClose?()
                 case .Opened:
-                    onOpen()
+                    onOpen?()
                 default:
                     break
             }
@@ -84,7 +95,6 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     }
     
     func cleanup() {
-        println("CLEANING UP")
         for subMenu in subMenus {
             subMenu.removeAllAnimations()
         }
@@ -134,13 +144,40 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         
         for (i, subMenu) in enumerate(subMenus) {
             let delay = closeDelayStep * Double(i)
-            subMenu.close(delay)
+            
+            // FIXME: Why can't I use shortcut enum syntax .Highlighted here?
+            if subMenu.state == RadialSubMenu.State.Highlighted {
+                subMenu.activate(delay + activatedDelay)
+            } else {
+                subMenu.close(delay)
+            }
         }
         
     }
     
     func moveAtPosition(position:CGPoint) {
         
+        if state != .Opened && state != .Highlighted && state != .Unhighlighted {
+            return
+        }
+        
+        for (i, subMenu) in enumerate(subMenus) {
+            
+            let relPos = self.convertPoint(position, fromView:self.superview)
+            let shouldHighlight = subMenu.shouldHighlight(relPos)
+            switch (shouldHighlight, subMenu.state) {
+                case (true, _):
+                    if (state == .Highlighted && allowMultipleHighlights == false) {
+                        continue
+                    }
+                    subMenu.highlight()
+                case (false, .Highlighted):
+                    subMenu.unhighlight()
+                default:
+                    break
+            }
+            
+        }
     }
     
     // MARK: RadialSubMenuDelegate
@@ -158,14 +195,17 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     }
     
     func subMenuDidHighlight(subMenu: RadialSubMenu) {
-        
+        state = .Highlighted
+        onHighlight?(subMenu: subMenu)
     }
     
     func subMenuDidUnhighlight(subMenu: RadialSubMenu) {
-        
+        state = .Unhighlighted
+        onUnhighlight?(subMenu: subMenu)
     }
     
-    func subMenuDidSelect(subMenu: RadialSubMenu) {
-        
+    func subMenuDidActivate(subMenu: RadialSubMenu) {
+        state = .Activated
+        onActivate?(subMenu: subMenu)
     }
 }
