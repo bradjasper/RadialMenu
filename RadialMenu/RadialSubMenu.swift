@@ -33,7 +33,6 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
     var delegate: RadialSubMenuDelegate?
     var origPosition         = CGPointZero
     var currPosition         = CGPointZero
-    var currFrame            = CGRectZero
     
     var openDelay            = 0.0
     var closeDelay           = 0.0
@@ -126,7 +125,14 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
     }
     
     func shouldHighlight(position: CGPoint) -> Bool {
-        return CGRectContainsPoint(currFrame, position)
+        let width = frame.width
+        let height = frame.height
+        
+        let posX = currPosition.x - (width/2)
+        let posY = currPosition.y - (height/2)
+        
+        let highlightFrame = CGRect(x: posX, y: posY, width: width, height: height)
+        return CGRectContainsPoint(highlightFrame, position)
     }
     
     // MARK - Animations
@@ -233,7 +239,6 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
         switch (anim.name!, state) {
             case (RadialSubMenuOpenAnimation, _):
                 state = .Opened
-                currFrame = frame
             case (RadialSubMenuCloseAnimation, _):
                 state = .Closed
                 removeOpenAnimations()

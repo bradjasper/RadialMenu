@@ -28,14 +28,6 @@
                                     <constraint firstAttribute="width" secondItem="pL3-BC-0tS" secondAttribute="height" multiplier="15:8" constant="-1" id="x0B-mt-2xC"/>
                                 </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="w3Q-4m-zQU" customClass="RadialMenu" customModule="RadialMenu" customModuleProvider="target">
-                                <rect key="frame" x="171" y="33" width="138" height="164"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="radius">
-                                        <integer key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -50,7 +42,6 @@
                     <tabBarItem key="tabBarItem" title="First" image="first" id="acW-dT-cKf"/>
                     <connections>
                         <outlet property="addButton" destination="pL3-BC-0tS" id="PCA-f6-WOf"/>
-                        <outlet property="radialMenu" destination="w3Q-4m-zQU" id="5ZX-8b-lk2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
