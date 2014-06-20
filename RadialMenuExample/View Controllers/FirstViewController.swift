@@ -7,16 +7,19 @@
 //
 
 import UIKit
+import QuartzCore
 
 class FirstViewController: UIViewController {
     
     @IBOutlet var addButton:UIImageView
     
     var radialMenu = RadialMenu()
-    let num = 8
-    let innerRadius = 65.0
-    let subMenuRadius = 35.0
-    let menuRadius = 115.0
+    let num = 12
+    let innerRadius = 55.0
+    let subMenuRadius = 25.0
+    let menuRadius = 125.0
+    let radialStep = 0.0
+    let allowMultipleHighlights = false
     let colors = ["#C0392B", "#2ECC71", "#E67E22", "#3498DB", "#9B59B6", "#F1C40F",
                   "#16A085", "#8E44AD", "#2C3E50", "#F39C12", "#2980B9", "#27AE60",
                   "#D35400", "#34495E", "#E74C3C", "#1ABC9C"].map { UIColor(rgba: $0) }
@@ -45,11 +48,13 @@ class FirstViewController: UIViewController {
         }
         
         self.radialMenu = RadialMenu(menus: subMenus)
-        self.radialMenu.frame = CGRect(x: 0, y: 0, width: innerRadius*2, height: innerRadius*2)
+        self.radialMenu.frame = CGRect(x: 0, y: 0, width: CGFloat(innerRadius*2), height: CGFloat(innerRadius*2))
         self.radialMenu.center = self.view.center
-        self.radialMenu.layer.cornerRadius = innerRadius
+        self.radialMenu.layer.cornerRadius = CGFloat(innerRadius)
         self.radialMenu.radius = menuRadius
+        self.radialMenu.radiusStep = radialStep
         self.radialMenu.backgroundColor = UIColor(rgba: "#bdc3c7")
+        self.radialMenu.allowMultipleHighlights = allowMultipleHighlights
         self.radialMenu.onOpen = {
             println("RADIAL MENU OPENED")
         }
@@ -84,6 +89,7 @@ class FirstViewController: UIViewController {
                 self.radialMenu.openAtPosition(self.addButton.center)
             case .Ended:
                 self.radialMenu.close()
+                break
             case .Changed:
                 self.radialMenu.moveAtPosition(gesture.locationInView(self.view))
             default:
@@ -94,8 +100,8 @@ class FirstViewController: UIViewController {
     // MARK - RadialSubMenu helpers
     
     func createSubMenu(i: Int) -> RadialSubMenu {
-        let subMenu = RadialSubMenu(frame: CGRect(x: 0.0, y: 0.0, width: subMenuRadius*2, height: subMenuRadius*2))
-        subMenu.layer.cornerRadius = subMenuRadius
+        let subMenu = RadialSubMenu(frame: CGRect(x: 0.0, y: 0.0, width: CGFloat(subMenuRadius*2), height: CGFloat(subMenuRadius*2)))
+        subMenu.layer.cornerRadius = CGFloat(subMenuRadius)
         subMenu.userInteractionEnabled = true
         subMenu.tag = i
         resetSubMenu(subMenu)

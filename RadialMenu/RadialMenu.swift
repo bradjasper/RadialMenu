@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import QuartzCore
 
 @IBDesignable
 class RadialMenu: UIView, RadialSubMenuDelegate {
@@ -19,6 +20,7 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     @IBInspectable var activatedDelay: Double = 1
     @IBInspectable var minAngle: Int = 180
     @IBInspectable var maxAngle: Int = 540
+    @IBInspectable var highlightDistance = 50.0
     @IBInspectable var allowMultipleHighlights: Bool = false
     
     
@@ -117,7 +119,7 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         let relPos = self.convertPoint(position, fromView:self.superview)
         
         for (i, subMenu) in enumerate(subMenus) {
-            let subMenuPos = getPositionForSubMenu(i, max: max, overlap: fullCircle)
+            let subMenuPos = getPositionForSubMenu(subMenu)
             let delay = openDelayStep * Double(i)
             numOpeningSubMenus++
             subMenu.openAt(subMenuPos, fromPosition: relPos, delay: delay)
@@ -126,10 +128,20 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         
     }
     
-    func getPositionForSubMenu(idx: Int, max: Int, overlap: Bool) -> CGPoint {
-        let absMax = overlap ? max : max - 1
-        let absRadius = radius + (radiusStep * Double(idx))
-        let circlePos = getPointAlongCircle(idx, max, Double(minAngle), Double(maxAngle), absRadius)
+    func getAngleForSubMenu(subMenu: RadialSubMenu) -> Double {
+        let fullCircle = isFullCircle(minAngle, maxAngle)
+        let max = fullCircle ? subMenus.count : subMenus.count - 1
+        return getAngleForIndex(subMenu.tag, max, Double(minAngle), Double(maxAngle))
+    }
+    
+    func getPositionForSubMenu(subMenu: RadialSubMenu) -> CGPoint {
+        return getPositionForSubMenu(subMenu, radius: radius)
+    }
+    
+    func getPositionForSubMenu(subMenu: RadialSubMenu, radius: Double) -> CGPoint {
+        let angle = getAngleForSubMenu(subMenu)
+        let absRadius = radius + (radiusStep * Double(subMenu.tag))
+        let circlePos = getPointForAngle(angle, absRadius)
         let relPos = CGPoint(x: position.x + circlePos.x, y: position.y + circlePos.y)
         return self.convertPoint(relPos, fromView:self.superview)
     }
@@ -147,7 +159,8 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
             
             // FIXME: Why can't I use shortcut enum syntax .Highlighted here?
             if subMenu.state == RadialSubMenu.State.Highlighted {
-                subMenu.activate(delay + activatedDelay)
+                let closeDelay = (closeDelayStep * Double(subMenus.count)) + activatedDelay
+                subMenu.activate(closeDelay)
             } else {
                 subMenu.close(delay)
             }
@@ -161,23 +174,30 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
             return
         }
         
-        for (i, subMenu) in enumerate(subMenus) {
+        let relPos = self.convertPoint(position, fromView:self.superview)
+        
+        var distances:(distance: Double, subMenu: RadialSubMenu)[] = []
+        for subMenu in subMenus {
             
-            let relPos = self.convertPoint(position, fromView:self.superview)
-            let shouldHighlight = subMenu.shouldHighlight(relPos)
-            switch (shouldHighlight, subMenu.state) {
-                case (true, _):
-                    if (state == .Highlighted && allowMultipleHighlights == false) {
-                        continue
-                    }
-                    subMenu.highlight()
-                case (false, .Highlighted):
-                    subMenu.unhighlight()
-                default:
-                    break
+            // If menu is within highlight distance, add to array
+            let distance = distanceBetweenPoints(subMenu.center, relPos)
+            if distance <= highlightDistance {
+                distances.append(distance: distance, subMenu: subMenu)
+                
+            } else if subMenu.state == .Highlighted {
+                subMenu.unhighlight()
             }
-            
         }
+        
+        if distances.count == 0 { return }
+        
+        distances.sort { $0.distance < $1.distance }
+        
+        for (_, subMenu) in distances {
+            subMenu.highlight()
+            if !allowMultipleHighlights { break }
+        }
+        
     }
     
     // MARK: RadialSubMenuDelegate

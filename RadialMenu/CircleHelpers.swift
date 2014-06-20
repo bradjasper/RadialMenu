@@ -24,11 +24,24 @@ func isFullCircle(minAngle: Int, maxAngle: Int) -> Bool {
     return isFullCircle(Double(minAngle), Double(maxAngle))
 }
 
-func getPointAlongCircle(idx: Int, max: Int, minAngle: Double, maxAngle: Double, radius: Double) -> CGPoint {
+func getAngleForIndex(idx: Int, max: Int, minAngle: Double, maxAngle: Double) -> Double {
     let spreadAngle = maxAngle - minAngle
     let percentage = Double(idx) / Double(max)
     let angle = degreesToRadians(minAngle + (percentage * spreadAngle))
+    return angle
+}
+
+func getPointForAngle(angle: Double, radius: Double) -> CGPoint {
     let pointX = CGFloat(radius * cos(angle))
     let pointY = CGFloat(radius * sin(angle))
     return CGPoint(x: pointX, y: pointY)
+}
+
+func getPointAlongCircle(idx: Int, max: Int, minAngle: Double, maxAngle: Double, radius: Double) -> CGPoint {
+    let angle = getAngleForIndex(idx, max, minAngle, maxAngle)
+    return getPointForAngle(angle, radius)
+}
+
+func distanceBetweenPoints(p1: CGPoint, p2: CGPoint) -> Double {
+    return sqrt(pow(p2.x-p1.x, 2) + pow(p2.y-p1.y, 2))
 }

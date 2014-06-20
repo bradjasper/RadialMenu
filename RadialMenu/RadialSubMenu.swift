@@ -68,6 +68,7 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
         super.init(frame: frame)
         origPosition = self.center
         alpha = 0
+        
     }
     
     convenience init(text: String) {
@@ -122,17 +123,6 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
     
     func activate() {
         activate(0)
-    }
-    
-    func shouldHighlight(position: CGPoint) -> Bool {
-        let width = frame.width
-        let height = frame.height
-        
-        let posX = currPosition.x - (width/2)
-        let posY = currPosition.y - (height/2)
-        
-        let highlightFrame = CGRect(x: posX, y: posY, width: width, height: height)
-        return CGRectContainsPoint(highlightFrame, position)
     }
     
     // MARK - Animations
