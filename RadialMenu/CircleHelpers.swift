@@ -43,5 +43,5 @@ func getPointAlongCircle(idx: Int, max: Int, minAngle: Double, maxAngle: Double,
 }
 
 func distanceBetweenPoints(p1: CGPoint, p2: CGPoint) -> Double {
-    return sqrt(pow(p2.x-p1.x, 2) + pow(p2.y-p1.y, 2))
+    return sqrt(pow(Double(p2.x-p1.x), 2) + pow(Double(p2.y-p1.y), 2))
 }

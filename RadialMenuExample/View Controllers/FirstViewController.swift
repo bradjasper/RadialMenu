@@ -14,7 +14,9 @@ class FirstViewController: UIViewController {
     @IBOutlet var addButton:UIImageView
     
     var radialMenu = RadialMenu()
+    let backgroundLayer = CALayer()
     let num = 12
+    var numHighlighted = 0
     let innerRadius = 55.0
     let subMenuRadius = 25.0
     let menuRadius = 125.0
@@ -47,40 +49,62 @@ class FirstViewController: UIViewController {
             subMenus.append(self.createSubMenu(i))
         }
         
-        self.radialMenu = RadialMenu(menus: subMenus)
-        self.radialMenu.frame = CGRect(x: 0, y: 0, width: CGFloat(innerRadius*2), height: CGFloat(innerRadius*2))
-        self.radialMenu.center = self.view.center
-        self.radialMenu.layer.cornerRadius = CGFloat(innerRadius)
-        self.radialMenu.radius = menuRadius
-        self.radialMenu.radiusStep = radialStep
-        self.radialMenu.backgroundColor = UIColor(rgba: "#bdc3c7")
-        self.radialMenu.allowMultipleHighlights = allowMultipleHighlights
-        self.radialMenu.onOpen = {
+        
+        radialMenu = RadialMenu(menus: subMenus)
+        radialMenu.frame = CGRect(x: 0, y: 0, width: CGFloat(innerRadius*2), height: CGFloat(innerRadius*2))
+        radialMenu.center = view.center
+        radialMenu.radius = menuRadius
+        radialMenu.radiusStep = radialStep
+        //radialMenu.backgroundColor = UIColor(rgba: "#bdc3c7")
+        radialMenu.allowMultipleHighlights = allowMultipleHighlights
+        radialMenu.onOpen = {
             println("RADIAL MENU OPENED")
         }
         
-        self.radialMenu.onClose = {
+        radialMenu.onClose = {
             println("RADIAL MENU CLOSED")
+            
+            self.numHighlighted = 0
+            self.resetRadialMenuBackground()
             
             for subMenu in self.radialMenu.subMenus {
                 self.resetSubMenu(subMenu)
             }
+            
         }
         
-        self.radialMenu.onHighlight = { subMenu in
+        radialMenu.onHighlight = { subMenu in
             println("Highlighted subMenu \(subMenu)")
+            
+            if (self.numHighlighted++ == 0) {
+                self.growRadialMenuBackground()
+            }
+            
             self.highlightSubMenu(subMenu)
         }
         
-        self.radialMenu.onUnhighlight = { subMenu in
+        radialMenu.onUnhighlight = { subMenu in
             println("Unhighlighted subMenu \(subMenu)")
+            
+            if (--self.numHighlighted == 0) {
+                self.resetRadialMenuBackground()
+            }
+            
             self.resetSubMenu(subMenu)
         }
         
-        self.radialMenu.onActivate = { subMenu in
+        radialMenu.onActivate = { subMenu in
             println("Activated \(subMenu)")
         }
         
+        // FIXME: Couldn't figure out how to resize UIView without also having to change subview pos
+        //resetRadialMenuBackground()
+        backgroundLayer.position = radialMenu.center
+        backgroundLayer.frame = CGRect(x: 0, y: 0, width: CGFloat(innerRadius*2), height: CGFloat(innerRadius*2))
+        backgroundLayer.cornerRadius = innerRadius
+        backgroundLayer.backgroundColor = UIColor(rgba: "#bdc3c7").colorWithAlphaComponent(0.5).CGColor
+        backgroundLayer.zPosition = -1
+        radialMenu.layer.addSublayer(backgroundLayer)
     }
     
     func pressedButton(gesture:UIGestureRecognizer) {
@@ -120,7 +144,19 @@ class FirstViewController: UIViewController {
     
     func resetSubMenu(subMenu: RadialSubMenu) {
         let color = colorForSubMenu(subMenu)
-        subMenu.backgroundColor = color.colorWithAlphaComponent(0.75)
+        subMenu.backgroundColor = color.colorWithAlphaComponent(0.5)
+    }
+    
+    func growRadialMenuBackground() {
+        println("grow")
+        backgroundLayer.bounds = CGRect(x: 0, y: 0, width: innerRadius*6, height: innerRadius*6)
+        backgroundLayer.cornerRadius = innerRadius*3
+    }
+    
+    func resetRadialMenuBackground() {
+        println("reset")
+        backgroundLayer.bounds = CGRect(x: 0, y: 0, width: innerRadius*2, height: innerRadius*2)
+        backgroundLayer.cornerRadius = innerRadius
     }
     
 }

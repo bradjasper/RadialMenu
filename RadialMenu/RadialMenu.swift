@@ -20,7 +20,7 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     @IBInspectable var activatedDelay: Double = 1
     @IBInspectable var minAngle: Int = 180
     @IBInspectable var maxAngle: Int = 540
-    @IBInspectable var highlightDistance = 50.0
+    @IBInspectable var highlightDistance = 75.0
     @IBInspectable var allowMultipleHighlights: Bool = false
     
     
@@ -34,6 +34,7 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     var onHighlight: RadialSubMenuCallback?
     var onUnhighlight: RadialSubMenuCallback?
     var onActivate: RadialSubMenuCallback?
+    
     
     // private
     let subMenus: RadialSubMenu[]
@@ -193,9 +194,18 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         
         distances.sort { $0.distance < $1.distance }
         
-        for (_, subMenu) in distances {
-            subMenu.highlight()
-            if !allowMultipleHighlights { break }
+        for (i, (_, subMenu)) in enumerate(distances) {
+            
+            switch (i, allowMultipleHighlights) {
+                case (0, false):
+                    subMenu.highlight()
+                case (_, true):
+                    subMenu.highlight()
+                case (_, _) where subMenu.state == .Highlighted:
+                    subMenu.unhighlight()
+                default:
+                    break
+            }
         }
         
     }
