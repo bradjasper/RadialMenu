@@ -7,22 +7,22 @@
 //
 
 import UIKit
+import QuartzCore
 
 class SecondViewController: UIViewController {
     var didSetupConstraints = false
     
+    let tapView:UIView
     let microphoneButton:UIView
     let radialMenu:RadialMenu
     let bgView:UIView
     let microphoneButtonImageView:UIImageView
     
+    let microphoneBumper:CGFloat = 24
     let microphoneRadius:CGFloat = 12
-    let innerRadius:CGFloat = 125
+    let innerRadius:CGFloat = 130
     let subMenuRadius:CGFloat = 25
     let menuRadius:CGFloat = 90
-    
-    let menuBounciness:CGFloat = 1.0
-    let menuSpeed:CGFloat = 12.0
     
     init(coder aDecoder: NSCoder!) {
         let img = UIImage(named: "microphone")
@@ -55,6 +55,10 @@ class SecondViewController: UIViewController {
         bgView.layer.cornerRadius = innerRadius
         radialMenu.addSubview(bgView)
         
+        
+        // Improve usability by making a larger tapview
+        tapView = UIView()
+        
         super.init(coder: aDecoder)
     }
     
@@ -63,8 +67,8 @@ class SecondViewController: UIViewController {
         
         if (!didSetupConstraints) {
             microphoneButton.autoSetDimensionsToSize(CGSize(width: microphoneRadius*2, height: microphoneRadius*2))
-            microphoneButton.autoPinToBottomLayoutGuideOfViewController(self, withInset: microphoneRadius)
-            microphoneButton.autoPinEdgeToSuperviewEdge(ALEdge.Right, withInset: microphoneRadius)
+            microphoneButton.autoPinToBottomLayoutGuideOfViewController(self, withInset: microphoneBumper)
+            microphoneButton.autoPinEdgeToSuperviewEdge(ALEdge.Right, withInset: microphoneBumper)
             
             radialMenu.autoAlignAxis(.Horizontal, toSameAxisOfView: microphoneButton)
             radialMenu.autoAlignAxis(.Vertical, toSameAxisOfView: microphoneButton)
@@ -72,31 +76,69 @@ class SecondViewController: UIViewController {
             bgView.autoAlignAxis(.Horizontal, toSameAxisOfView: radialMenu)
             bgView.autoAlignAxis(.Vertical, toSameAxisOfView: radialMenu)
             
+            tapView.autoSetDimensionsToSize(CGSize(width: 75, height: 75))
+            tapView.autoAlignAxis(.Horizontal, toSameAxisOfView: microphoneButton)
+            tapView.autoAlignAxis(.Vertical, toSameAxisOfView: microphoneButton)
+            
             didSetupConstraints = true
         }
     }
     
-    func radialMenuShowAnimation() -> POPSpringAnimation {
+    func radialMenuShowAnimation(delay: CGFloat) -> POPSpringAnimation {
         if let anim = bgView.pop_animationForKey("show") as? POPSpringAnimation {
             return anim
         } else {
             let anim = POPSpringAnimation(propertyNamed:kPOPViewBounds)
-            anim.springBounciness = menuBounciness
-            anim.springSpeed = menuSpeed
+            anim.springBounciness = 6.0
+            anim.name = "show"
+            anim.springSpeed = 20.0
+            anim.beginTime = CACurrentMediaTime() + CFTimeInterval(delay)
+            anim.delegate = self
             bgView.pop_addAnimation(anim, forKey:"show")
             return anim
         }
     }
     
+    func radialMenuCornerRadiusAnimation(delay: CGFloat) -> POPSpringAnimation {
+        if let anim = bgView.layer.pop_animationForKey("cornerRadius") as? POPSpringAnimation {
+            return anim
+        } else {
+            let anim = POPSpringAnimation(propertyNamed:kPOPLayerCornerRadius)
+            anim.springBounciness = 6.0
+            anim.name = "cornerRadius"
+            anim.springSpeed = 20.0
+            anim.beginTime = CACurrentMediaTime() + CFTimeInterval(delay)
+            anim.delegate = self
+            bgView.layer.pop_addAnimation(anim, forKey:"cornerRadius")
+            return anim
+        }
+    }
+    
+    func superExpandRadialMenu() {
+        let radialAnim = radialMenuShowAnimation(0)
+        radialAnim.toValue = NSValue(CGRect: CGRect(x: 0, y: 0, width: innerRadius*2.25, height: innerRadius*2.25))
+        
+        let cornerAnim = radialMenuCornerRadiusAnimation(0)
+        cornerAnim.toValue = NSNumber(double: innerRadius*1.125)
+        
+        bgView.alpha = 1.0
+    }
+    
     func expandRadialMenu() {
-        let radialAnim = radialMenuShowAnimation()
+        let radialAnim = radialMenuShowAnimation(0)
         radialAnim.toValue = NSValue(CGRect: CGRect(x: 0, y: 0, width: innerRadius*2, height: innerRadius*2))
+        let cornerAnim = radialMenuCornerRadiusAnimation(0)
+        cornerAnim.toValue = NSNumber(double: innerRadius)
+        bgView.alpha = 1.0
     }
     
     
     func shrinkRadialMenu() {
-        let radialAnim = radialMenuShowAnimation()
+        let radialAnim = radialMenuShowAnimation(0)
         radialAnim.toValue = NSValue(CGRect: CGRectZero)
+        let cornerAnim = radialMenuCornerRadiusAnimation(0)
+        cornerAnim.toValue = NSNumber(double: 0)
+        bgView.alpha = 0.25
     }
     
     override func viewDidLoad() {
@@ -112,10 +154,12 @@ class SecondViewController: UIViewController {
         
         radialMenu.onHighlight = { subMenu in
             println("Highlighted submenu")
+            self.superExpandRadialMenu()
         }
         
         radialMenu.onUnhighlight = { subMenu in
             println("Unhighlighted submenu")
+            self.expandRadialMenu()
         }
         
         
@@ -125,8 +169,12 @@ class SecondViewController: UIViewController {
         view.addSubview(radialMenu)
         view.addSubview(microphoneButton)
         
+        view.addSubview(tapView)
+        
+        
+        
         let longPress = UILongPressGestureRecognizer(target: self, action: "pressedButton:")
-        microphoneButton.addGestureRecognizer(longPress)
+        tapView.addGestureRecognizer(longPress)
     }
     
     func pressedButton(gesture:UIGestureRecognizer) {

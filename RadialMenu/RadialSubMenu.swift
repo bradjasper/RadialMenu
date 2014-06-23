@@ -37,9 +37,9 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
     var openDelay            = 0.0
     var closeDelay           = 0.0
     
-    var closeDuration        = 0.25
+    var closeDuration        = 0.1
     var openSpringSpeed      = 12.0
-    var openSpringBounciness = 12.0
+    var openSpringBounciness = 6.0
     
     var state: State = .Closed {
         didSet {
