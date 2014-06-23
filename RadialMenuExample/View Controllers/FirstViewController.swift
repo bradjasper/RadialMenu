@@ -17,8 +17,8 @@ class FirstViewController: UIViewController {
     let backgroundLayer = CALayer()
     let num = 12
     var numHighlighted = 0
-    let innerRadius = 55.0
-    let subMenuRadius = 25.0
+    let innerRadius:CGFloat = 55.0
+    let subMenuRadius:CGFloat = 25.0
     let menuRadius = 125.0
     let radialStep = 0.0
     let allowMultipleHighlights = false
@@ -113,7 +113,6 @@ class FirstViewController: UIViewController {
                 self.radialMenu.openAtPosition(self.addButton.center)
             case .Ended:
                 self.radialMenu.close()
-                break
             case .Changed:
                 self.radialMenu.moveAtPosition(gesture.locationInView(self.view))
             default:

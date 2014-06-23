@@ -29,7 +29,9 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     typealias RadialMenuCallback = () -> ()
     typealias RadialSubMenuCallback = (subMenu: RadialSubMenu) -> ()
     
+    var onOpening: RadialMenuCallback?
     var onOpen: RadialMenuCallback?
+    var onClosing: RadialMenuCallback?
     var onClose: RadialMenuCallback?
     var onHighlight: RadialSubMenuCallback?
     var onUnhighlight: RadialSubMenuCallback?
@@ -59,6 +61,10 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
                     onClose?()
                 case .Opened:
                     onOpen?()
+                case .Opening:
+                    onOpening?()
+                case .Closing:
+                    onClosing?()
                 default:
                     break
             }
