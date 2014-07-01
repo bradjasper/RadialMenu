@@ -12,17 +12,18 @@ import QuartzCore
 class SecondViewController: UIViewController {
     var didSetupConstraints = false
     
+    let highlightColor = UIColor(rgba: "#007aff")
     let tapView:UIView
     let microphoneButton:UIView
-    let radialMenu:RadialMenu
+    var radialMenu:RadialMenu
     let bgView:UIView
     let microphoneButtonImageView:UIImageView
     
     let microphoneBumper:CGFloat = 24
     let microphoneRadius:CGFloat = 12
     let innerRadius:CGFloat = 130
-    let subMenuRadius:CGFloat = 25
     let menuRadius:CGFloat = 90
+    let subMenuRadius:CGFloat = 16
     
     init(coder aDecoder: NSCoder!) {
         let img = UIImage(named: "microphone")
@@ -39,27 +40,32 @@ class SecondViewController: UIViewController {
         microphoneButtonImageView.contentMode = .Center
         
         microphoneButton = UIView(frame: CGRect(x: 0, y: 0, width: microphoneRadius*2, height: microphoneRadius*2))
-        microphoneButton.backgroundColor = UIColor(rgba: "#007aff")
+        microphoneButton.backgroundColor = UIColor.grayColor()
         microphoneButton.layer.cornerRadius = microphoneRadius
         
         
-        radialMenu = RadialMenu(text: ["1", "2"])
-        radialMenu.frame = CGRectZero
-        radialMenu.minAngle = 180
-        radialMenu.maxAngle = 270
-        radialMenu.layer.cornerRadius = innerRadius
-        
+        radialMenu = RadialMenu()
         bgView = UIView()
-        bgView.backgroundColor = UIColor(rgba: "#bdc3c7")
-        bgView.layer.zPosition = -1
-        bgView.layer.cornerRadius = innerRadius
-        radialMenu.addSubview(bgView)
         
         
         // Improve usability by making a larger tapview
         tapView = UIView()
         
         super.init(coder: aDecoder)
+    }
+    
+    func createSubMenu(icon: String) -> RadialSubMenu {
+        let subMenu = RadialSubMenu(frame: CGRect(x: 0.0, y: 0.0, width: CGFloat(subMenuRadius*2), height: CGFloat(subMenuRadius*2)))
+        subMenu.layer.cornerRadius = CGFloat(subMenuRadius)
+        subMenu.userInteractionEnabled = true
+        subMenu.backgroundColor = UIColor.whiteColor()
+        
+        let img = UIImage(named: icon)
+        let imgView = UIImageView(image: img)
+        imgView.alpha = 0.5
+        imgView.center = subMenu.center
+        subMenu.addSubview(imgView)
+        return subMenu
     }
     
     override func updateViewConstraints() {
@@ -121,7 +127,7 @@ class SecondViewController: UIViewController {
         let cornerAnim = radialMenuCornerRadiusAnimation(0)
         cornerAnim.toValue = NSNumber(double: innerRadius*1.125)
         
-        bgView.alpha = 1.0
+        bgView.alpha = 0.5
     }
     
     func expandRadialMenu() {
@@ -129,7 +135,7 @@ class SecondViewController: UIViewController {
         radialAnim.toValue = NSValue(CGRect: CGRect(x: 0, y: 0, width: innerRadius*2, height: innerRadius*2))
         let cornerAnim = radialMenuCornerRadiusAnimation(0)
         cornerAnim.toValue = NSNumber(double: innerRadius)
-        bgView.alpha = 1.0
+        bgView.alpha = 0.5
     }
     
     
@@ -144,21 +150,40 @@ class SecondViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        radialMenu = RadialMenu(menus: [
+            createSubMenu("cancel"),
+            createSubMenu("save"),
+        ])
+        
+        bgView.backgroundColor = UIColor(rgba: "#bdc3c7")
+        bgView.layer.zPosition = -1
+        bgView.layer.cornerRadius = innerRadius
+        radialMenu.addSubview(bgView)
+        
+        
+        radialMenu.frame = CGRectZero
+        radialMenu.minAngle = 180
+        radialMenu.maxAngle = 270
+        radialMenu.layer.cornerRadius = innerRadius
+        
+        
         radialMenu.onOpening = {
             self.expandRadialMenu()
         }
         
-        radialMenu.onClosing = {
+        radialMenu.onClose = {
             self.shrinkRadialMenu()
         }
         
         radialMenu.onHighlight = { subMenu in
             println("Highlighted submenu")
+            subMenu.backgroundColor = self.highlightColor
             self.superExpandRadialMenu()
         }
         
         radialMenu.onUnhighlight = { subMenu in
             println("Unhighlighted submenu")
+            subMenu.backgroundColor = UIColor.whiteColor()
             self.expandRadialMenu()
         }
         
