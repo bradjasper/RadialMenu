@@ -39,7 +39,7 @@ class SecondViewController: UIViewController {
         microphoneButtonImageView.contentMode = .Center
         
         microphoneButton = UIView(frame: CGRect(x: 0, y: 0, width: microphoneRadius*2, height: microphoneRadius*2))
-        microphoneButton.backgroundColor = UIColor.grayColor()
+        microphoneButton.backgroundColor = UIColor.grayColor().colorWithAlphaComponent(0.5)
         microphoneButton.layer.cornerRadius = microphoneRadius
         
         
@@ -90,6 +90,7 @@ class SecondViewController: UIViewController {
     }
     
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -100,24 +101,7 @@ class SecondViewController: UIViewController {
         
         radialMenu.minAngle = 180
         radialMenu.maxAngle = 270
-        
-        /*
-        let anim = POPSpringAnimation(propertyNamed: kPOPViewScaleXY)
-        anim.toValue = NSValue(CGPoint: CGPoint(x: 2.0, y: 2.0))
-        anim.autoreverses = true
-        anim.springBounciness = 8.0
-        anim.springSpeed = 20.0
-        anim.repeatForever = true
-        radialMenu.backgroundView.pop_addAnimation(anim, forKey: "scale")
-        */
-        
-        //radialMenu.backgroundView.backgroundColor = UIColor(rgba: "#bdc3c7")
-        
-        /*
-        
-        radialMenu.backgroundView.frame = CGRectMake(0, 0, backgroundRadius*2, backgroundRadius*2)
-        radialMenu.backgroundView.layer.cornerRadius = backgroundRadius
-        */
+        radialMenu.activatedDelay = 0
         
         radialMenu.onHighlight = { subMenu in
             println("Highlighted submenu")
@@ -127,6 +111,12 @@ class SecondViewController: UIViewController {
         radialMenu.onUnhighlight = { subMenu in
             println("Unhighlighted submenu")
             subMenu.backgroundColor = UIColor.whiteColor()
+        }
+        
+        radialMenu.onClose = {
+            for subMenu in self.radialMenu.subMenus {
+                subMenu.backgroundColor = UIColor.whiteColor()
+            }
         }
         
         microphoneButton.addSubview(microphoneButtonImageView)

@@ -15,12 +15,19 @@ import QuartzCore
 class RadialMenu: UIView, RadialSubMenuDelegate {
     
     // configurable properties
-    @IBInspectable var radius = 100.0
-    @IBInspectable var subMenuPercentage = 0.7
+    @IBInspectable var radius:Float = 135
+    @IBInspectable var subMenuScale:Float = 0.7
+    @IBInspectable var highlightScale:Float = 1.2
     
-    var subMenuRadius: Double {
+    var subMenuRadius: Float {
         get {
-            return radius * subMenuPercentage
+            return Float(radius) * subMenuScale
+        }
+    }
+    
+    var subMenuExpandedRadius: Float {
+        get {
+            return Float(radius) * (subMenuScale * highlightScale)
         }
     }
     
@@ -30,7 +37,7 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     @IBInspectable var activatedDelay = 1.0
     @IBInspectable var minAngle = 180
     @IBInspectable var maxAngle = 540
-    @IBInspectable var highlightDistance = 50.0
+    @IBInspectable var highlightDistance = 65.0
     @IBInspectable var allowMultipleHighlights = false
     
     
@@ -105,7 +112,7 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         self.init(menus: menus, radius: 100)
     }
     
-    convenience init(menus: RadialSubMenu[], radius: Double) {
+    convenience init(menus: RadialSubMenu[], radius: Float) {
         self.init(frame: CGRect(x: 0, y: 0, width: radius*2, height: radius*2))
         subMenus = menus
         
@@ -127,7 +134,7 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     
     func setup() {
         layer.zPosition = -2
-        backgroundView.backgroundColor = UIColor.grayColor()
+        backgroundView.backgroundColor = UIColor.grayColor().colorWithAlphaComponent(0.5)
         backgroundView.layer.zPosition = -1
         backgroundView.frame = CGRectMake(0, 0, radius*2, radius*2)
         backgroundView.layer.cornerRadius = radius
@@ -169,7 +176,6 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         
         show()
         
-        let fullCircle = isFullCircle(minAngle, maxAngle)
         let relPos = convertPoint(position, fromView:superview)
         
         for (i, subMenu) in enumerate(subMenus) {
@@ -178,8 +184,6 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
             numOpeningSubMenus++
             subMenu.openAt(subMenuPos, fromPosition: relPos, delay: delay)
         }
-        
-        
     }
     
     func getAngleForSubMenu(subMenu: RadialSubMenu) -> Double {
@@ -189,7 +193,11 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     }
     
     func getPositionForSubMenu(subMenu: RadialSubMenu) -> CGPoint {
-        return getPositionForSubMenu(subMenu, radius: subMenuRadius)
+        return getPositionForSubMenu(subMenu, radius: Double(subMenuRadius))
+    }
+    
+    func getExpandedPositionForSubMenu(subMenu: RadialSubMenu) -> CGPoint {
+        return getPositionForSubMenu(subMenu, radius: Double(subMenuExpandedRadius))
     }
     
     func getPositionForSubMenu(subMenu: RadialSubMenu, radius: Double) -> CGPoint {
@@ -262,11 +270,13 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     }
     
     func grow() {
-        scaleBackgroundView(1.5)
+        scaleBackgroundView(highlightScale)
+        growSubMenus()
     }
     
     func shrink() {
         scaleBackgroundView(1)
+        shrinkSubMenus()
     }
     
     func show() {
@@ -277,7 +287,7 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         scaleBackgroundView(0)
     }
     
-    func scaleBackgroundView(size: Double) {
+    func scaleBackgroundView(size: Float) {
         
         var anim = backgroundView.pop_animationForKey("scale") as? POPSpringAnimation
         let toValue = NSValue(CGPoint: CGPoint(x: size, y: size))
@@ -291,6 +301,41 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         }
     }
     
+    
+    func growSubMenus() {
+        
+        // FIXME: Refactor
+        for subMenu in subMenus {
+            let subMenuPos = getExpandedPositionForSubMenu(subMenu)
+            moveSubMenuToPosition(subMenu, pos: subMenuPos)
+        }
+    }
+    
+    func shrinkSubMenus() {
+        
+        // FIXME: Refactor
+        for subMenu in subMenus {
+            let subMenuPos = getPositionForSubMenu(subMenu)
+            moveSubMenuToPosition(subMenu, pos: subMenuPos)
+        }
+    }
+    
+    func moveSubMenuToPosition(subMenu: RadialSubMenu, pos: CGPoint) {
+        
+        println("EXPAND!")
+        
+        var anim = subMenu.pop_animationForKey("expand") as? POPSpringAnimation
+        let toValue = NSValue(CGPoint: pos)
+        
+        if (anim) {
+            anim!.toValue = toValue
+        } else {
+            anim = POPSpringAnimation(propertyNamed: kPOPViewCenter)
+            anim!.toValue = toValue
+            subMenu.pop_addAnimation(anim, forKey: "expand")
+        }
+    }
+    
     // MARK: RadialSubMenuDelegate
     
     func subMenuDidOpen(subMenu: RadialSubMenu) {
@@ -301,8 +346,8 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     
     func subMenuDidClose(subMenu: RadialSubMenu) {
         if --numOpeningSubMenus == 0 || --numOpenedSubMenus == 0 {
-            state = .Closed
             hide()
+            state = .Closed
         }
     }
     

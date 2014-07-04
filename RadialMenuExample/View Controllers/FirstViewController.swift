@@ -19,7 +19,7 @@ class FirstViewController: UIViewController {
     var numHighlighted = 0
     let innerRadius:CGFloat = 55.0
     let subMenuRadius:CGFloat = 25.0
-    let menuRadius = 125.0
+    let menuRadius: Float = 125.0
     let radialStep = 0.0
     let allowMultipleHighlights = false
     let colors = ["#C0392B", "#2ECC71", "#E67E22", "#3498DB", "#9B59B6", "#F1C40F",
