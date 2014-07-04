@@ -16,7 +16,6 @@ class SecondViewController: UIViewController {
     let tapView:UIView
     let microphoneButton:UIView
     var radialMenu:RadialMenu
-    let bgView:UIView
     let microphoneButtonImageView:UIImageView
     
     let microphoneBumper:CGFloat = 24
@@ -45,11 +44,13 @@ class SecondViewController: UIViewController {
         
         
         radialMenu = RadialMenu()
-        bgView = UIView()
         
         
         // Improve usability by making a larger tapview
         tapView = UIView()
+        
+        
+        
         
         super.init(coder: aDecoder)
     }
@@ -76,11 +77,9 @@ class SecondViewController: UIViewController {
             microphoneButton.autoPinToBottomLayoutGuideOfViewController(self, withInset: microphoneBumper)
             microphoneButton.autoPinEdgeToSuperviewEdge(ALEdge.Right, withInset: microphoneBumper)
             
-            radialMenu.autoAlignAxis(.Horizontal, toSameAxisOfView: microphoneButton)
-            radialMenu.autoAlignAxis(.Vertical, toSameAxisOfView: microphoneButton)
-            
-            bgView.autoAlignAxis(.Horizontal, toSameAxisOfView: radialMenu)
-            bgView.autoAlignAxis(.Vertical, toSameAxisOfView: radialMenu)
+            //radialMenu.autoAlignAxis(.Horizontal, toSameAxisOfView: microphoneButton)
+            //radialMenu.autoAlignAxis(.Vertical, toSameAxisOfView: microphoneButton)
+//            radialMenu.autoSetDimensionsToSize(CGSize(width: 350, height: 350))
             
             tapView.autoSetDimensionsToSize(CGSize(width: 75, height: 75))
             tapView.autoAlignAxis(.Horizontal, toSameAxisOfView: microphoneButton)
@@ -90,6 +89,76 @@ class SecondViewController: UIViewController {
         }
     }
     
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        radialMenu = RadialMenu(menus: [
+            createSubMenu("cancel"),
+            createSubMenu("save"),
+        ], radius: 100)
+        
+        radialMenu.minAngle = 180
+        radialMenu.maxAngle = 270
+        
+        /*
+        let anim = POPSpringAnimation(propertyNamed: kPOPViewScaleXY)
+        anim.toValue = NSValue(CGPoint: CGPoint(x: 2.0, y: 2.0))
+        anim.autoreverses = true
+        anim.springBounciness = 8.0
+        anim.springSpeed = 20.0
+        anim.repeatForever = true
+        radialMenu.backgroundView.pop_addAnimation(anim, forKey: "scale")
+        */
+        
+        //radialMenu.backgroundView.backgroundColor = UIColor(rgba: "#bdc3c7")
+        
+        /*
+        
+        radialMenu.backgroundView.frame = CGRectMake(0, 0, backgroundRadius*2, backgroundRadius*2)
+        radialMenu.backgroundView.layer.cornerRadius = backgroundRadius
+        */
+        
+        radialMenu.onHighlight = { subMenu in
+            println("Highlighted submenu")
+            subMenu.backgroundColor = self.highlightColor
+        }
+        
+        radialMenu.onUnhighlight = { subMenu in
+            println("Unhighlighted submenu")
+            subMenu.backgroundColor = UIColor.whiteColor()
+        }
+        
+        microphoneButton.addSubview(microphoneButtonImageView)
+        microphoneButtonImageView.center = microphoneButtonImageView.convertPoint(microphoneButton.center, fromView: view)
+        
+        view.addSubview(radialMenu)
+        view.addSubview(microphoneButton)
+        view.addSubview(tapView)
+        
+        let longPress = UILongPressGestureRecognizer(target: self, action: "pressedButton:")
+        tapView.addGestureRecognizer(longPress)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        radialMenu.center = microphoneButton.center
+    }
+    
+    func pressedButton(gesture:UIGestureRecognizer) {
+        switch(gesture.state) {
+            case .Began:
+                radialMenu.openAtPosition(self.microphoneButton.center)
+            case .Changed:
+                radialMenu.moveAtPosition(gesture.locationInView(self.view))
+            case .Ended:
+                radialMenu.close()
+            default:
+                break
+        }
+    }
+    
+    /*
     func radialMenuShowAnimation(delay: CGFloat) -> POPSpringAnimation {
         if let anim = bgView.pop_animationForKey("show") as? POPSpringAnimation {
             return anim
@@ -119,7 +188,7 @@ class SecondViewController: UIViewController {
             return anim
         }
     }
-    
+
     func superExpandRadialMenu() {
         let radialAnim = radialMenuShowAnimation(0)
         radialAnim.toValue = NSValue(CGRect: CGRect(x: 0, y: 0, width: innerRadius*2.25, height: innerRadius*2.25))
@@ -137,7 +206,7 @@ class SecondViewController: UIViewController {
         cornerAnim.toValue = NSNumber(double: innerRadius)
         bgView.alpha = 0.5
     }
-    
+
     
     func shrinkRadialMenu() {
         let radialAnim = radialMenuShowAnimation(0)
@@ -146,82 +215,6 @@ class SecondViewController: UIViewController {
         cornerAnim.toValue = NSNumber(double: 0)
         bgView.alpha = 0.25
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        radialMenu = RadialMenu(menus: [
-            createSubMenu("cancel"),
-            createSubMenu("save"),
-        ])
-        
-        bgView.backgroundColor = UIColor(rgba: "#bdc3c7")
-        bgView.layer.zPosition = -1
-        bgView.layer.cornerRadius = innerRadius
-        radialMenu.addSubview(bgView)
-        
-        
-        radialMenu.frame = CGRectZero
-        radialMenu.minAngle = 180
-        radialMenu.maxAngle = 270
-        radialMenu.layer.cornerRadius = innerRadius
-        
-        
-        radialMenu.onOpening = {
-            self.expandRadialMenu()
-        }
-        
-        radialMenu.onClose = {
-            self.shrinkRadialMenu()
-        }
-        
-        radialMenu.onHighlight = { subMenu in
-            println("Highlighted submenu")
-            subMenu.backgroundColor = self.highlightColor
-            self.superExpandRadialMenu()
-        }
-        
-        radialMenu.onUnhighlight = { subMenu in
-            println("Unhighlighted submenu")
-            subMenu.backgroundColor = UIColor.whiteColor()
-            self.expandRadialMenu()
-        }
-        
-        
-        microphoneButton.addSubview(microphoneButtonImageView)
-        microphoneButtonImageView.center = microphoneButtonImageView.convertPoint(microphoneButton.center, fromView: view)
-        
-        view.addSubview(radialMenu)
-        view.addSubview(microphoneButton)
-        
-        view.addSubview(tapView)
-        
-        
-        
-        let longPress = UILongPressGestureRecognizer(target: self, action: "pressedButton:")
-        tapView.addGestureRecognizer(longPress)
-    }
-    
-    func pressedButton(gesture:UIGestureRecognizer) {
-        switch(gesture.state) {
-            case .Began:
-                println("OPEN")
-                radialMenu.openAtPosition(self.microphoneButton.center)
-            case .Ended:
-                println("CLOSE")
-                radialMenu.close()
-            case .Changed:
-                println("MOVE")
-                radialMenu.moveAtPosition(gesture.locationInView(self.view))
-            default:
-                break
-        }
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-
-
+    */
 }
 
