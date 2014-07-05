@@ -17,6 +17,7 @@ class SecondViewController: UIViewController {
     let microphoneButton:UIView
     var radialMenu:RadialMenu
     let microphoneButtonImageView:UIImageView
+    let stopButton:UIView
     
     let microphoneBumper:CGFloat = 24
     let microphoneRadius:CGFloat = 12
@@ -25,7 +26,6 @@ class SecondViewController: UIViewController {
     let subMenuRadius:CGFloat = 16
     
     init(coder aDecoder: NSCoder!) {
-        let img = UIImage(named: "microphone")
         
         // FIXME: How can I:
         // 1. Create a padding around a UIImageView (think I can do this with a larger frame contentMode = center)
@@ -34,7 +34,7 @@ class SecondViewController: UIViewController {
         // It seems once you setTranslatesAutoresizingMaskIntoConstraints = false, the padding no longer works--which is required for auto layout
         microphoneButtonImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: microphoneRadius*2, height: microphoneRadius*2))
         
-        microphoneButtonImageView.image = img.imageWithRenderingMode(.AlwaysTemplate)
+        microphoneButtonImageView.image = UIImage(named: "microphone").imageWithRenderingMode(.AlwaysTemplate)
         microphoneButtonImageView.tintColor = UIColor.whiteColor()
         microphoneButtonImageView.contentMode = .Center
         
@@ -42,15 +42,24 @@ class SecondViewController: UIViewController {
         microphoneButton.backgroundColor = UIColor.grayColor().colorWithAlphaComponent(0.5)
         microphoneButton.layer.cornerRadius = microphoneRadius
         
+        // FIXME: Possibly move center image/button to RadialMenu
         
-        radialMenu = RadialMenu()
+        stopButton = UIView(frame: CGRect(x: 0, y: 0, width: microphoneRadius*2.2, height: microphoneRadius*2.2))
+        stopButton.layer.borderWidth = 2
+        stopButton.layer.borderColor = UIColor.whiteColor().CGColor
+        stopButton.layer.cornerRadius = microphoneRadius*1.1
         
+        let innerStopButton = UIView(frame: CGRect(x: 0, y: 0, width: microphoneRadius, height: microphoneRadius))
+        innerStopButton.backgroundColor = UIColor.redColor()
+        innerStopButton.layer.cornerRadius = 2
+        innerStopButton.center = innerStopButton.convertPoint(stopButton.center, fromView: stopButton)
+        stopButton.addSubview(innerStopButton)
+        stopButton.alpha = 0
         
         // Improve usability by making a larger tapview
         tapView = UIView()
         
-        
-        
+        radialMenu = RadialMenu()
         
         super.init(coder: aDecoder)
     }
@@ -77,9 +86,14 @@ class SecondViewController: UIViewController {
             microphoneButton.autoPinToBottomLayoutGuideOfViewController(self, withInset: microphoneBumper)
             microphoneButton.autoPinEdgeToSuperviewEdge(ALEdge.Right, withInset: microphoneBumper)
             
+            stopButton.autoPinToBottomLayoutGuideOfViewController(self, withInset: microphoneBumper)
+            stopButton.autoPinEdgeToSuperviewEdge(ALEdge.Right, withInset: microphoneBumper)
+            stopButton.autoSetDimensionsToSize(CGSize(width: microphoneRadius*2.2, height: microphoneRadius*2.2))
+            
+            // FIXME: How to use auto layout with radialMenu while keeping frame intact?
             //radialMenu.autoAlignAxis(.Horizontal, toSameAxisOfView: microphoneButton)
             //radialMenu.autoAlignAxis(.Vertical, toSameAxisOfView: microphoneButton)
-//            radialMenu.autoSetDimensionsToSize(CGSize(width: 350, height: 350))
+            //radialMenu.autoSetDimensionsToSize(CGSize(width: 350, height: 350))
             
             tapView.autoSetDimensionsToSize(CGSize(width: 75, height: 75))
             tapView.autoAlignAxis(.Horizontal, toSameAxisOfView: microphoneButton)
@@ -97,11 +111,23 @@ class SecondViewController: UIViewController {
         radialMenu = RadialMenu(menus: [
             createSubMenu("cancel"),
             createSubMenu("save"),
-        ], radius: 100)
+        ])
         
         radialMenu.minAngle = 180
         radialMenu.maxAngle = 270
-        radialMenu.activatedDelay = 0
+        radialMenu.alpha = 0.75
+        
+        radialMenu.onOpening = {
+            // FIXME: Add transitions
+            self.microphoneButtonImageView.alpha = 0.0
+            self.stopButton.alpha = 1.0
+        }
+        
+        radialMenu.onClosing = {
+            // FIXME: Add transitions
+            self.microphoneButtonImageView.alpha = 1.0
+            self.stopButton.alpha = 0.0
+        }
         
         radialMenu.onHighlight = { subMenu in
             println("Highlighted submenu")
@@ -125,6 +151,7 @@ class SecondViewController: UIViewController {
         view.addSubview(radialMenu)
         view.addSubview(microphoneButton)
         view.addSubview(tapView)
+        view.addSubview(stopButton)
         
         let longPress = UILongPressGestureRecognizer(target: self, action: "pressedButton:")
         tapView.addGestureRecognizer(longPress)
@@ -147,64 +174,5 @@ class SecondViewController: UIViewController {
                 break
         }
     }
-    
-    /*
-    func radialMenuShowAnimation(delay: CGFloat) -> POPSpringAnimation {
-        if let anim = bgView.pop_animationForKey("show") as? POPSpringAnimation {
-            return anim
-        } else {
-            let anim = POPSpringAnimation(propertyNamed:kPOPViewBounds)
-            anim.springBounciness = 6.0
-            anim.name = "show"
-            anim.springSpeed = 20.0
-            anim.beginTime = CACurrentMediaTime() + CFTimeInterval(delay)
-            anim.delegate = self
-            bgView.pop_addAnimation(anim, forKey:"show")
-            return anim
-        }
-    }
-    
-    func radialMenuCornerRadiusAnimation(delay: CGFloat) -> POPSpringAnimation {
-        if let anim = bgView.layer.pop_animationForKey("cornerRadius") as? POPSpringAnimation {
-            return anim
-        } else {
-            let anim = POPSpringAnimation(propertyNamed:kPOPLayerCornerRadius)
-            anim.springBounciness = 6.0
-            anim.name = "cornerRadius"
-            anim.springSpeed = 20.0
-            anim.beginTime = CACurrentMediaTime() + CFTimeInterval(delay)
-            anim.delegate = self
-            bgView.layer.pop_addAnimation(anim, forKey:"cornerRadius")
-            return anim
-        }
-    }
-
-    func superExpandRadialMenu() {
-        let radialAnim = radialMenuShowAnimation(0)
-        radialAnim.toValue = NSValue(CGRect: CGRect(x: 0, y: 0, width: innerRadius*2.25, height: innerRadius*2.25))
-        
-        let cornerAnim = radialMenuCornerRadiusAnimation(0)
-        cornerAnim.toValue = NSNumber(double: innerRadius*1.125)
-        
-        bgView.alpha = 0.5
-    }
-    
-    func expandRadialMenu() {
-        let radialAnim = radialMenuShowAnimation(0)
-        radialAnim.toValue = NSValue(CGRect: CGRect(x: 0, y: 0, width: innerRadius*2, height: innerRadius*2))
-        let cornerAnim = radialMenuCornerRadiusAnimation(0)
-        cornerAnim.toValue = NSNumber(double: innerRadius)
-        bgView.alpha = 0.5
-    }
-
-    
-    func shrinkRadialMenu() {
-        let radialAnim = radialMenuShowAnimation(0)
-        radialAnim.toValue = NSValue(CGRect: CGRectZero)
-        let cornerAnim = radialMenuCornerRadiusAnimation(0)
-        cornerAnim.toValue = NSNumber(double: 0)
-        bgView.alpha = 0.25
-    }
-    */
 }
 

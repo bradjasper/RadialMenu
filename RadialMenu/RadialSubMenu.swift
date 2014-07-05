@@ -85,15 +85,12 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
         currPosition = position
         origPosition = fromPosition
         
-        // reset center to origPosition
         center = origPosition
         
         openAnimation()
     }
     
     func openAt(position: CGPoint, fromPosition: CGPoint) {
-        
-        // Race condition
         openAt(position, fromPosition: fromPosition, delay: 0)
     }
     

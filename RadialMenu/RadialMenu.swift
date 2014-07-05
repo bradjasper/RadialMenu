@@ -15,9 +15,9 @@ import QuartzCore
 class RadialMenu: UIView, RadialSubMenuDelegate {
     
     // configurable properties
-    @IBInspectable var radius:CGFloat = 135
-    @IBInspectable var subMenuScale:CGFloat = 0.7
-    @IBInspectable var highlightScale:CGFloat = 1.2
+    @IBInspectable var radius:CGFloat = 115
+    @IBInspectable var subMenuScale:CGFloat = 0.75
+    @IBInspectable var highlightScale:CGFloat = 1.15
     
     var subMenuRadius: CGFloat {
         get {
@@ -34,11 +34,14 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     @IBInspectable var radiusStep = 0.0
     @IBInspectable var openDelayStep = 0.05
     @IBInspectable var closeDelayStep = 0.035
-    @IBInspectable var activatedDelay = 1.0
+    @IBInspectable var activatedDelay = 0.0
     @IBInspectable var minAngle = 180
     @IBInspectable var maxAngle = 540
-    @IBInspectable var highlightDistance = 65.0
     @IBInspectable var allowMultipleHighlights = false
+    
+    // get's set automatically on initialized to a percentage of radius
+    @IBInspectable var highlightDistance:CGFloat = 0
+    
     
     
     // Callbacks
@@ -98,29 +101,30 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     init(coder decoder: NSCoder!) {
         subMenus = []
         super.init(coder: decoder)
-        setup()
     }
     
     init(frame: CGRect) {
         subMenus = []
         super.init(frame: frame)
-        setup()
     }
     
     convenience init(menus: RadialSubMenu[]) {
         // FIXME: Magic number. Can't use radius here because it uses self....how to make DRY?
-        self.init(menus: menus, radius: 100)
+        self.init(menus: menus, radius: 115)
     }
     
     convenience init(menus: RadialSubMenu[], radius: CGFloat) {
         self.init(frame: CGRect(x: 0, y: 0, width: radius*2, height: radius*2))
         subMenus = menus
+        self.radius = radius
         
         for (i, menu) in enumerate(subMenus) {
             menu.delegate = self
             menu.tag = i
             self.addSubview(menu)
         }
+        
+        setup()
     }
     
     convenience init(text: String[]) {
@@ -133,7 +137,12 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     }
     
     func setup() {
+        
         layer.zPosition = -2
+        
+        // set a sane highlight distance by default..might need to be tweaked based on your needs
+        highlightDistance = radius * 0.51
+        
         backgroundView.backgroundColor = UIColor.grayColor().colorWithAlphaComponent(0.5)
         backgroundView.layer.zPosition = -1
         backgroundView.frame = CGRectMake(0, 0, radius*2, radius*2)
@@ -239,10 +248,16 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         
         // Add all submenus within a certain distance to array
         var distances:(distance: Double, subMenu: RadialSubMenu)[] = []
+        
+        var highlightDistance = self.highlightDistance
+        if numHighlightedSubMenus > 0 {
+            highlightDistance = highlightDistance * highlightScale
+        }
+        
         for subMenu in subMenus {
             
             let distance = distanceBetweenPoints(subMenu.center, relPos)
-            if distance <= highlightDistance {
+            if distance <= Double(highlightDistance) {
                 distances.append(distance: distance, subMenu: subMenu)
                 
             } else if subMenu.state == .Highlighted {
@@ -321,8 +336,6 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     }
     
     func moveSubMenuToPosition(subMenu: RadialSubMenu, pos: CGPoint) {
-        
-        println("EXPAND!")
         
         var anim = subMenu.pop_animationForKey("expand") as? POPSpringAnimation
         let toValue = NSValue(CGPoint: pos)
