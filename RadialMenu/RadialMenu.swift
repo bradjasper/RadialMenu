@@ -15,19 +15,19 @@ import QuartzCore
 class RadialMenu: UIView, RadialSubMenuDelegate {
     
     // configurable properties
-    @IBInspectable var radius:Float = 135
-    @IBInspectable var subMenuScale:Float = 0.7
-    @IBInspectable var highlightScale:Float = 1.2
+    @IBInspectable var radius:CGFloat = 135
+    @IBInspectable var subMenuScale:CGFloat = 0.7
+    @IBInspectable var highlightScale:CGFloat = 1.2
     
-    var subMenuRadius: Float {
+    var subMenuRadius: CGFloat {
         get {
-            return Float(radius) * subMenuScale
+            return radius * subMenuScale
         }
     }
     
-    var subMenuExpandedRadius: Float {
+    var subMenuExpandedRadius: CGFloat {
         get {
-            return Float(radius) * (subMenuScale * highlightScale)
+            return radius * (subMenuScale * highlightScale)
         }
     }
     
@@ -112,7 +112,7 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         self.init(menus: menus, radius: 100)
     }
     
-    convenience init(menus: RadialSubMenu[], radius: Float) {
+    convenience init(menus: RadialSubMenu[], radius: CGFloat) {
         self.init(frame: CGRect(x: 0, y: 0, width: radius*2, height: radius*2))
         subMenus = menus
         
@@ -287,7 +287,7 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         scaleBackgroundView(0)
     }
     
-    func scaleBackgroundView(size: Float) {
+    func scaleBackgroundView(size: CGFloat) {
         
         var anim = backgroundView.pop_animationForKey("scale") as? POPSpringAnimation
         let toValue = NSValue(CGPoint: CGPoint(x: size, y: size))
