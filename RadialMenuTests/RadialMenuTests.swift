@@ -14,7 +14,7 @@ class RadialMenuTests: XCTestCase {
     func testEventStateTransitions() {
         
         // Setup radial menu
-        let radialMenu = RadialMenu(text: ["1", "2", "3", "4"])
+        let radialMenu = RadialMenu(menus: [RadialSubMenu(frame: CGRectZero), RadialSubMenu(frame: CGRectZero)])
         
         radialMenu.openDelayStep = 0.0
         radialMenu.closeDelayStep = 0.0
@@ -39,8 +39,6 @@ class RadialMenuTests: XCTestCase {
             closeExpectation.fulfill()
         }
         
-        
-        
         // Verify initial state
         XCTAssertEqual(radialMenu.subMenus.count, 4, "Unknown number of subMenus")
         XCTAssertEqual(radialMenu.state, .Closed)
@@ -59,7 +57,7 @@ class RadialMenuTests: XCTestCase {
     
     func testStateChangeEventsFireOnce() {
         
-        let radialMenu = RadialMenu(text: ["1", "2", "3", "4"])
+        let radialMenu = RadialMenu(menus: [RadialSubMenu(frame: CGRectZero), RadialSubMenu(frame: CGRectZero)])
         
         var opened = 0, closed = 0
         radialMenu.onOpen  = { opened += 1}
