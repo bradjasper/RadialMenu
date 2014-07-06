@@ -11,100 +11,60 @@ import QuartzCore
 
 class FirstViewController: UIViewController {
     
-    @IBOutlet var addButton:UIImageView
+    var addButton:UIImageView
     
-    var radialMenu = RadialMenu()
-    let backgroundLayer = CALayer()
-    let num = 12
-    var numHighlighted = 0
-    let innerRadius:CGFloat = 55.0
-    let subMenuRadius:CGFloat = 25.0
+    var radialMenu:RadialMenu!
+    let num = 8
+    let addButtonSize: CGFloat = 25
     let menuRadius: CGFloat = 125.0
-    let radialStep = 0.0
-    let allowMultipleHighlights = false
+    let subMenuRadius: CGFloat = 20.0
     let colors = ["#C0392B", "#2ECC71", "#E67E22", "#3498DB", "#9B59B6", "#F1C40F",
                   "#16A085", "#8E44AD", "#2C3E50", "#F39C12", "#2980B9", "#27AE60",
                   "#D35400", "#34495E", "#E74C3C", "#1ABC9C"].map { UIColor(rgba: $0) }
     
+    
+    init(coder aDecoder: NSCoder!) {
+        
+        addButton = UIImageView(image: UIImage(named: "plus"))
+        super.init(coder: aDecoder)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupRadialMenu()
-        
-        self.view.addSubview(self.radialMenu)
-        self.view.backgroundColor = UIColor(rgba: "#ecf0f1")
-        
         let longPress = UILongPressGestureRecognizer(target: self, action: "pressedButton:")
-        self.addButton.addGestureRecognizer(longPress)
         
-        // How else to get button to trigger?
-        self.view.bringSubviewToFront(self.addButton)
-        
-    }
-    
-    func setupRadialMenu() {
-        
+        // Setup radial menu
         var subMenus: RadialSubMenu[] = []
         for i in 0..num {
             subMenus.append(self.createSubMenu(i))
         }
         
-        
-        radialMenu = RadialMenu(menus: subMenus)
-        radialMenu.frame = CGRect(x: 0, y: 0, width: CGFloat(innerRadius*2), height: CGFloat(innerRadius*2))
+        radialMenu = RadialMenu(menus: subMenus, radius: menuRadius)
         radialMenu.center = view.center
-        radialMenu.radius = menuRadius
-        radialMenu.radiusStep = radialStep
-        //radialMenu.backgroundColor = UIColor(rgba: "#bdc3c7")
-        radialMenu.allowMultipleHighlights = allowMultipleHighlights
-        radialMenu.onOpen = {
-            println("RADIAL MENU OPENED")
-        }
-        
+        radialMenu.openDelayStep = 0.05
+        radialMenu.closeDelayStep = 0.00
+        radialMenu.activatedDelay = 1.0
+        radialMenu.backgroundView.alpha = 0.35
         radialMenu.onClose = {
-            println("RADIAL MENU CLOSED")
-            
-            self.numHighlighted = 0
-            self.resetRadialMenuBackground()
-            
             for subMenu in self.radialMenu.subMenus {
                 self.resetSubMenu(subMenu)
             }
-            
         }
+        radialMenu.onHighlight = { subMenu in self.highlightSubMenu(subMenu) }
+        radialMenu.onUnhighlight = { subMenu in self.resetSubMenu(subMenu) }
+        radialMenu.onActivate = { subMenu in println("Activated \(subMenu)") }
+        view.addSubview(radialMenu)
         
-        radialMenu.onHighlight = { subMenu in
-            println("Highlighted subMenu \(subMenu)")
-            
-            if (self.numHighlighted++ == 0) {
-                self.growRadialMenuBackground()
-            }
-            
-            self.highlightSubMenu(subMenu)
-        }
+        // Setup add button
+        addButton.frame = CGRectMake(0, 0, addButtonSize, addButtonSize)
+        addButton.center = view.center
+        addButton.userInteractionEnabled = true
+        addButton.alpha = 0.65
+        addButton.addGestureRecognizer(longPress)
+        view.addSubview(addButton)
         
-        radialMenu.onUnhighlight = { subMenu in
-            println("Unhighlighted subMenu \(subMenu)")
-            
-            if (--self.numHighlighted == 0) {
-                self.resetRadialMenuBackground()
-            }
-            
-            self.resetSubMenu(subMenu)
-        }
-        
-        radialMenu.onActivate = { subMenu in
-            println("Activated \(subMenu)")
-        }
-        
-        // FIXME: Couldn't figure out how to resize UIView without also having to change subview pos
-        //resetRadialMenuBackground()
-        backgroundLayer.position = radialMenu.center
-        backgroundLayer.frame = CGRect(x: 0, y: 0, width: CGFloat(innerRadius*2), height: CGFloat(innerRadius*2))
-        backgroundLayer.cornerRadius = innerRadius
-        backgroundLayer.backgroundColor = UIColor(rgba: "#bdc3c7").colorWithAlphaComponent(0.5).CGColor
-        backgroundLayer.zPosition = -1
-        radialMenu.layer.addSublayer(backgroundLayer)
+        view.backgroundColor = UIColor(rgba: "#ecf0f1")
     }
     
     func pressedButton(gesture:UIGestureRecognizer) {
@@ -145,18 +105,5 @@ class FirstViewController: UIViewController {
         let color = colorForSubMenu(subMenu)
         subMenu.backgroundColor = color.colorWithAlphaComponent(0.5)
     }
-    
-    func growRadialMenuBackground() {
-        println("grow")
-        backgroundLayer.bounds = CGRect(x: 0, y: 0, width: innerRadius*6, height: innerRadius*6)
-        backgroundLayer.cornerRadius = innerRadius*3
-    }
-    
-    func resetRadialMenuBackground() {
-        println("reset")
-        backgroundLayer.bounds = CGRect(x: 0, y: 0, width: innerRadius*2, height: innerRadius*2)
-        backgroundLayer.cornerRadius = innerRadius
-    }
-    
 }
 

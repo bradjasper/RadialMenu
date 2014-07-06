@@ -127,15 +127,6 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         setup()
     }
     
-    convenience init(text: String[]) {
-        var menus: RadialSubMenu[] = []
-        for string in text {
-            menus.append(RadialSubMenu(text: string))
-        }
-        
-        self.init(menus: menus)
-    }
-    
     func setup() {
         
         layer.zPosition = -2

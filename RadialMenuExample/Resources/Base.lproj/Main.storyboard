@@ -2,10 +2,9 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.13"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
-        <!--First View Controller - First-->
+        <!--First View Controller - Default-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
                 <viewController id="9pv-A4-QxB" customClass="FirstViewController" customModule="RadialMenu" customModuleProvider="target" sceneMemberID="viewController">
@@ -21,34 +20,22 @@
                                 <rect key="frame" x="0.0" y="0.0" width="480" height="44"/>
                                 <items/>
                             </toolbar>
-                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plus-white" translatesAutoresizingMaskIntoConstraints="NO" id="pL3-BC-0tS">
-                                <rect key="frame" x="211" y="224" width="59" height="32"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="59" id="11O-HE-miL"/>
-                                    <constraint firstAttribute="width" secondItem="pL3-BC-0tS" secondAttribute="height" multiplier="15:8" constant="-1" id="x0B-mt-2xC"/>
-                                </constraints>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="iQr-d4-Ar2" firstAttribute="top" secondItem="tsR-hK-woN" secondAttribute="top" id="8qp-4k-ywN"/>
                             <constraint firstItem="iQr-d4-Ar2" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leading" id="9hT-Pl-9vo"/>
                             <constraint firstItem="iQr-d4-Ar2" firstAttribute="trailing" secondItem="tsR-hK-woN" secondAttribute="trailing" id="GCv-eZ-Lr1"/>
-                            <constraint firstAttribute="centerY" secondItem="pL3-BC-0tS" secondAttribute="centerY" id="Qyl-Cv-216"/>
-                            <constraint firstAttribute="centerX" secondItem="pL3-BC-0tS" secondAttribute="centerX" id="vWN-tl-BzD"/>
                         </constraints>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="First" image="first" id="acW-dT-cKf"/>
-                    <connections>
-                        <outlet property="addButton" destination="pL3-BC-0tS" id="PCA-f6-WOf"/>
-                    </connections>
+                    <tabBarItem key="tabBarItem" title="Default" image="circle" id="acW-dT-cKf"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3042" y="670"/>
         </scene>
-        <!--Second View Controller - Second-->
+        <!--Second View Controller - iOS 8-->
         <scene sceneID="wg7-f3-ORb">
             <objects>
                 <viewController id="8rJ-Kc-sve" customClass="SecondViewController" customModule="RadialMenu" customModuleProvider="target" sceneMemberID="viewController">
@@ -70,7 +57,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Second" image="second" id="cPa-gy-q4n"/>
+                    <tabBarItem key="tabBarItem" title="iOS 8" image="microphone" id="cPa-gy-q4n"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
             </objects>
@@ -87,8 +74,8 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="8rJ-Kc-sve" kind="relationship" relationship="viewControllers" id="lzU-1b-eKA"/>
                         <segue destination="9pv-A4-QxB" kind="relationship" relationship="viewControllers" id="u7Y-xg-7CH"/>
+                        <segue destination="8rJ-Kc-sve" kind="relationship" relationship="viewControllers" id="lzU-1b-eKA"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
@@ -97,8 +84,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="first" width="30" height="30"/>
-        <image name="plus-white" width="246" height="246"/>
-        <image name="second" width="30" height="30"/>
+        <image name="circle" width="30" height="30"/>
+        <image name="microphone" width="16" height="16"/>
     </resources>
 </document>

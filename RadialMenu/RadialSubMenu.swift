@@ -71,10 +71,12 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
         
     }
     
-    convenience init(text: String) {
-        self.init(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        backgroundColor = UIColor.greenColor()
+    convenience init(imageView: UIImageView) {
+        self.init(frame: imageView.frame)
+        imageView.userInteractionEnabled = true
+        addSubview(imageView)
     }
+    
     
     // MARK - Main interface
     
