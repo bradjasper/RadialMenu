@@ -19,7 +19,7 @@ class SecondViewController: UIViewController {
     let microphoneButtonImageView:UIImageView
     let stopButton:UIView
     
-    let menuRadius:CGFloat = 95
+    let menuRadius:CGFloat = 125
     let subMenuRadius:CGFloat = 16
     let microphoneBumper:CGFloat = 24
     let microphoneRadius:CGFloat = 12

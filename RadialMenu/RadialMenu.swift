@@ -42,6 +42,11 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     // get's set automatically on initialized to a percentage of radius
     @IBInspectable var highlightDistance:CGFloat = 0
     
+    // FIXME: Needs better solution
+    // Fixes issue with highlighting too close to center (get set automatically..can be changed)
+    var minHighlightDistance:CGFloat = 0
+    
+    
     // Callbacks
     // FIXME: Easier way to handle optional callbacks?
     typealias RadialMenuCallback = () -> ()
@@ -130,7 +135,8 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         layer.zPosition = -2
         
         // set a sane highlight distance by default..might need to be tweaked based on your needs
-        highlightDistance = radius * 0.51
+        highlightDistance = radius * 0.75 // allow aggressive highlights near submenu
+        minHighlightDistance = radius * 0.25 // but not within 25% of center
         
         backgroundView.backgroundColor = UIColor.grayColor().colorWithAlphaComponent(0.5)
         backgroundView.layer.zPosition = -1
@@ -234,7 +240,10 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
             return
         }
         
+        
         let relPos = convertPoint(position, fromView:superview)
+        let distanceFromCenter = distanceBetweenPoints(position, center)
+        println(distanceFromCenter)
         
         // Add all submenus within a certain distance to array
         var distances:(distance: Double, subMenu: RadialSubMenu)[] = []
@@ -247,7 +256,7 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         for subMenu in subMenus {
             
             let distance = distanceBetweenPoints(subMenu.center, relPos)
-            if distance <= Double(highlightDistance) {
+            if distanceFromCenter >= Double(minHighlightDistance) && distance <= Double(highlightDistance) {
                 distances.append(distance: distance, subMenu: subMenu)
                 
             } else if subMenu.state == .Highlighted {
