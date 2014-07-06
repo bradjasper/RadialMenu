@@ -12,12 +12,14 @@ import QuartzCore
 class FirstViewController: UIViewController {
     
     var addButton:UIImageView
+    var tapView:UIView
     
     var radialMenu:RadialMenu!
-    let num = 8
+    let num = 4
     let addButtonSize: CGFloat = 25
     let menuRadius: CGFloat = 125.0
-    let subMenuRadius: CGFloat = 20.0
+    let subMenuRadius: CGFloat = 35.0
+    var didSetupConstraints = false
     let colors = ["#C0392B", "#2ECC71", "#E67E22", "#3498DB", "#9B59B6", "#F1C40F",
                   "#16A085", "#8E44AD", "#2C3E50", "#F39C12", "#2980B9", "#27AE60",
                   "#D35400", "#34495E", "#E74C3C", "#1ABC9C"].map { UIColor(rgba: $0) }
@@ -26,6 +28,7 @@ class FirstViewController: UIViewController {
     init(coder aDecoder: NSCoder!) {
         
         addButton = UIImageView(image: UIImage(named: "plus"))
+        tapView = UIView()
         super.init(coder: aDecoder)
     }
     
@@ -44,27 +47,45 @@ class FirstViewController: UIViewController {
         radialMenu.center = view.center
         radialMenu.openDelayStep = 0.05
         radialMenu.closeDelayStep = 0.00
+        radialMenu.minAngle = 180
+        radialMenu.maxAngle = 360
         radialMenu.activatedDelay = 1.0
-        radialMenu.backgroundView.alpha = 0.35
+        radialMenu.backgroundView.alpha = 0.0
         radialMenu.onClose = {
             for subMenu in self.radialMenu.subMenus {
                 self.resetSubMenu(subMenu)
             }
         }
-        radialMenu.onHighlight = { subMenu in self.highlightSubMenu(subMenu) }
-        radialMenu.onUnhighlight = { subMenu in self.resetSubMenu(subMenu) }
-        radialMenu.onActivate = { subMenu in println("Activated \(subMenu)") }
+        radialMenu.onHighlight = { subMenu in
+            self.highlightSubMenu(subMenu)
+            
+            let color = self.colorForSubMenu(subMenu).colorWithAlphaComponent(1.0)
+            
+            // TODO: Add nice color transition
+            self.view.backgroundColor = color
+        }
+        
+        radialMenu.onUnhighlight = { subMenu in
+            self.resetSubMenu(subMenu)
+            self.view.backgroundColor = UIColor.whiteColor()
+        }
+        
+        radialMenu.onClose = {
+            self.view.backgroundColor = UIColor.whiteColor()
+        }
+        
         view.addSubview(radialMenu)
         
         // Setup add button
-        addButton.frame = CGRectMake(0, 0, addButtonSize, addButtonSize)
-        addButton.center = view.center
         addButton.userInteractionEnabled = true
         addButton.alpha = 0.65
-        addButton.addGestureRecognizer(longPress)
         view.addSubview(addButton)
         
-        view.backgroundColor = UIColor(rgba: "#ecf0f1")
+        tapView.center = view.center
+        tapView.addGestureRecognizer(longPress)
+        view.addSubview(tapView)
+        
+        view.backgroundColor = UIColor.whiteColor()
     }
     
     func pressedButton(gesture:UIGestureRecognizer) {
@@ -80,12 +101,33 @@ class FirstViewController: UIViewController {
         }
     }
     
+    override func updateViewConstraints() {
+        super.updateViewConstraints()
+        
+        if (!didSetupConstraints) {
+            
+            // FIXME: Any way to simplify this?
+            addButton.autoAlignAxisToSuperviewAxis(.Horizontal)
+            addButton.autoAlignAxisToSuperviewAxis(.Vertical)
+            addButton.autoSetDimensionsToSize(CGSize(width: addButtonSize, height: addButtonSize))
+            
+            tapView.autoAlignAxisToSuperviewAxis(.Horizontal)
+            tapView.autoAlignAxisToSuperviewAxis(.Vertical)
+            tapView.autoSetDimensionsToSize(CGSize(width: addButtonSize*2, height: addButtonSize*2))
+            
+            didSetupConstraints = true
+        }
+    }
+    
     // MARK - RadialSubMenu helpers
     
     func createSubMenu(i: Int) -> RadialSubMenu {
         let subMenu = RadialSubMenu(frame: CGRect(x: 0.0, y: 0.0, width: CGFloat(subMenuRadius*2), height: CGFloat(subMenuRadius*2)))
         subMenu.layer.cornerRadius = CGFloat(subMenuRadius)
         subMenu.userInteractionEnabled = true
+        subMenu.layer.cornerRadius = subMenuRadius
+        subMenu.layer.borderColor = UIColor.whiteColor().colorWithAlphaComponent(0.5).CGColor
+        subMenu.layer.borderWidth = 1
         subMenu.tag = i
         resetSubMenu(subMenu)
         return subMenu
@@ -103,7 +145,7 @@ class FirstViewController: UIViewController {
     
     func resetSubMenu(subMenu: RadialSubMenu) {
         let color = colorForSubMenu(subMenu)
-        subMenu.backgroundColor = color.colorWithAlphaComponent(0.5)
+        subMenu.backgroundColor = color.colorWithAlphaComponent(0.75)
     }
 }
 

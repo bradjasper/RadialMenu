@@ -42,8 +42,6 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     // get's set automatically on initialized to a percentage of radius
     @IBInspectable var highlightDistance:CGFloat = 0
     
-    
-    
     // Callbacks
     // FIXME: Easier way to handle optional callbacks?
     typealias RadialMenuCallback = () -> ()
@@ -229,6 +227,7 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         }
     }
     
+    // FIXME: Refactor entire method
     func moveAtPosition(position:CGPoint) {
         
         if state != .Opened && state != .Highlighted && state != .Unhighlighted {
@@ -260,18 +259,23 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         
         distances.sort { $0.distance < $1.distance }
         
+        var shouldHighlight: RadialSubMenu[] = []
+        
         for (i, (_, subMenu)) in enumerate(distances) {
             
             switch (i, allowMultipleHighlights) {
-                case (0, false):
-                    subMenu.highlight()
-                case (_, true):
-                    subMenu.highlight()
+                case (0, false), (_, true):
+                    shouldHighlight.append(subMenu)
                 case (_, _) where subMenu.state == .Highlighted:
                     subMenu.unhighlight()
                 default:
                     break
             }
+        }
+        
+        // Make sure all submenus are unhighlighted before any should be highlighted
+        for subMenu in shouldHighlight {
+            subMenu.highlight()
         }
     }
     
