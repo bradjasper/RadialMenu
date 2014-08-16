@@ -12,7 +12,7 @@ import QuartzCore
 class SecondViewController: UIViewController {
     var didSetupConstraints = false
     
-    let highlightColor = UIColor(rgba: "#007aff")
+    let highlightColor = UIColor(red:0.0, green:122.0/255.0, blue:1.0, alpha:1.0)
     let tapView:UIView
     let microphoneButton:UIView
     var radialMenu:RadialMenu
@@ -115,7 +115,8 @@ class SecondViewController: UIViewController {
         // FIXME: See radialMenu auto layout bug above
         radialMenu.center = microphoneButton.center
     }
-        func createSubMenu(icon: String) -> RadialSubMenu {
+    
+    func createSubMenu(icon: String) -> RadialSubMenu {
         let img = UIImageView(image: UIImage(named: icon))
         let subMenu = RadialSubMenu(imageView: img)
         subMenu.frame = CGRect(x: 0.0, y: 0.0, width: CGFloat(subMenuRadius*2), height: CGFloat(subMenuRadius*2))
@@ -144,15 +145,18 @@ class SecondViewController: UIViewController {
         
         if (!didSetupConstraints) {
             
-            // FIXME: Any way to simplify this?
+            // FIXME: Any way to simplify autolayout constraints?
             
+            
+            // FIXME: pinning to bottom layout guide has bug where value isn't correct until devices is rotated
             microphoneButton.autoSetDimensionsToSize(CGSize(width: microphoneRadius*2, height: microphoneRadius*2))
-            microphoneButton.autoPinToBottomLayoutGuideOfViewController(self, withInset: microphoneBumper)
-            microphoneButton.autoPinEdgeToSuperviewEdge(ALEdge.Right, withInset: microphoneBumper)
+            microphoneButton.autoPinEdgeToSuperviewEdge(.Bottom, withInset: microphoneBumper*2.8)
+            //microphoneButton.autoPinToBottomLayoutGuideOfViewController(self, withInset: microphoneBumper)
+            microphoneButton.autoPinEdgeToSuperviewEdge(.Right, withInset: microphoneBumper)
             
-            stopButton.autoPinToBottomLayoutGuideOfViewController(self, withInset: microphoneBumper)
-            stopButton.autoPinEdgeToSuperviewEdge(ALEdge.Right, withInset: microphoneBumper)
             stopButton.autoSetDimensionsToSize(CGSize(width: microphoneRadius*2.2, height: microphoneRadius*2.2))
+            stopButton.autoAlignAxis(.Horizontal, toSameAxisOfView: microphoneButton)
+            stopButton.autoAlignAxis(.Vertical, toSameAxisOfView: microphoneButton)
             
             radialMenu.autoAlignAxis(.Horizontal, toSameAxisOfView: microphoneButton)
             radialMenu.autoAlignAxis(.Vertical, toSameAxisOfView: microphoneButton)

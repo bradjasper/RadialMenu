@@ -11,11 +11,13 @@
 import UIKit
 import QuartzCore
 
+let defaultRadius:CGFloat = 115
+
 @IBDesignable
 class RadialMenu: UIView, RadialSubMenuDelegate {
     
     // configurable properties
-    @IBInspectable var radius:CGFloat = 115
+    @IBInspectable var radius:CGFloat = defaultRadius
     @IBInspectable var subMenuScale:CGFloat = 0.75
     @IBInspectable var highlightScale:CGFloat = 1.15
     
@@ -25,7 +27,7 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         }
     }
     
-    var subMenuExpandedRadius: CGFloat {
+    var subMenuHighlightedRadius: CGFloat {
         get {
             return radius * (subMenuScale * highlightScale)
         }
@@ -65,7 +67,7 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     let backgroundView = UIView()
     
     // FIXME: Make private when Swift adds access controls
-    let subMenus: RadialSubMenu[]
+    var subMenus: [RadialSubMenu]
     
     var numOpeningSubMenus = 0
     var numOpenedSubMenus = 0
@@ -111,14 +113,13 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         super.init(frame: frame)
     }
     
-    convenience init(menus: RadialSubMenu[]) {
-        // FIXME: Magic number. Can't use radius here because it uses self....how to make DRY?
-        self.init(menus: menus, radius: 115)
+    convenience init(menus: [RadialSubMenu]) {
+        self.init(menus: menus, radius: defaultRadius)
     }
     
-    convenience init(menus: RadialSubMenu[], radius: CGFloat) {
+    convenience init(menus: [RadialSubMenu], radius: CGFloat) {
         self.init(frame: CGRect(x: 0, y: 0, width: radius*2, height: radius*2))
-        subMenus = menus
+        self.subMenus = menus
         self.radius = radius
         
         for (i, menu) in enumerate(subMenus) {
@@ -201,7 +202,7 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     }
     
     func getExpandedPositionForSubMenu(subMenu: RadialSubMenu) -> CGPoint {
-        return getPositionForSubMenu(subMenu, radius: Double(subMenuExpandedRadius))
+        return getPositionForSubMenu(subMenu, radius: Double(subMenuHighlightedRadius))
     }
     
     func getPositionForSubMenu(subMenu: RadialSubMenu, radius: Double) -> CGPoint {
@@ -243,10 +244,9 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         
         let relPos = convertPoint(position, fromView:superview)
         let distanceFromCenter = distanceBetweenPoints(position, center)
-        println(distanceFromCenter)
         
         // Add all submenus within a certain distance to array
-        var distances:(distance: Double, subMenu: RadialSubMenu)[] = []
+        var distances:[(distance: Double, subMenu: RadialSubMenu)] = []
         
         var highlightDistance = self.highlightDistance
         if numHighlightedSubMenus > 0 {
@@ -268,7 +268,7 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         
         distances.sort { $0.distance < $1.distance }
         
-        var shouldHighlight: RadialSubMenu[] = []
+        var shouldHighlight: [RadialSubMenu] = []
         
         for (i, (_, subMenu)) in enumerate(distances) {
             
@@ -288,6 +288,7 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         }
     }
     
+    // FIXME: Clean this up & make it more clear what's happening
     func grow() {
         scaleBackgroundView(highlightScale)
         growSubMenus()

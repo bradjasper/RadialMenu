@@ -38,8 +38,8 @@ class FirstViewController: UIViewController {
         let longPress = UILongPressGestureRecognizer(target: self, action: "pressedButton:")
         
         // Setup radial menu
-        var subMenus: RadialSubMenu[] = []
-        for i in 0..num {
+        var subMenus: [RadialSubMenu] = []
+        for i in 0..<num {
             subMenus.append(self.createSubMenu(i))
         }
         
@@ -88,6 +88,7 @@ class FirstViewController: UIViewController {
         view.backgroundColor = UIColor.whiteColor()
     }
     
+    // FIXME: Consider moving this to the radial menu and making standard interaction types  that are configurable
     func pressedButton(gesture:UIGestureRecognizer) {
         switch(gesture.state) {
             case .Began:
@@ -123,7 +124,6 @@ class FirstViewController: UIViewController {
     
     func createSubMenu(i: Int) -> RadialSubMenu {
         let subMenu = RadialSubMenu(frame: CGRect(x: 0.0, y: 0.0, width: CGFloat(subMenuRadius*2), height: CGFloat(subMenuRadius*2)))
-        subMenu.layer.cornerRadius = CGFloat(subMenuRadius)
         subMenu.userInteractionEnabled = true
         subMenu.layer.cornerRadius = subMenuRadius
         subMenu.layer.borderColor = UIColor.whiteColor().colorWithAlphaComponent(0.5).CGColor
