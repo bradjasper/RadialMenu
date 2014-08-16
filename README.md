@@ -2,7 +2,7 @@
 
 **Experimental Software:** Fun to play with, but probably shouldn't put it in production (yet).
 
-RadialMenu is a custom control that allows you to provide context menu to a user on a touch screen (generally after a long press). This is similar to the record functionality Apple introduced for iMessage in iOS 8.
+RadialMenu is a custom control that allows you to provide a context menu to a user on a touch screen (generally after a long press). This is similar to the record functionality Apple introduced for iMessage in iOS 8.
 
 Here's an example of the iMessage menu re-created, taken from the demo app:
 
