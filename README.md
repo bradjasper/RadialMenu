@@ -4,7 +4,7 @@
 
 RadialMenu is a custom control that allows you to provide a context menu to a user on a touch screen (generally after a long press). This is similar to the record functionality Apple introduced for iMessage in iOS 8.
 
-Here's an example of the iMessage menu re-created, taken from the demo app:
+Here's an example of the iMessage menu recreated, taken from the demo app:
 
 ![iMessage RadialMenu Custom Control Example](https://raw.githubusercontent.com/bradjasper/RadialMenu/master/images/imessage-radialmenu-screencast-example.gif)
 
