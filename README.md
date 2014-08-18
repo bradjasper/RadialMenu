@@ -95,6 +95,10 @@ func pressedButton(gesture:UIGestureRecognizer) {
 
 MIT
 
+## Read More
+
+Read the blog entry: http://bradjasper.com/blog/radialmenu-imessage-ios8/
+
 ## Contact
 
 Web: http://bradjasper.com<br>
