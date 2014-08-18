@@ -14,6 +14,8 @@ You can create your own custom menus as well
 
 Plus it's built with Facebook POP, so it's very flexible!
 
+Read the blog entry at http://bradjasper.com/blog/radialmenu-imessage-ios8/ for more information.
+
 ## Install
 
 Copy the source files from the RadialMenu/ directory into your project.
