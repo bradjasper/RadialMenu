@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
         'Brad Jasper' => 'contact@bradjasper.com'
     }
     s.source            = {
-        :git => 'https://github.com/bradjasper/radialmenu.git'
+        :git => 'https://github.com/bradjasper/radialmenu.git',
         :tag => s.version.to_s
     }
     s.source_files      = 'RadialMenu/*'
