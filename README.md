@@ -2,9 +2,9 @@
 
 **Experimental Software:** Fun to play with, but probably shouldn't put it in production (yet).
 
-RadialMenu is a custom control that allows you to provide context menu to a user on a touch screen (generally after a long press). This is similar to the record functionality Apple introduced for iMessage in iOS 8.
+RadialMenu is a custom control that allows you to provide a context menu to a user on a touch screen (generally after a long press). This is similar to the record functionality Apple introduced for iMessage in iOS 8.
 
-Here's an example of the iMessage menu re-created, taken from the demo app:
+Here's an example of the iMessage menu recreated, taken from the demo app:
 
 ![iMessage RadialMenu Custom Control Example](https://raw.githubusercontent.com/bradjasper/RadialMenu/master/images/imessage-radialmenu-screencast-example.gif)
 
@@ -94,6 +94,13 @@ func pressedButton(gesture:UIGestureRecognizer) {
 ## LICENSE
 
 MIT
+
+## Read More
+
+* Blog entry: http://bradjasper.com/blog/radialmenu-imessage-ios8/
+* ALRadial (path radial menu): https://github.com/alattis/ALRadial
+* What product designers can learn from iOS 8's iMessage changes: http://scotthurff.com/posts/what-we-can-learn-from-apples-imessage-changes-in-ios-8
+* PininterestLikeMenu: https://github.com/itouch2/PinterestLikeMenu
 
 ## Contact
 
