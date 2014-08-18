@@ -97,7 +97,10 @@ MIT
 
 ## Read More
 
-Read the blog entry: http://bradjasper.com/blog/radialmenu-imessage-ios8/
+* Blog entry: http://bradjasper.com/blog/radialmenu-imessage-ios8/
+* ALRadial (path radial menu): https://github.com/alattis/ALRadial
+* What product designers can learn from iOS 8's iMessage changes: http://scotthurff.com/posts/what-we-can-learn-from-apples-imessage-changes-in-ios-8
+* PininterestLikeMenu: https://github.com/itouch2/PinterestLikeMenu
 
 ## Contact
 
