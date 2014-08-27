@@ -9,41 +9,49 @@
 import UIKit
 import QuartzCore
 
+// TODO: Xcode beta 6 made this all a mess...cleanup inits
+
 class SecondViewController: UIViewController {
-    var didSetupConstraints = false
     
-    let highlightColor = UIColor(red:0.0, green:122.0/255.0, blue:1.0, alpha:1.0)
-    let tapView:UIView
-    let microphoneButton:UIView
-    var radialMenu:RadialMenu
-    let microphoneButtonImageView:UIImageView
-    let stopButton:UIView
+    var didSetupConstraints = false
     
     let menuRadius:CGFloat = 125
     let subMenuRadius:CGFloat = 16
     let microphoneBumper:CGFloat = 24
     let microphoneRadius:CGFloat = 12
     
-    init(coder aDecoder: NSCoder!) {
+    let highlightColor = UIColor(red:0.0, green:122.0/255.0, blue:1.0, alpha:1.0)
+    let tapView = UIView()
+    var radialMenu:RadialMenu = RadialMenu(menus: [])
+    var microphoneButtonImageView:UIImageView {
+        return UIImageView(frame: CGRect(x: 0, y: 0, width: microphoneRadius*2, height: microphoneRadius*2))
+    }
+    
+    var microphoneButton:UIView {
+        return UIView(frame: CGRect(x: 0, y: 0, width: microphoneRadius*2, height: microphoneRadius*2))
+    }
+    
+    var stopButton:UIView {
+        return UIView(frame: CGRect(x: 0, y: 0, width: microphoneRadius*2.2, height: microphoneRadius*2.2))
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    override func viewDidLoad() {
         
-        // FIXME: How can I:
-        // 1. Create a padding around a UIImageView (think I can do this with a larger frame contentMode = center)
-        // 2. Use AutoLayout
-        // 3. Without the extra UIView wrapper
-        // It seems once you setTranslatesAutoresizingMaskIntoConstraints = false, the padding no longer works--which is required for auto layout
-        microphoneButtonImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: microphoneRadius*2, height: microphoneRadius*2))
+        super.viewDidLoad()
         
         microphoneButtonImageView.image = UIImage(named: "microphone").imageWithRenderingMode(.AlwaysTemplate)
         microphoneButtonImageView.tintColor = UIColor.whiteColor()
         microphoneButtonImageView.contentMode = .Center
         
-        microphoneButton = UIView(frame: CGRect(x: 0, y: 0, width: microphoneRadius*2, height: microphoneRadius*2))
         microphoneButton.backgroundColor = UIColor.grayColor().colorWithAlphaComponent(0.5)
         microphoneButton.layer.cornerRadius = microphoneRadius
         microphoneButton.addSubview(microphoneButtonImageView)
         
         // FIXME: Possibly move center image/button to RadialMenu
-        stopButton = UIView(frame: CGRect(x: 0, y: 0, width: microphoneRadius*2.2, height: microphoneRadius*2.2))
         stopButton.layer.borderWidth = 2
         stopButton.layer.borderColor = UIColor.whiteColor().CGColor
         stopButton.layer.cornerRadius = microphoneRadius*1.1
@@ -54,18 +62,6 @@ class SecondViewController: UIViewController {
         innerStopButton.center = innerStopButton.convertPoint(stopButton.center, fromView: stopButton)
         stopButton.addSubview(innerStopButton)
         stopButton.alpha = 0
-        
-        // Improve usability by making a larger tapview
-        tapView = UIView()
-        
-        radialMenu = RadialMenu()
-        
-        super.init(coder: aDecoder)
-    }
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
         
         let longPress = UILongPressGestureRecognizer(target: self, action: "pressedButton:")
         

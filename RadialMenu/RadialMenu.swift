@@ -67,7 +67,7 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     let backgroundView = UIView()
     
     // FIXME: Make private when Swift adds access controls
-    var subMenus: [RadialSubMenu]
+    var subMenus: [RadialSubMenu] = []
     
     var numOpeningSubMenus = 0
     var numOpenedSubMenus = 0
@@ -103,22 +103,13 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     
     // MARK: Init
 
-    init(coder decoder: NSCoder!) {
-        subMenus = []
-        super.init(coder: decoder)
-    }
-    
-    init(frame: CGRect) {
-        subMenus = []
-        super.init(frame: frame)
-    }
-    
     convenience init(menus: [RadialSubMenu]) {
         self.init(menus: menus, radius: defaultRadius)
     }
     
-    convenience init(menus: [RadialSubMenu], radius: CGFloat) {
-        self.init(frame: CGRect(x: 0, y: 0, width: radius*2, height: radius*2))
+    init(menus: [RadialSubMenu], radius: CGFloat) {
+        
+        super.init(frame: CGRect(x: 0, y: 0, width: radius*2, height: radius*2))
         self.subMenus = menus
         self.radius = radius
         
@@ -129,6 +120,10 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         }
         
         setup()
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
     
     func setup() {
@@ -312,7 +307,7 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         var anim = backgroundView.pop_animationForKey("scale") as? POPSpringAnimation
         let toValue = NSValue(CGPoint: CGPoint(x: size, y: size))
         
-        if (anim) {
+        if (anim != nil) {
             anim!.toValue = toValue
         } else {
             anim = POPSpringAnimation(propertyNamed: kPOPViewScaleXY)
@@ -345,7 +340,7 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         var anim = subMenu.pop_animationForKey("expand") as? POPSpringAnimation
         let toValue = NSValue(CGPoint: pos)
         
-        if (anim) {
+        if anim != nil {
             anim!.toValue = toValue
         } else {
             anim = POPSpringAnimation(propertyNamed: kPOPViewCenter)

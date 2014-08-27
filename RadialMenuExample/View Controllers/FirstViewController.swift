@@ -11,8 +11,8 @@ import QuartzCore
 
 class FirstViewController: UIViewController {
     
-    var addButton:UIImageView
-    var tapView:UIView
+    var addButton = UIImageView(image: UIImage(named: "plus"))
+    var tapView = UIView()
     
     var radialMenu:RadialMenu!
     let num = 4
@@ -20,17 +20,13 @@ class FirstViewController: UIViewController {
     let menuRadius: CGFloat = 125.0
     let subMenuRadius: CGFloat = 35.0
     var didSetupConstraints = false
+    
+    /*
     let colors = ["#C0392B", "#2ECC71", "#E67E22", "#3498DB", "#9B59B6", "#F1C40F",
                   "#16A085", "#8E44AD", "#2C3E50", "#F39C12", "#2980B9", "#27AE60",
                   "#D35400", "#34495E", "#E74C3C", "#1ABC9C"].map { UIColor(rgba: $0) }
+    */
     
-    
-    init(coder aDecoder: NSCoder!) {
-        
-        addButton = UIImageView(image: UIImage(named: "plus"))
-        tapView = UIView()
-        super.init(coder: aDecoder)
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -134,8 +130,11 @@ class FirstViewController: UIViewController {
     }
     
     func colorForSubMenu(subMenu: RadialSubMenu) -> UIColor {
+        return UIColor.redColor()
+        /*
         let pos = subMenu.tag % colors.count
         return colors[pos] as UIColor!
+        */
     }
     
     func highlightSubMenu(subMenu: RadialSubMenu) {

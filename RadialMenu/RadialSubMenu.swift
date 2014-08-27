@@ -64,7 +64,7 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
    
     // MARK - Init
     
-    init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         origPosition = self.center
         alpha = 0
@@ -76,7 +76,10 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
         imageView.userInteractionEnabled = true
         addSubview(imageView)
     }
-    
+
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
     
     // MARK - Main interface
     
@@ -130,7 +133,7 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
     func openAnimation() {
         // FIXME: Is there a way to do the opposite of "if let"? Make these two statements one?
         let existingAnim = pop_animationForKey(RadialSubMenuOpenAnimation) as? POPAnimation
-        if !existingAnim {
+        if existingAnim != nil {
             let anim = POPSpringAnimation(propertyNamed:kPOPViewCenter)
             anim.name = RadialSubMenuOpenAnimation
             anim.toValue = NSValue(CGPoint: currPosition)
@@ -146,7 +149,7 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
     func closeAnimation() {
         // FIXME: Is there a way to do the opposite of "if let"? Make these two statements one?
         let existingAnim = pop_animationForKey(RadialSubMenuCloseAnimation) as? POPAnimation
-        if !existingAnim {
+        if existingAnim != nil {
             let anim = POPBasicAnimation(propertyNamed:kPOPViewCenter)
             anim.name = RadialSubMenuCloseAnimation
             anim.toValue = NSValue(CGPoint: origPosition)
