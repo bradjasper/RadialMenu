@@ -24,7 +24,7 @@ class SecondViewController: UIViewController {
     let microphoneBumper:CGFloat = 24
     let microphoneRadius:CGFloat = 12
     
-    init(coder aDecoder: NSCoder!) {
+    required init(coder aDecoder: NSCoder) {
         
         // FIXME: How can I:
         // 1. Create a padding around a UIImageView (think I can do this with a larger frame contentMode = center)
@@ -58,7 +58,7 @@ class SecondViewController: UIViewController {
         // Improve usability by making a larger tapview
         tapView = UIView()
         
-        radialMenu = RadialMenu()
+        radialMenu = RadialMenu(coder: aDecoder)
         
         super.init(coder: aDecoder)
     }
@@ -68,22 +68,45 @@ class SecondViewController: UIViewController {
         super.viewDidLoad()
         
         let longPress = UILongPressGestureRecognizer(target: self, action: "pressedButton:")
+        longPress.minimumPressDuration = 0.1
         
         radialMenu = RadialMenu(menus: [createSubMenu("cancel"), createSubMenu("save")], radius: menuRadius)
         radialMenu.minAngle = 180
         radialMenu.maxAngle = 270
-        radialMenu.alpha = 0.75
+        radialMenu.alpha = 1.0
         
         radialMenu.onOpening = {
-            // FIXME: Add transitions
-            self.microphoneButtonImageView.alpha = 0.0
-            self.stopButton.alpha = 1.0
+            
+            // maybe not the nicest way to fix this, but it works for the demo
+            let fadeout:() -> Void = {
+                self.microphoneButtonImageView.alpha = 0.0
+            }
+            
+            let fadein: () -> Void = {
+                UIView.animateWithDuration(0.2, animations: {
+                    self.stopButton.alpha = 1.0
+                })
+            }
+            
+            UIView.animateWithDuration(0.2, delay: 0.0, options: nil, animations: fadeout, completion: { (finished: Bool) -> () in
+                fadein();
+            })
         }
         
         radialMenu.onClosing = {
-            // FIXME: Add transitions
-            self.microphoneButtonImageView.alpha = 1.0
-            self.stopButton.alpha = 0.0
+            let fadeout:() -> Void = {
+                self.stopButton.alpha = 0.0
+            }
+            
+            let fadein: () -> Void = {
+                UIView.animateWithDuration(0.2, animations: {
+                    self.microphoneButtonImageView.alpha = 1.0
+                })
+            }
+            
+            UIView.animateWithDuration(0.2, delay: 0.0, options: nil, animations: fadeout, completion: { (finished: Bool) -> () in
+                fadein();
+            })
         }
         
         radialMenu.onHighlight = { subMenu in
