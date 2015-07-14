@@ -357,20 +357,20 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
     
     // MARK: RadialSubMenuDelegate
     
-    func subMenuDidOpen(subMenu: RadialSubMenu) {
+    public func subMenuDidOpen(subMenu: RadialSubMenu) {
         if ++numOpenedSubMenus == numOpeningSubMenus {
             state = .Opened
         }
     }
     
-    func subMenuDidClose(subMenu: RadialSubMenu) {
+    public func subMenuDidClose(subMenu: RadialSubMenu) {
         if --numOpeningSubMenus == 0 || --numOpenedSubMenus == 0 {
             hide()
             state = .Closed
         }
     }
     
-    func subMenuDidHighlight(subMenu: RadialSubMenu) {
+    public func subMenuDidHighlight(subMenu: RadialSubMenu) {
         state = .Highlighted
         onHighlight?(subMenu: subMenu)
         if ++numHighlightedSubMenus >= 1 {
@@ -378,7 +378,7 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
         }
     }
     
-    func subMenuDidUnhighlight(subMenu: RadialSubMenu) {
+    public func subMenuDidUnhighlight(subMenu: RadialSubMenu) {
         state = .Unhighlighted
         onUnhighlight?(subMenu: subMenu)
         if --numHighlightedSubMenus == 0 {
@@ -386,7 +386,7 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
         }
     }
     
-    func subMenuDidActivate(subMenu: RadialSubMenu) {
+    public func subMenuDidActivate(subMenu: RadialSubMenu) {
         state = .Activated
         onActivate?(subMenu: subMenu)
     }
