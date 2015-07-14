@@ -25,7 +25,7 @@ let RadialSubMenuFadeOutAnimation = "fadeOutAnimation"
     optional func subMenuDidClose(subMenu: RadialSubMenu)
 }
 
-class RadialSubMenu: UIView, POPAnimationDelegate {
+public class RadialSubMenu: UIView, POPAnimationDelegate {
     
     enum State {
         case Closed, Opening, Opened, Highlighted, Unhighlighted, Activated, Closing
@@ -78,7 +78,7 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
         addSubview(imageView)
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required public init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -215,7 +215,7 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
     
     // MARK - POP animation delegates
     
-    func pop_animationDidStart(anim: POPAnimation!) {
+    public func pop_animationDidStart(anim: POPAnimation!) {
         switch anim.name {
             case RadialSubMenuOpenAnimation:
                 fadeInAnimation()
@@ -227,7 +227,7 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
         
     }
     
-    func pop_animationDidStop(anim: POPAnimation!, finished: Bool) {
+    public func pop_animationDidStop(anim: POPAnimation!, finished: Bool) {
         
         if !finished { return }
         

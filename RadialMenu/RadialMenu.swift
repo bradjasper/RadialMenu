@@ -15,7 +15,7 @@ import pop
 let defaultRadius:CGFloat = 115
 
 @IBDesignable
-class RadialMenu: UIView, RadialSubMenuDelegate {
+public class RadialMenu: UIView, RadialSubMenuDelegate {
     
     // configurable properties
     @IBInspectable var radius:CGFloat = defaultRadius
@@ -104,7 +104,7 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     
     // MARK: Init
 
-    required init(coder decoder: NSCoder) {
+    required public init(coder decoder: NSCoder) {
         subMenus = []
         super.init(coder: decoder)
     }
