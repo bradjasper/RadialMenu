@@ -18,9 +18,9 @@ let defaultRadius:CGFloat = 115
 public class RadialMenu: UIView, RadialSubMenuDelegate {
     
     // configurable properties
-    @IBInspectable var radius:CGFloat = defaultRadius
-    @IBInspectable var subMenuScale:CGFloat = 0.75
-    @IBInspectable var highlightScale:CGFloat = 1.15
+    @IBInspectable public var radius:CGFloat = defaultRadius
+    @IBInspectable public var subMenuScale:CGFloat = 0.75
+    @IBInspectable public var highlightScale:CGFloat = 1.15
     
     var subMenuRadius: CGFloat {
         get {
@@ -34,16 +34,16 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
         }
     }
     
-    @IBInspectable var radiusStep = 0.0
-    @IBInspectable var openDelayStep = 0.05
-    @IBInspectable var closeDelayStep = 0.035
-    @IBInspectable var activatedDelay = 0.0
-    @IBInspectable var minAngle = 180
-    @IBInspectable var maxAngle = 540
-    @IBInspectable var allowMultipleHighlights = false
+    @IBInspectable public var radiusStep = 0.0
+    @IBInspectable public var openDelayStep = 0.05
+    @IBInspectable public var closeDelayStep = 0.035
+    @IBInspectable public var activatedDelay = 0.0
+    @IBInspectable public var minAngle = 180
+    @IBInspectable public var maxAngle = 540
+    @IBInspectable public var allowMultipleHighlights = false
     
     // get's set automatically on initialized to a percentage of radius
-    @IBInspectable var highlightDistance:CGFloat = 0
+    @IBInspectable public var highlightDistance:CGFloat = 0
     
     // FIXME: Needs better solution
     // Fixes issue with highlighting too close to center (get set automatically..can be changed)
@@ -52,16 +52,16 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
     
     // Callbacks
     // FIXME: Easier way to handle optional callbacks?
-    typealias RadialMenuCallback = () -> ()
-    typealias RadialSubMenuCallback = (subMenu: RadialSubMenu) -> ()
+    public typealias RadialMenuCallback = () -> ()
+    public typealias RadialSubMenuCallback = (subMenu: RadialSubMenu) -> ()
     
-    var onOpening: RadialMenuCallback?
-    var onOpen: RadialMenuCallback?
-    var onClosing: RadialMenuCallback?
-    var onClose: RadialMenuCallback?
-    var onHighlight: RadialSubMenuCallback?
-    var onUnhighlight: RadialSubMenuCallback?
-    var onActivate: RadialSubMenuCallback?
+    public var onOpening: RadialMenuCallback?
+    public var onOpen: RadialMenuCallback?
+    public var onClosing: RadialMenuCallback?
+    public var onClose: RadialMenuCallback?
+    public var onHighlight: RadialSubMenuCallback?
+    public var onUnhighlight: RadialSubMenuCallback?
+    public var onActivate: RadialSubMenuCallback?
     
     // FIXME: Is it possible to scale a view without changing it's children? Couldn't get that
     // working so put bg on it's own view
@@ -109,16 +109,16 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
         super.init(coder: decoder)
     }
     
-    override init(frame: CGRect) {
+    override public init(frame: CGRect) {
         subMenus = []
         super.init(frame: frame)
     }
     
-    convenience init(menus: [RadialSubMenu]) {
+    convenience public init(menus: [RadialSubMenu]) {
         self.init(menus: menus, radius: defaultRadius)
     }
     
-    convenience init(menus: [RadialSubMenu], radius: CGFloat) {
+    convenience public init(menus: [RadialSubMenu], radius: CGFloat) {
         self.init(frame: CGRect(x: 0, y: 0, width: radius*2, height: radius*2))
         self.subMenus = menus
         self.radius = radius
@@ -163,7 +163,7 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
         }
     }
     
-    func openAtPosition(newPosition: CGPoint) {
+    public func openAtPosition(newPosition: CGPoint) {
         
         let max = subMenus.count
         
@@ -214,7 +214,7 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
         return self.convertPoint(relPos, fromView:self.superview)
     }
     
-    func close() {
+    public func close() {
         
         if (state == .Closed || state == .Closing) {
             return println("Menu is already closed/closing")
@@ -236,7 +236,7 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
     }
     
     // FIXME: Refactor entire method
-    func moveAtPosition(position:CGPoint) {
+    public func moveAtPosition(position:CGPoint) {
         
         if state != .Opened && state != .Highlighted && state != .Unhighlighted {
             return

@@ -17,7 +17,7 @@ let RadialSubMenuFadeOutAnimation = "fadeOutAnimation"
 
 // Using @objc here because we want to specify @optional methods which
 // you can only do on classes, which you specify with the @objc modifier
-@objc protocol RadialSubMenuDelegate {
+@objc public protocol RadialSubMenuDelegate {
     optional func subMenuDidOpen(subMenu: RadialSubMenu)
     optional func subMenuDidHighlight(subMenu: RadialSubMenu)
     optional func subMenuDidActivate(subMenu: RadialSubMenu)
@@ -31,7 +31,7 @@ public class RadialSubMenu: UIView, POPAnimationDelegate {
         case Closed, Opening, Opened, Highlighted, Unhighlighted, Activated, Closing
     }
 
-    var delegate: RadialSubMenuDelegate?
+    public var delegate: RadialSubMenuDelegate?
     var origPosition         = CGPointZero
     var currPosition         = CGPointZero
     
@@ -65,14 +65,14 @@ public class RadialSubMenu: UIView, POPAnimationDelegate {
    
     // MARK - Init
     
-    override init(frame: CGRect) {
+    override public init(frame: CGRect) {
         super.init(frame: frame)
         origPosition = self.center
         alpha = 0
         
     }
     
-    convenience init(imageView: UIImageView) {
+    convenience public init(imageView: UIImageView) {
         self.init(frame: imageView.frame)
         imageView.userInteractionEnabled = true
         addSubview(imageView)
