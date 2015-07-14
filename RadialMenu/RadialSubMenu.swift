@@ -8,6 +8,7 @@
 
 import UIKit
 import QuartzCore
+import pop
 
 let RadialSubMenuOpenAnimation = "openAnimation"
 let RadialSubMenuCloseAnimation = "closeAnimation"
@@ -16,7 +17,7 @@ let RadialSubMenuFadeOutAnimation = "fadeOutAnimation"
 
 // Using @objc here because we want to specify @optional methods which
 // you can only do on classes, which you specify with the @objc modifier
-@objc protocol RadialSubMenuDelegate {
+@objc public protocol RadialSubMenuDelegate {
     optional func subMenuDidOpen(subMenu: RadialSubMenu)
     optional func subMenuDidHighlight(subMenu: RadialSubMenu)
     optional func subMenuDidActivate(subMenu: RadialSubMenu)
@@ -24,13 +25,13 @@ let RadialSubMenuFadeOutAnimation = "fadeOutAnimation"
     optional func subMenuDidClose(subMenu: RadialSubMenu)
 }
 
-class RadialSubMenu: UIView, POPAnimationDelegate {
+public class RadialSubMenu: UIView, POPAnimationDelegate {
     
     enum State {
         case Closed, Opening, Opened, Highlighted, Unhighlighted, Activated, Closing
     }
 
-    var delegate: RadialSubMenuDelegate?
+    public var delegate: RadialSubMenuDelegate?
     var origPosition         = CGPointZero
     var currPosition         = CGPointZero
     
@@ -64,17 +65,21 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
    
     // MARK - Init
     
-    init(frame: CGRect) {
+    override public init(frame: CGRect) {
         super.init(frame: frame)
         origPosition = self.center
         alpha = 0
         
     }
     
-    convenience init(imageView: UIImageView) {
+    convenience public init(imageView: UIImageView) {
         self.init(frame: imageView.frame)
         imageView.userInteractionEnabled = true
         addSubview(imageView)
+    }
+
+    required public init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     
@@ -130,7 +135,7 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
     func openAnimation() {
         // FIXME: Is there a way to do the opposite of "if let"? Make these two statements one?
         let existingAnim = pop_animationForKey(RadialSubMenuOpenAnimation) as? POPAnimation
-        if !existingAnim {
+        if existingAnim == nil {
             let anim = POPSpringAnimation(propertyNamed:kPOPViewCenter)
             anim.name = RadialSubMenuOpenAnimation
             anim.toValue = NSValue(CGPoint: currPosition)
@@ -146,7 +151,7 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
     func closeAnimation() {
         // FIXME: Is there a way to do the opposite of "if let"? Make these two statements one?
         let existingAnim = pop_animationForKey(RadialSubMenuCloseAnimation) as? POPAnimation
-        if !existingAnim {
+        if existingAnim == nil {
             let anim = POPBasicAnimation(propertyNamed:kPOPViewCenter)
             anim.name = RadialSubMenuCloseAnimation
             anim.toValue = NSValue(CGPoint: origPosition)
@@ -210,7 +215,7 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
     
     // MARK - POP animation delegates
     
-    func pop_animationDidStart(anim: POPAnimation!) {
+    public func pop_animationDidStart(anim: POPAnimation!) {
         switch anim.name {
             case RadialSubMenuOpenAnimation:
                 fadeInAnimation()
@@ -222,7 +227,7 @@ class RadialSubMenu: UIView, POPAnimationDelegate {
         
     }
     
-    func pop_animationDidStop(anim: POPAnimation!, finished: Bool) {
+    public func pop_animationDidStop(anim: POPAnimation!, finished: Bool) {
         
         if !finished { return }
         

@@ -1,29 +1,29 @@
 PODS:
-  - pop (1.0.6)
-  - POP+MCAnimate (1.1):
+  - pop (1.0.7)
+  - POP+MCAnimate (2.0.1):
     - pop (~> 1.0)
-    - POP+MCAnimate/Animations
+    - POP+MCAnimate/Animations (= 2.0.1)
+    - POP+MCAnimate/Group (= 2.0.1)
+    - POP+MCAnimate/Internal (= 2.0.1)
+    - POP+MCAnimate/Shorthand (= 2.0.1)
+    - POP+MCAnimate/Velocity (= 2.0.1)
+  - POP+MCAnimate/Animations (2.0.1):
+    - pop (~> 1.0)
     - POP+MCAnimate/Group
     - POP+MCAnimate/Internal
     - POP+MCAnimate/Shorthand
     - POP+MCAnimate/Velocity
-  - POP+MCAnimate/Animations (1.1):
+  - POP+MCAnimate/Group (2.0.1):
     - pop (~> 1.0)
-    - POP+MCAnimate/Group
-    - POP+MCAnimate/Internal
-    - POP+MCAnimate/Shorthand
-    - POP+MCAnimate/Velocity
-  - POP+MCAnimate/Group (1.1):
+  - POP+MCAnimate/Internal (2.0.1):
     - pop (~> 1.0)
-  - POP+MCAnimate/Internal (1.1):
+  - POP+MCAnimate/Shorthand (2.0.1):
     - pop (~> 1.0)
-  - POP+MCAnimate/Shorthand (1.1):
-    - pop (~> 1.0)
-  - POP+MCAnimate/Velocity (1.1):
+  - POP+MCAnimate/Velocity (2.0.1):
     - pop (~> 1.0)
     - POP+MCAnimate/Internal
-  - PureLayout (1.0.1)
-  - Tweaks (1.1.0)
+  - PureLayout (2.0.6)
+  - Tweaks (2.0.0)
   - UIColor-CrossFade (1.1.0)
 
 DEPENDENCIES:
@@ -37,11 +37,16 @@ EXTERNAL SOURCES:
   pop:
     :git: https://github.com/facebook/pop.git
 
-SPEC CHECKSUMS:
-  pop: 6df6021f2f4efd89ee1c8c49a753296859ad5ac6
-  POP+MCAnimate: 3ad540606cbf21547f79585c8d5b63f9da69d52b
-  PureLayout: 972964b21dbcbc5cc36785aed16aba03176f057d
-  Tweaks: 05b197d4a1247288f576587546bc1932189d8c98
-  UIColor-CrossFade: a0bc76620fd46da2c9af1bf072c994cf916613d7
+CHECKOUT OPTIONS:
+  pop:
+    :commit: 27793516fc16079843e8683cf3abcd8b73b5475d
+    :git: https://github.com/facebook/pop.git
 
-COCOAPODS: 0.33.1
+SPEC CHECKSUMS:
+  pop: 628ffc631644601567ee8bfaaaea493ebd7d0923
+  POP+MCAnimate: a99e209148c602512de487f1160a44bf78572024
+  PureLayout: f25f0bb904d5ccfe6e31da3cb869185259f02e0d
+  Tweaks: 524fa47636cce3bf3a4d9156e980f10ae9480e81
+  UIColor-CrossFade: 1e0dd1329ae45c6298f2b6b10d2bffc1e5af5d20
+
+COCOAPODS: 0.37.2

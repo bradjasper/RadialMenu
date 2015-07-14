@@ -18,10 +18,10 @@ extension UIColor {
         
         if rgba.hasPrefix("#") {
             let hex = rgba.substringFromIndex(advance(rgba.startIndex, 1))
-            let scanner = NSScanner.scannerWithString(hex)
+            let scanner = NSScanner(string: hex)
             var hexValue: CUnsignedLongLong = 0
             if scanner.scanHexLongLong(&hexValue) {
-                let numElements = countElements(hex)
+                let numElements = count(hex)
                 if numElements == 6 {
                     red   = Double((hexValue & 0xFF0000) >> 16) / 255.0
                     green = Double((hexValue & 0x00FF00) >> 8)  / 255.0

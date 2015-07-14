@@ -13,59 +13,15 @@
 		A205B8B619415FDE00C0E5A3 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A205B8B519415FDE00C0E5A3 /* SecondViewController.swift */; };
 		A205B8B919415FDE00C0E5A3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A205B8B719415FDE00C0E5A3 /* Main.storyboard */; };
 		A205B8BB19415FDE00C0E5A3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A205B8BA19415FDE00C0E5A3 /* Images.xcassets */; };
-		A205B8C719415FDF00C0E5A3 /* RadialMenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A205B8C619415FDF00C0E5A3 /* RadialMenuTests.swift */; };
-		A21C293A1943707600514A22 /* RadialSubMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2030289194282F1000FF9D1 /* RadialSubMenu.swift */; };
-		A21C293B1943707900514A22 /* RadialMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A244F3D01941625B0081DCB6 /* RadialMenu.swift */; };
 		A23919811943607F00822BD9 /* CircleHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23919801943607F00822BD9 /* CircleHelpers.swift */; };
-		A24289B719436310008DA89C /* CircleHelpersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24289B619436310008DA89C /* CircleHelpersTests.swift */; };
 		A244F3D11941625B0081DCB6 /* RadialMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A244F3D01941625B0081DCB6 /* RadialMenu.swift */; };
 		A26632FA194E990000F28D06 /* UIColor+helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26632F9194E990000F28D06 /* UIColor+helpers.swift */; };
-		A2A23B461946437600DDAE4F /* RadialSubMenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A23B451946437600DDAE4F /* RadialSubMenuTests.swift */; };
-		A2C35FB119436C34005B3D24 /* CircleHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23919801943607F00822BD9 /* CircleHelpers.swift */; };
-		BFD7D541F1DB49F8840D1355 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94D3AA863A764DF0A5EE5918 /* libPods.a */; };
+		FB2B46C385BEA914B580953A /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA4BDA54F0A9924F66C14D1D /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		A205B8C119415FDF00C0E5A3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A205B8A419415FDE00C0E5A3 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A205B8AB19415FDE00C0E5A3;
-			remoteInfo = RadialMenu;
-		};
-		A20744FF194ABBE000188433 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A205B8A419415FDE00C0E5A3 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A205B8AB19415FDE00C0E5A3;
-			remoteInfo = RadialMenu;
-		};
-		A24289B81943632F008DA89C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A205B8A419415FDE00C0E5A3 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A205B8AB19415FDE00C0E5A3;
-			remoteInfo = RadialMenu;
-		};
-		A2A950DF194B781C00B9CC8C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A205B8A419415FDE00C0E5A3 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A205B8AB19415FDE00C0E5A3;
-			remoteInfo = RadialMenu;
-		};
-		A2A950E1194B781C00B9CC8C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A205B8A419415FDE00C0E5A3 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A205B8AB19415FDE00C0E5A3;
-			remoteInfo = RadialMenu;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		696BA227E8D745F988E911E4 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
-		94D3AA863A764DF0A5EE5918 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		2CE6D7ADB0973B13AFA94CC3 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		6CAD58C34501753BE19FDD72 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		A2030289194282F1000FF9D1 /* RadialSubMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadialSubMenu.swift; sourceTree = "<group>"; };
 		A203028B1942939C000FF9D1 /* RadialMenuPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = RadialMenuPlayground.playground; sourceTree = "<group>"; };
 		A205B8AC19415FDE00C0E5A3 /* RadialMenu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RadialMenu.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -75,16 +31,14 @@
 		A205B8B519415FDE00C0E5A3 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		A205B8B819415FDE00C0E5A3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A205B8BA19415FDE00C0E5A3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		A205B8C019415FDF00C0E5A3 /* RadialMenuTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RadialMenuTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A205B8C519415FDF00C0E5A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A205B8C619415FDF00C0E5A3 /* RadialMenuTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadialMenuTests.swift; sourceTree = "<group>"; };
 		A23919801943607F00822BD9 /* CircleHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleHelpers.swift; sourceTree = "<group>"; };
-		A24289B619436310008DA89C /* CircleHelpersTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleHelpersTests.swift; sourceTree = "<group>"; };
 		A244F3D01941625B0081DCB6 /* RadialMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadialMenu.swift; sourceTree = "<group>"; };
 		A26632F9194E990000F28D06 /* UIColor+helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+helpers.swift"; sourceTree = "<group>"; };
 		A2695FF6194B51F4004FB4FF /* RadialMenu-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RadialMenu-Bridging-Header.h"; sourceTree = "<group>"; };
 		A292FE83194B795600F437DA /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
-		A2A23B451946437600DDAE4F /* RadialSubMenuTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadialSubMenuTests.swift; sourceTree = "<group>"; };
+		AADC838C1B547B7E005B25BD /* Pods.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods.framework; path = "Pods/../build/Debug-iphoneos/Pods.framework"; sourceTree = "<group>"; };
+		AADC838E1B547B90005B25BD /* pop.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = pop.framework; path = "Pods/../build/Debug-iphoneos/Pods/pop.framework"; sourceTree = "<group>"; };
+		DA4BDA54F0A9924F66C14D1D /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,25 +46,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFD7D541F1DB49F8840D1355 /* libPods.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A205B8BD19415FDF00C0E5A3 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				FB2B46C385BEA914B580953A /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4424736D4B1B20BCC958D24B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6CAD58C34501753BE19FDD72 /* Pods.debug.xcconfig */,
+				2CE6D7ADB0973B13AFA94CC3 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		6C35E8CE8878416EA78E2631 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AADC838E1B547B90005B25BD /* pop.framework */,
+				AADC838C1B547B7E005B25BD /* Pods.framework */,
 				A292FE83194B795600F437DA /* libPods.a */,
-				94D3AA863A764DF0A5EE5918 /* libPods.a */,
+				DA4BDA54F0A9924F66C14D1D /* Pods.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -120,10 +78,9 @@
 			children = (
 				A2C35FB219436CDD005B3D24 /* RadialMenuExample */,
 				A205B8AE19415FDE00C0E5A3 /* RadialMenu */,
-				A205B8C319415FDF00C0E5A3 /* RadialMenuTests */,
 				A205B8AD19415FDE00C0E5A3 /* Products */,
-				696BA227E8D745F988E911E4 /* Pods.xcconfig */,
 				6C35E8CE8878416EA78E2631 /* Frameworks */,
+				4424736D4B1B20BCC958D24B /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -131,7 +88,6 @@
 			isa = PBXGroup;
 			children = (
 				A205B8AC19415FDE00C0E5A3 /* RadialMenu.app */,
-				A205B8C019415FDF00C0E5A3 /* RadialMenuTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -150,25 +106,6 @@
 			isa = PBXGroup;
 			children = (
 				A205B8B019415FDE00C0E5A3 /* Info.plist */,
-			);
-			path = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		A205B8C319415FDF00C0E5A3 /* RadialMenuTests */ = {
-			isa = PBXGroup;
-			children = (
-				A205B8C619415FDF00C0E5A3 /* RadialMenuTests.swift */,
-				A2A23B451946437600DDAE4F /* RadialSubMenuTests.swift */,
-				A24289B619436310008DA89C /* CircleHelpersTests.swift */,
-				A205B8C419415FDF00C0E5A3 /* Supporting Files */,
-			);
-			path = RadialMenuTests;
-			sourceTree = "<group>";
-		};
-		A205B8C419415FDF00C0E5A3 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				A205B8C519415FDF00C0E5A3 /* Info.plist */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -217,6 +154,7 @@
 				A205B8A919415FDE00C0E5A3 /* Frameworks */,
 				A205B8AA19415FDE00C0E5A3 /* Resources */,
 				35DDBC1AEDED48ECB3193AFF /* Copy Pods Resources */,
+				3391FB0069C1447E555D5361 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -226,28 +164,6 @@
 			productName = RadialMenu;
 			productReference = A205B8AC19415FDE00C0E5A3 /* RadialMenu.app */;
 			productType = "com.apple.product-type.application";
-		};
-		A205B8BF19415FDF00C0E5A3 /* RadialMenuTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = A205B8CD19415FDF00C0E5A3 /* Build configuration list for PBXNativeTarget "RadialMenuTests" */;
-			buildPhases = (
-				A205B8BC19415FDF00C0E5A3 /* Sources */,
-				A205B8BD19415FDF00C0E5A3 /* Frameworks */,
-				A205B8BE19415FDF00C0E5A3 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				A205B8C219415FDF00C0E5A3 /* PBXTargetDependency */,
-				A24289B91943632F008DA89C /* PBXTargetDependency */,
-				A2074500194ABBE000188433 /* PBXTargetDependency */,
-				A2A950E0194B781C00B9CC8C /* PBXTargetDependency */,
-				A2A950E2194B781C00B9CC8C /* PBXTargetDependency */,
-			);
-			name = RadialMenuTests;
-			productName = RadialMenuTests;
-			productReference = A205B8C019415FDF00C0E5A3 /* RadialMenuTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -260,10 +176,6 @@
 				TargetAttributes = {
 					A205B8AB19415FDE00C0E5A3 = {
 						CreatedOnToolsVersion = 6.0;
-					};
-					A205B8BF19415FDF00C0E5A3 = {
-						CreatedOnToolsVersion = 6.0;
-						TestTargetID = A205B8AB19415FDE00C0E5A3;
 					};
 				};
 			};
@@ -281,7 +193,6 @@
 			projectRoot = "";
 			targets = (
 				A205B8AB19415FDE00C0E5A3 /* RadialMenu */,
-				A205B8BF19415FDF00C0E5A3 /* RadialMenuTests */,
 			);
 		};
 /* End PBXProject section */
@@ -296,16 +207,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A205B8BE19415FDF00C0E5A3 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		3391FB0069C1447E555D5361 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		35DDBC1AEDED48ECB3193AFF /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -318,7 +237,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7FC4E313ABC6435B9FFC2A1F /* Check Pods Manifest.lock */ = {
@@ -353,48 +272,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A205B8BC19415FDF00C0E5A3 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A2A23B461946437600DDAE4F /* RadialSubMenuTests.swift in Sources */,
-				A205B8C719415FDF00C0E5A3 /* RadialMenuTests.swift in Sources */,
-				A24289B719436310008DA89C /* CircleHelpersTests.swift in Sources */,
-				A2C35FB119436C34005B3D24 /* CircleHelpers.swift in Sources */,
-				A21C293B1943707900514A22 /* RadialMenu.swift in Sources */,
-				A21C293A1943707600514A22 /* RadialSubMenu.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		A205B8C219415FDF00C0E5A3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = A205B8AB19415FDE00C0E5A3 /* RadialMenu */;
-			targetProxy = A205B8C119415FDF00C0E5A3 /* PBXContainerItemProxy */;
-		};
-		A2074500194ABBE000188433 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = A205B8AB19415FDE00C0E5A3 /* RadialMenu */;
-			targetProxy = A20744FF194ABBE000188433 /* PBXContainerItemProxy */;
-		};
-		A24289B91943632F008DA89C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = A205B8AB19415FDE00C0E5A3 /* RadialMenu */;
-			targetProxy = A24289B81943632F008DA89C /* PBXContainerItemProxy */;
-		};
-		A2A950E0194B781C00B9CC8C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = A205B8AB19415FDE00C0E5A3 /* RadialMenu */;
-			targetProxy = A2A950DF194B781C00B9CC8C /* PBXContainerItemProxy */;
-		};
-		A2A950E2194B781C00B9CC8C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = A205B8AB19415FDE00C0E5A3 /* RadialMenu */;
-			targetProxy = A2A950E1194B781C00B9CC8C /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		A205B8B719415FDE00C0E5A3 /* Main.storyboard */ = {
@@ -491,7 +369,7 @@
 		};
 		A205B8CB19415FDF00C0E5A3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 696BA227E8D745F988E911E4 /* Pods.xcconfig */;
+			baseConfigurationReference = 6CAD58C34501753BE19FDD72 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -503,53 +381,13 @@
 		};
 		A205B8CC19415FDF00C0E5A3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 696BA227E8D745F988E911E4 /* Pods.xcconfig */;
+			baseConfigurationReference = 2CE6D7ADB0973B13AFA94CC3 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = "RadialMenuExample/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		A205B8CE19415FDF00C0E5A3 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 696BA227E8D745F988E911E4 /* Pods.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/RadialMenu.app/RadialMenu";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "RadialMenuTests/Supporting Files/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				METAL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-			};
-			name = Debug;
-		};
-		A205B8CF19415FDF00C0E5A3 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 696BA227E8D745F988E911E4 /* Pods.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/RadialMenu.app/RadialMenu";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "RadialMenuTests/Supporting Files/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				METAL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
 			name = Release;
 		};
@@ -570,15 +408,6 @@
 			buildConfigurations = (
 				A205B8CB19415FDF00C0E5A3 /* Debug */,
 				A205B8CC19415FDF00C0E5A3 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		A205B8CD19415FDF00C0E5A3 /* Build configuration list for PBXNativeTarget "RadialMenuTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A205B8CE19415FDF00C0E5A3 /* Debug */,
-				A205B8CF19415FDF00C0E5A3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
