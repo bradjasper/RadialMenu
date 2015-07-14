@@ -10,6 +10,7 @@
 
 import UIKit
 import QuartzCore
+import pop
 
 let defaultRadius:CGFloat = 115
 
@@ -103,12 +104,12 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
     
     // MARK: Init
 
-    init(coder decoder: NSCoder!) {
+    required init(coder decoder: NSCoder) {
         subMenus = []
         super.init(coder: decoder)
     }
     
-    init(frame: CGRect) {
+    override init(frame: CGRect) {
         subMenus = []
         super.init(frame: frame)
     }
@@ -270,13 +271,13 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         
         var shouldHighlight: [RadialSubMenu] = []
         
-        for (i, (_, subMenu)) in enumerate(distances) {
+        for (index: Int, element: (distance: Double, subMenu: RadialSubMenu)) in enumerate(distances) {
             
-            switch (i, allowMultipleHighlights) {
+            switch (index, allowMultipleHighlights) {
                 case (0, false), (_, true):
-                    shouldHighlight.append(subMenu)
-                case (_, _) where subMenu.state == .Highlighted:
-                    subMenu.unhighlight()
+                    shouldHighlight.append(element.1)
+                case (_, _) where element.1.state == .Highlighted:
+                    element.1.unhighlight()
                 default:
                     break
             }
@@ -312,7 +313,7 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         var anim = backgroundView.pop_animationForKey("scale") as? POPSpringAnimation
         let toValue = NSValue(CGPoint: CGPoint(x: size, y: size))
         
-        if (anim) {
+        if ((anim) != nil) {
             anim!.toValue = toValue
         } else {
             anim = POPSpringAnimation(propertyNamed: kPOPViewScaleXY)
@@ -345,7 +346,7 @@ class RadialMenu: UIView, RadialSubMenuDelegate {
         var anim = subMenu.pop_animationForKey("expand") as? POPSpringAnimation
         let toValue = NSValue(CGPoint: pos)
         
-        if (anim) {
+        if ((anim) != nil) {
             anim!.toValue = toValue
         } else {
             anim = POPSpringAnimation(propertyNamed: kPOPViewCenter)

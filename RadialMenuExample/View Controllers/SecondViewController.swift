@@ -8,6 +8,7 @@
 
 import UIKit
 import QuartzCore
+import PureLayout
 
 class SecondViewController: UIViewController {
     var didSetupConstraints = false
@@ -24,7 +25,7 @@ class SecondViewController: UIViewController {
     let microphoneBumper:CGFloat = 24
     let microphoneRadius:CGFloat = 12
     
-    init(coder aDecoder: NSCoder!) {
+    required init(coder aDecoder: NSCoder) {
         
         // FIXME: How can I:
         // 1. Create a padding around a UIImageView (think I can do this with a larger frame contentMode = center)
@@ -33,7 +34,7 @@ class SecondViewController: UIViewController {
         // It seems once you setTranslatesAutoresizingMaskIntoConstraints = false, the padding no longer works--which is required for auto layout
         microphoneButtonImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: microphoneRadius*2, height: microphoneRadius*2))
         
-        microphoneButtonImageView.image = UIImage(named: "microphone").imageWithRenderingMode(.AlwaysTemplate)
+        microphoneButtonImageView.image = UIImage(named: "microphone")!.imageWithRenderingMode(.AlwaysTemplate)
         microphoneButtonImageView.tintColor = UIColor.whiteColor()
         microphoneButtonImageView.contentMode = .Center
         
