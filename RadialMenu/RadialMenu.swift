@@ -104,7 +104,7 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
     
     // MARK: Init
 
-    required public init(coder decoder: NSCoder) {
+    required public init?(coder decoder: NSCoder) {
         subMenus = []
         super.init(coder: decoder)
     }
@@ -123,7 +123,7 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
         self.subMenus = menus
         self.radius = radius
         
-        for (i, menu) in enumerate(subMenus) {
+        for (i, menu) in subMenus.enumerate() {
             menu.delegate = self
             menu.tag = i
             self.addSubview(menu)
@@ -168,11 +168,11 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
         let max = subMenus.count
         
         if max == 0 {
-            return println("No submenus to open")
+            return print("No submenus to open")
         }
         
         if state != .Closed {
-            return println("Can only open closed menus")
+            return print("Can only open closed menus")
         }
         
         resetDefaults()
@@ -184,7 +184,7 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
         
         let relPos = convertPoint(position, fromView:superview)
         
-        for (i, subMenu) in enumerate(subMenus) {
+        for (i, subMenu) in subMenus.enumerate() {
             let subMenuPos = getPositionForSubMenu(subMenu)
             let delay = openDelayStep * Double(i)
             numOpeningSubMenus++
@@ -193,9 +193,9 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
     }
     
     func getAngleForSubMenu(subMenu: RadialSubMenu) -> Double {
-        let fullCircle = isFullCircle(minAngle, maxAngle)
+        let fullCircle = isFullCircle(minAngle, maxAngle: maxAngle)
         let max = fullCircle ? subMenus.count : subMenus.count - 1
-        return getAngleForIndex(subMenu.tag, max, Double(minAngle), Double(maxAngle))
+        return getAngleForIndex(subMenu.tag, max: max, minAngle: Double(minAngle), maxAngle: Double(maxAngle))
     }
     
     func getPositionForSubMenu(subMenu: RadialSubMenu) -> CGPoint {
@@ -209,7 +209,7 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
     func getPositionForSubMenu(subMenu: RadialSubMenu, radius: Double) -> CGPoint {
         let angle = getAngleForSubMenu(subMenu)
         let absRadius = radius + (radiusStep * Double(subMenu.tag))
-        let circlePos = getPointForAngle(angle, absRadius)
+        let circlePos = getPointForAngle(angle, radius: absRadius)
         let relPos = CGPoint(x: position.x + circlePos.x, y: position.y + circlePos.y)
         return self.convertPoint(relPos, fromView:self.superview)
     }
@@ -217,12 +217,12 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
     public func close() {
         
         if (state == .Closed || state == .Closing) {
-            return println("Menu is already closed/closing")
+            return print("Menu is already closed/closing")
         }
         
         state = .Closing
         
-        for (i, subMenu) in enumerate(subMenus) {
+        for (i, subMenu) in subMenus.enumerate() {
             let delay = closeDelayStep * Double(i)
             
             // FIXME: Why can't I use shortcut enum syntax .Highlighted here?
@@ -244,7 +244,7 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
         
         
         let relPos = convertPoint(position, fromView:superview)
-        let distanceFromCenter = distanceBetweenPoints(position, center)
+        let distanceFromCenter = distanceBetweenPoints(position, p2: center)
         
         // Add all submenus within a certain distance to array
         var distances:[(distance: Double, subMenu: RadialSubMenu)] = []
@@ -256,7 +256,7 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
         
         for subMenu in subMenus {
             
-            let distance = distanceBetweenPoints(subMenu.center, relPos)
+            let distance = distanceBetweenPoints(subMenu.center, p2: relPos)
             if distanceFromCenter >= Double(minHighlightDistance) && distance <= Double(highlightDistance) {
                 distances.append(distance: distance, subMenu: subMenu)
                 
@@ -267,11 +267,11 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
         
         if distances.count == 0 { return }
         
-        distances.sort { $0.distance < $1.distance }
+        distances.sortInPlace { $0.distance < $1.distance }
         
         var shouldHighlight: [RadialSubMenu] = []
         
-        for (index: Int, element: (distance: Double, subMenu: RadialSubMenu)) in enumerate(distances) {
+        for (index, element): (Int, (distance: Double, subMenu: RadialSubMenu)) in distances.enumerate() {
             
             switch (index, allowMultipleHighlights) {
                 case (0, false), (_, true):

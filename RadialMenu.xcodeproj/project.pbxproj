@@ -16,7 +16,7 @@
 		A23919811943607F00822BD9 /* CircleHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23919801943607F00822BD9 /* CircleHelpers.swift */; };
 		A244F3D11941625B0081DCB6 /* RadialMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A244F3D01941625B0081DCB6 /* RadialMenu.swift */; };
 		A26632FA194E990000F28D06 /* UIColor+helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26632F9194E990000F28D06 /* UIColor+helpers.swift */; };
-		FB2B46C385BEA914B580953A /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA4BDA54F0A9924F66C14D1D /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		FB2B46C385BEA914B580953A /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA4BDA54F0A9924F66C14D1D /* Pods.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -171,6 +171,8 @@
 		A205B8A419415FDE00C0E5A3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = "Brad Jasper";
 				TargetAttributes = {
