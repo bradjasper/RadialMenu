@@ -25,7 +25,7 @@ class SecondViewController: UIViewController {
     let microphoneBumper:CGFloat = 24
     let microphoneRadius:CGFloat = 12
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         
         // FIXME: How can I:
         // 1. Create a padding around a UIImageView (think I can do this with a larger frame contentMode = center)
