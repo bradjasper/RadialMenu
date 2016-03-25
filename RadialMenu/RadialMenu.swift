@@ -225,8 +225,7 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
         for (i, subMenu) in subMenus.enumerate() {
             let delay = closeDelayStep * Double(i)
             
-            // FIXME: Why can't I use shortcut enum syntax .Highlighted here?
-            if subMenu.state == RadialSubMenu.State.Highlighted {
+            if subMenu.state == .Highlighted {
                 let closeDelay = (closeDelayStep * Double(subMenus.count)) + activatedDelay
                 subMenu.activate(closeDelay)
             } else {
