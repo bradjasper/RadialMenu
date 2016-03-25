@@ -187,7 +187,7 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
         for (i, subMenu) in subMenus.enumerate() {
             let subMenuPos = getPositionForSubMenu(subMenu)
             let delay = openDelayStep * Double(i)
-            numOpeningSubMenus++
+            numOpeningSubMenus += 1
             subMenu.openAt(subMenuPos, fromPosition: relPos, delay: delay)
         }
     }
@@ -357,13 +357,16 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
     // MARK: RadialSubMenuDelegate
     
     public func subMenuDidOpen(subMenu: RadialSubMenu) {
-        if ++numOpenedSubMenus == numOpeningSubMenus {
+        numOpenedSubMenus += 1
+        if numOpenedSubMenus == numOpeningSubMenus {
             state = .Opened
         }
     }
     
     public func subMenuDidClose(subMenu: RadialSubMenu) {
-        if --numOpeningSubMenus == 0 || --numOpenedSubMenus == 0 {
+        numOpeningSubMenus -= 1
+        numOpenedSubMenus -= 1
+        if numOpeningSubMenus == 0 || numOpenedSubMenus == 0 {
             hide()
             state = .Closed
         }
@@ -372,15 +375,17 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
     public func subMenuDidHighlight(subMenu: RadialSubMenu) {
         state = .Highlighted
         onHighlight?(subMenu: subMenu)
-        if ++numHighlightedSubMenus >= 1 {
+        numHighlightedSubMenus += 1
+        if numHighlightedSubMenus >= 1 {
             grow()
         }
     }
     
     public func subMenuDidUnhighlight(subMenu: RadialSubMenu) {
         state = .Unhighlighted
+        numHighlightedSubMenus -= 1
         onUnhighlight?(subMenu: subMenu)
-        if --numHighlightedSubMenus == 0 {
+        if numHighlightedSubMenus == 0 {
             shrink()
         }
     }

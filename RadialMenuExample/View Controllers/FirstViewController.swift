@@ -35,7 +35,7 @@ class FirstViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let longPress = UILongPressGestureRecognizer(target: self, action: "pressedButton:")
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(FirstViewController.pressedButton(_:)))
         
         // Setup radial menu
         var subMenus: [RadialSubMenu] = []
