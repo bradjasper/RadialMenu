@@ -34,25 +34,25 @@ class SecondViewController: UIViewController {
         // It seems once you setTranslatesAutoresizingMaskIntoConstraints = false, the padding no longer works--which is required for auto layout
         microphoneButtonImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: microphoneRadius*2, height: microphoneRadius*2))
         
-        microphoneButtonImageView.image = UIImage(named: "microphone")!.imageWithRenderingMode(.AlwaysTemplate)
-        microphoneButtonImageView.tintColor = UIColor.whiteColor()
-        microphoneButtonImageView.contentMode = .Center
+        microphoneButtonImageView.image = UIImage(named: "microphone")!.withRenderingMode(.alwaysTemplate)
+        microphoneButtonImageView.tintColor = UIColor.white
+        microphoneButtonImageView.contentMode = .center
         
         microphoneButton = UIView(frame: CGRect(x: 0, y: 0, width: microphoneRadius*2, height: microphoneRadius*2))
-        microphoneButton.backgroundColor = UIColor.grayColor().colorWithAlphaComponent(0.5)
+        microphoneButton.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
         microphoneButton.layer.cornerRadius = microphoneRadius
         microphoneButton.addSubview(microphoneButtonImageView)
         
         // FIXME: Possibly move center image/button to RadialMenu
         stopButton = UIView(frame: CGRect(x: 0, y: 0, width: microphoneRadius*2.2, height: microphoneRadius*2.2))
         stopButton.layer.borderWidth = 2
-        stopButton.layer.borderColor = UIColor.whiteColor().CGColor
+        stopButton.layer.borderColor = UIColor.white.cgColor
         stopButton.layer.cornerRadius = microphoneRadius*1.1
         
         let innerStopButton = UIView(frame: CGRect(x: 0, y: 0, width: microphoneRadius, height: microphoneRadius))
-        innerStopButton.backgroundColor = UIColor.redColor()
+        innerStopButton.backgroundColor = UIColor.red
         innerStopButton.layer.cornerRadius = 2
-        innerStopButton.center = innerStopButton.convertPoint(stopButton.center, fromView: stopButton)
+        innerStopButton.center = innerStopButton.convert(stopButton.center, from: stopButton)
         stopButton.addSubview(innerStopButton)
         stopButton.alpha = 0
         
@@ -68,7 +68,7 @@ class SecondViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let longPress = UILongPressGestureRecognizer(target: self, action: "pressedButton:")
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(SecondViewController.pressedButton(_:)))
         
         radialMenu = RadialMenu(menus: [createSubMenu("cancel"), createSubMenu("save")], radius: menuRadius)
         radialMenu.minAngle = 180
@@ -92,16 +92,16 @@ class SecondViewController: UIViewController {
         }
         
         radialMenu.onUnhighlight = { subMenu in
-            subMenu.backgroundColor = UIColor.whiteColor()
+            subMenu.backgroundColor = UIColor.white
         }
         
         radialMenu.onClose = {
             for subMenu in self.radialMenu.subMenus {
-                subMenu.backgroundColor = UIColor.whiteColor()
+                subMenu.backgroundColor = UIColor.white
             }
         }
         
-        microphoneButtonImageView.center = microphoneButtonImageView.convertPoint(microphoneButton.center, fromView: view)
+        microphoneButtonImageView.center = microphoneButtonImageView.convert(microphoneButton.center, from: view)
         
         view.addSubview(radialMenu)
         view.addSubview(microphoneButton)
@@ -111,30 +111,30 @@ class SecondViewController: UIViewController {
         tapView.addGestureRecognizer(longPress)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // FIXME: See radialMenu auto layout bug above
         radialMenu.center = microphoneButton.center
     }
     
-    func createSubMenu(icon: String) -> RadialSubMenu {
+    func createSubMenu(_ icon: String) -> RadialSubMenu {
         let img = UIImageView(image: UIImage(named: icon))
         let subMenu = RadialSubMenu(imageView: img)
         subMenu.frame = CGRect(x: 0.0, y: 0.0, width: CGFloat(subMenuRadius*2), height: CGFloat(subMenuRadius*2))
         subMenu.layer.cornerRadius = CGFloat(subMenuRadius)
-        subMenu.backgroundColor = UIColor.whiteColor()
+        subMenu.backgroundColor = UIColor.white
         img.center = subMenu.center
         
         return subMenu
     }
     
-    func pressedButton(gesture:UIGestureRecognizer) {
+    func pressedButton(_ gesture:UIGestureRecognizer) {
         switch(gesture.state) {
-            case .Began:
+            case .began:
                 radialMenu.openAtPosition(self.microphoneButton.center)
-            case .Changed:
-                radialMenu.moveAtPosition(gesture.locationInView(self.view))
-            case .Ended:
+            case .changed:
+                radialMenu.moveAtPosition(gesture.location(in: self.view))
+            case .ended:
                 radialMenu.close()
             default:
                 break
@@ -150,22 +150,22 @@ class SecondViewController: UIViewController {
             
             
             // FIXME: pinning to bottom layout guide has bug where value isn't correct until devices is rotated
-            microphoneButton.autoSetDimensionsToSize(CGSize(width: microphoneRadius*2, height: microphoneRadius*2))
-            microphoneButton.autoPinEdgeToSuperviewEdge(.Bottom, withInset: microphoneBumper*2.8)
+            microphoneButton.autoSetDimensions(to: CGSize(width: microphoneRadius*2, height: microphoneRadius*2))
+            microphoneButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: microphoneBumper*2.8)
             //microphoneButton.autoPinToBottomLayoutGuideOfViewController(self, withInset: microphoneBumper)
-            microphoneButton.autoPinEdgeToSuperviewEdge(.Right, withInset: microphoneBumper)
+            microphoneButton.autoPinEdge(toSuperviewEdge: .right, withInset: microphoneBumper)
             
-            stopButton.autoSetDimensionsToSize(CGSize(width: microphoneRadius*2.2, height: microphoneRadius*2.2))
-            stopButton.autoAlignAxis(.Horizontal, toSameAxisOfView: microphoneButton)
-            stopButton.autoAlignAxis(.Vertical, toSameAxisOfView: microphoneButton)
+            stopButton.autoSetDimensions(to: CGSize(width: microphoneRadius*2.2, height: microphoneRadius*2.2))
+            stopButton.autoAlignAxis(.horizontal, toSameAxisOf: microphoneButton)
+            stopButton.autoAlignAxis(.vertical, toSameAxisOf: microphoneButton)
             
-            radialMenu.autoAlignAxis(.Horizontal, toSameAxisOfView: microphoneButton)
-            radialMenu.autoAlignAxis(.Vertical, toSameAxisOfView: microphoneButton)
-            radialMenu.autoSetDimensionsToSize(CGSize(width: menuRadius*2, height: menuRadius*2))
+            radialMenu.autoAlignAxis(.horizontal, toSameAxisOf: microphoneButton)
+            radialMenu.autoAlignAxis(.vertical, toSameAxisOf: microphoneButton)
+            radialMenu.autoSetDimensions(to: CGSize(width: menuRadius*2, height: menuRadius*2))
             
-            tapView.autoSetDimensionsToSize(CGSize(width: 75, height: 75))
-            tapView.autoAlignAxis(.Horizontal, toSameAxisOfView: microphoneButton)
-            tapView.autoAlignAxis(.Vertical, toSameAxisOfView: microphoneButton)
+            tapView.autoSetDimensions(to: CGSize(width: 75, height: 75))
+            tapView.autoAlignAxis(.horizontal, toSameAxisOf: microphoneButton)
+            tapView.autoAlignAxis(.vertical, toSameAxisOf: microphoneButton)
             
             didSetupConstraints = true
         }

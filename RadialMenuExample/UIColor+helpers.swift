@@ -17,10 +17,10 @@ extension UIColor {
         var alpha: Double = 1.0
         
         if rgba.hasPrefix("#") {
-            let hex = rgba.substringFromIndex(rgba.startIndex.advancedBy(1))
-            let scanner = NSScanner(string: hex)
+            let hex = rgba.substring(from: rgba.characters.index(rgba.startIndex, offsetBy: 1))
+            let scanner = Scanner(string: hex)
             var hexValue: CUnsignedLongLong = 0
-            if scanner.scanHexLongLong(&hexValue) {
+            if scanner.scanHexInt64(&hexValue) {
                 let numElements = hex.characters.count
                 if numElements == 6 {
                     red   = Double((hexValue & 0xFF0000) >> 16) / 255.0
