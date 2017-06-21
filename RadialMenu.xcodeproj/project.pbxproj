@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6F87448E8E0477A004704F98 /* Pods_RadialMenu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6366340055CEAAB0BD1555 /* Pods_RadialMenu.framework */; };
 		A203028A194282F1000FF9D1 /* RadialSubMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2030289194282F1000FF9D1 /* RadialSubMenu.swift */; };
 		A205B8B219415FDE00C0E5A3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A205B8B119415FDE00C0E5A3 /* AppDelegate.swift */; };
 		A205B8B419415FDE00C0E5A3 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A205B8B319415FDE00C0E5A3 /* FirstViewController.swift */; };
@@ -16,12 +17,10 @@
 		A23919811943607F00822BD9 /* CircleHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23919801943607F00822BD9 /* CircleHelpers.swift */; };
 		A244F3D11941625B0081DCB6 /* RadialMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A244F3D01941625B0081DCB6 /* RadialMenu.swift */; };
 		A26632FA194E990000F28D06 /* UIColor+helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26632F9194E990000F28D06 /* UIColor+helpers.swift */; };
-		FB2B46C385BEA914B580953A /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA4BDA54F0A9924F66C14D1D /* Pods.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2CE6D7ADB0973B13AFA94CC3 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		6CAD58C34501753BE19FDD72 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		5C6366340055CEAAB0BD1555 /* Pods_RadialMenu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RadialMenu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2030289194282F1000FF9D1 /* RadialSubMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadialSubMenu.swift; sourceTree = "<group>"; };
 		A203028B1942939C000FF9D1 /* RadialMenuPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = RadialMenuPlayground.playground; sourceTree = "<group>"; };
 		A205B8AC19415FDE00C0E5A3 /* RadialMenu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RadialMenu.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -38,7 +37,9 @@
 		A292FE83194B795600F437DA /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		AADC838C1B547B7E005B25BD /* Pods.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods.framework; path = "Pods/../build/Debug-iphoneos/Pods.framework"; sourceTree = "<group>"; };
 		AADC838E1B547B90005B25BD /* pop.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = pop.framework; path = "Pods/../build/Debug-iphoneos/Pods/pop.framework"; sourceTree = "<group>"; };
+		BB13C3F258C6B3FC42FEAB47 /* Pods-RadialMenu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RadialMenu.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RadialMenu/Pods-RadialMenu.debug.xcconfig"; sourceTree = "<group>"; };
 		DA4BDA54F0A9924F66C14D1D /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F27B40DB5E27E809EEE2FAF2 /* Pods-RadialMenu.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RadialMenu.release.xcconfig"; path = "Pods/Target Support Files/Pods-RadialMenu/Pods-RadialMenu.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,18 +47,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB2B46C385BEA914B580953A /* Pods.framework in Frameworks */,
+				6F87448E8E0477A004704F98 /* Pods_RadialMenu.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4424736D4B1B20BCC958D24B /* Pods */ = {
+		6796E3F60E5B8F46BCA0FCBE /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				6CAD58C34501753BE19FDD72 /* Pods.debug.xcconfig */,
-				2CE6D7ADB0973B13AFA94CC3 /* Pods.release.xcconfig */,
+				BB13C3F258C6B3FC42FEAB47 /* Pods-RadialMenu.debug.xcconfig */,
+				F27B40DB5E27E809EEE2FAF2 /* Pods-RadialMenu.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -69,6 +70,7 @@
 				AADC838C1B547B7E005B25BD /* Pods.framework */,
 				A292FE83194B795600F437DA /* libPods.a */,
 				DA4BDA54F0A9924F66C14D1D /* Pods.framework */,
+				5C6366340055CEAAB0BD1555 /* Pods_RadialMenu.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -80,7 +82,7 @@
 				A205B8AE19415FDE00C0E5A3 /* RadialMenu */,
 				A205B8AD19415FDE00C0E5A3 /* Products */,
 				6C35E8CE8878416EA78E2631 /* Frameworks */,
-				4424736D4B1B20BCC958D24B /* Pods */,
+				6796E3F60E5B8F46BCA0FCBE /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -149,12 +151,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A205B8CA19415FDF00C0E5A3 /* Build configuration list for PBXNativeTarget "RadialMenu" */;
 			buildPhases = (
-				7FC4E313ABC6435B9FFC2A1F /* Check Pods Manifest.lock */,
+				9D96ED1FFA9C736E67E8518E /* [CP] Check Pods Manifest.lock */,
 				A205B8A819415FDE00C0E5A3 /* Sources */,
 				A205B8A919415FDE00C0E5A3 /* Frameworks */,
 				A205B8AA19415FDE00C0E5A3 /* Resources */,
-				35DDBC1AEDED48ECB3193AFF /* Copy Pods Resources */,
-				3391FB0069C1447E555D5361 /* Embed Pods Frameworks */,
+				38E2D13B159ACE973CA136BF /* [CP] Embed Pods Frameworks */,
+				077754DA4D88615E0CE387D2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -178,6 +180,7 @@
 				TargetAttributes = {
 					A205B8AB19415FDE00C0E5A3 = {
 						CreatedOnToolsVersion = 6.0;
+						LastSwiftMigration = 0830;
 					};
 				};
 			};
@@ -212,49 +215,49 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3391FB0069C1447E555D5361 /* Embed Pods Frameworks */ = {
+		077754DA4D88615E0CE387D2 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RadialMenu/Pods-RadialMenu-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		35DDBC1AEDED48ECB3193AFF /* Copy Pods Resources */ = {
+		38E2D13B159ACE973CA136BF /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RadialMenu/Pods-RadialMenu-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7FC4E313ABC6435B9FFC2A1F /* Check Pods Manifest.lock */ = {
+		9D96ED1FFA9C736E67E8518E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -371,25 +374,27 @@
 		};
 		A205B8CB19415FDF00C0E5A3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6CAD58C34501753BE19FDD72 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = BB13C3F258C6B3FC42FEAB47 /* Pods-RadialMenu.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = "RadialMenuExample/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		A205B8CC19415FDF00C0E5A3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2CE6D7ADB0973B13AFA94CC3 /* Pods.release.xcconfig */;
+			baseConfigurationReference = F27B40DB5E27E809EEE2FAF2 /* Pods-RadialMenu.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = "RadialMenuExample/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

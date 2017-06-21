@@ -15,12 +15,12 @@ import pop
 let defaultRadius:CGFloat = 115
 
 @IBDesignable
-public class RadialMenu: UIView, RadialSubMenuDelegate {
+open class RadialMenu: UIView, RadialSubMenuDelegate {
     
     // configurable properties
-    @IBInspectable public var radius:CGFloat = defaultRadius
-    @IBInspectable public var subMenuScale:CGFloat = 0.75
-    @IBInspectable public var highlightScale:CGFloat = 1.15
+    @IBInspectable open var radius:CGFloat = defaultRadius
+    @IBInspectable open var subMenuScale:CGFloat = 0.75
+    @IBInspectable open var highlightScale:CGFloat = 1.15
     
     var subMenuRadius: CGFloat {
         get {
@@ -34,16 +34,16 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
         }
     }
     
-    @IBInspectable public var radiusStep = 0.0
-    @IBInspectable public var openDelayStep = 0.05
-    @IBInspectable public var closeDelayStep = 0.035
-    @IBInspectable public var activatedDelay = 0.0
-    @IBInspectable public var minAngle = 180
-    @IBInspectable public var maxAngle = 540
-    @IBInspectable public var allowMultipleHighlights = false
+    @IBInspectable open var radiusStep = 0.0
+    @IBInspectable open var openDelayStep = 0.05
+    @IBInspectable open var closeDelayStep = 0.035
+    @IBInspectable open var activatedDelay = 0.0
+    @IBInspectable open var minAngle = 180
+    @IBInspectable open var maxAngle = 540
+    @IBInspectable open var allowMultipleHighlights = false
     
     // get's set automatically on initialized to a percentage of radius
-    @IBInspectable public var highlightDistance:CGFloat = 0
+    @IBInspectable open var highlightDistance:CGFloat = 0
     
     // FIXME: Needs better solution
     // Fixes issue with highlighting too close to center (get set automatically..can be changed)
@@ -53,48 +53,48 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
     // Callbacks
     // FIXME: Easier way to handle optional callbacks?
     public typealias RadialMenuCallback = () -> ()
-    public typealias RadialSubMenuCallback = (subMenu: RadialSubMenu) -> ()
+    public typealias RadialSubMenuCallback = (_ subMenu: RadialSubMenu) -> ()
     
-    public var onOpening: RadialMenuCallback?
-    public var onOpen: RadialMenuCallback?
-    public var onClosing: RadialMenuCallback?
-    public var onClose: RadialMenuCallback?
-    public var onHighlight: RadialSubMenuCallback?
-    public var onUnhighlight: RadialSubMenuCallback?
-    public var onActivate: RadialSubMenuCallback?
+    open var onOpening: RadialMenuCallback?
+    open var onOpen: RadialMenuCallback?
+    open var onClosing: RadialMenuCallback?
+    open var onClose: RadialMenuCallback?
+    open var onHighlight: RadialSubMenuCallback?
+    open var onUnhighlight: RadialSubMenuCallback?
+    open var onActivate: RadialSubMenuCallback?
     
     // FIXME: Is it possible to scale a view without changing it's children? Couldn't get that
     // working so put bg on it's own view
-    public let backgroundView = UIView()
+    open let backgroundView = UIView()
     
     // FIXME: Make private when Swift adds access controls
-    public var subMenus: [RadialSubMenu]
+    open var subMenus: [RadialSubMenu]
     
     var numOpeningSubMenus = 0
     var numOpenedSubMenus = 0
     var numHighlightedSubMenus = 0
     var addedConstraints = false
     
-    var position = CGPointZero
+    var position = CGPoint.zero
     
     enum State {
-        case Closed, Opening, Opened, Highlighted, Unhighlighted, Activated, Closing
+        case closed, opening, opened, highlighted, unhighlighted, activated, closing
     }
     
-    var state: State = .Closed {
+    var state: State = .closed {
         didSet {
             if oldValue == state { return }
             // FIXME: open/close callbacks are called up here but (un)highlight/activate are called below
             // we're abusing the fact that state changes are only called once here
             // but can't pass submenu context without ugly global state
             switch state {
-                case .Closed:
+                case .closed:
                     onClose?()
-                case .Opened:
+                case .opened:
                     onOpen?()
-                case .Opening:
+                case .opening:
                     onOpening?()
-                case .Closing:
+                case .closing:
                     onClosing?()
                 default:
                     break
@@ -123,7 +123,7 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
         self.subMenus = menus
         self.radius = radius
         
-        for (i, menu) in subMenus.enumerate() {
+        for (i, menu) in subMenus.enumerated() {
             menu.delegate = self
             menu.tag = i
             self.addSubview(menu)
@@ -140,14 +140,14 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
         highlightDistance = radius * 0.75 // allow aggressive highlights near submenu
         minHighlightDistance = radius * 0.25 // but not within 25% of center
         
-        backgroundView.backgroundColor = UIColor.grayColor().colorWithAlphaComponent(0.5)
+        backgroundView.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
         backgroundView.layer.zPosition = -1
-        backgroundView.frame = CGRectMake(0, 0, radius*2, radius*2)
+        backgroundView.frame = CGRect(x: 0, y: 0, width: radius*2, height: radius*2)
         backgroundView.layer.cornerRadius = radius
         backgroundView.center = center
         
         // Initial transform size can't be 0 - https://github.com/facebook/pop/issues/24
-        backgroundView.transform = CGAffineTransformMakeScale(0.000001, 0.000001)
+        backgroundView.transform = CGAffineTransform(scaleX: 0.000001, y: 0.000001)
         
         addSubview(backgroundView)
     }
@@ -163,7 +163,7 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
         }
     }
     
-    public func openAtPosition(newPosition: CGPoint) {
+    open func openAtPosition(_ newPosition: CGPoint) {
         
         let max = subMenus.count
         
@@ -171,20 +171,20 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
             return print("No submenus to open")
         }
         
-        if state != .Closed {
+        if state != .closed {
             return print("Can only open closed menus")
         }
         
         resetDefaults()
         
-        state = .Opening
+        state = .opening
         position = newPosition
         
         show()
         
-        let relPos = convertPoint(position, fromView:superview)
+        let relPos = convert(position, from:superview)
         
-        for (i, subMenu) in subMenus.enumerate() {
+        for (i, subMenu) in subMenus.enumerated() {
             let subMenuPos = getPositionForSubMenu(subMenu)
             let delay = openDelayStep * Double(i)
             numOpeningSubMenus += 1
@@ -192,40 +192,40 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
         }
     }
     
-    func getAngleForSubMenu(subMenu: RadialSubMenu) -> Double {
+    func getAngleForSubMenu(_ subMenu: RadialSubMenu) -> Double {
         let fullCircle = isFullCircle(minAngle, maxAngle: maxAngle)
         let max = fullCircle ? subMenus.count : subMenus.count - 1
         return getAngleForIndex(subMenu.tag, max: max, minAngle: Double(minAngle), maxAngle: Double(maxAngle))
     }
     
-    func getPositionForSubMenu(subMenu: RadialSubMenu) -> CGPoint {
+    func getPositionForSubMenu(_ subMenu: RadialSubMenu) -> CGPoint {
         return getPositionForSubMenu(subMenu, radius: Double(subMenuRadius))
     }
     
-    func getExpandedPositionForSubMenu(subMenu: RadialSubMenu) -> CGPoint {
+    func getExpandedPositionForSubMenu(_ subMenu: RadialSubMenu) -> CGPoint {
         return getPositionForSubMenu(subMenu, radius: Double(subMenuHighlightedRadius))
     }
     
-    func getPositionForSubMenu(subMenu: RadialSubMenu, radius: Double) -> CGPoint {
+    func getPositionForSubMenu(_ subMenu: RadialSubMenu, radius: Double) -> CGPoint {
         let angle = getAngleForSubMenu(subMenu)
         let absRadius = radius + (radiusStep * Double(subMenu.tag))
         let circlePos = getPointForAngle(angle, radius: absRadius)
         let relPos = CGPoint(x: position.x + circlePos.x, y: position.y + circlePos.y)
-        return self.convertPoint(relPos, fromView:self.superview)
+        return self.convert(relPos, from:self.superview)
     }
     
-    public func close() {
+    open func close() {
         
-        if (state == .Closed || state == .Closing) {
+        if (state == .closed || state == .closing) {
             return print("Menu is already closed/closing")
         }
         
-        state = .Closing
+        state = .closing
         
-        for (i, subMenu) in subMenus.enumerate() {
+        for (i, subMenu) in subMenus.enumerated() {
             let delay = closeDelayStep * Double(i)
             
-            if subMenu.state == .Highlighted {
+            if subMenu.state == .highlighted {
                 let closeDelay = (closeDelayStep * Double(subMenus.count)) + activatedDelay
                 subMenu.activate(closeDelay)
             } else {
@@ -235,14 +235,14 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
     }
     
     // FIXME: Refactor entire method
-    public func moveAtPosition(position:CGPoint) {
+    open func moveAtPosition(_ position:CGPoint) {
         
-        if state != .Opened && state != .Highlighted && state != .Unhighlighted {
+        if state != .opened && state != .highlighted && state != .unhighlighted {
             return
         }
         
         
-        let relPos = convertPoint(position, fromView:superview)
+        let relPos = convert(position, from:superview)
         let distanceFromCenter = distanceBetweenPoints(position, p2: center)
         
         // Add all submenus within a certain distance to array
@@ -259,23 +259,23 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
             if distanceFromCenter >= Double(minHighlightDistance) && distance <= Double(highlightDistance) {
                 distances.append(distance: distance, subMenu: subMenu)
                 
-            } else if subMenu.state == .Highlighted {
+            } else if subMenu.state == .highlighted {
                 subMenu.unhighlight()
             }
         }
         
         if distances.count == 0 { return }
         
-        distances.sortInPlace { $0.distance < $1.distance }
+        distances.sort { $0.distance < $1.distance }
         
         var shouldHighlight: [RadialSubMenu] = []
         
-        for (index, element): (Int, (distance: Double, subMenu: RadialSubMenu)) in distances.enumerate() {
+        for (index, element): (Int, (distance: Double, subMenu: RadialSubMenu)) in distances.enumerated() {
             
             switch (index, allowMultipleHighlights) {
                 case (0, false), (_, true):
                     shouldHighlight.append(element.1)
-                case (_, _) where element.1.state == .Highlighted:
+                case (_, _) where element.1.state == .highlighted:
                     element.1.unhighlight()
                 default:
                     break
@@ -307,17 +307,17 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
         scaleBackgroundView(0)
     }
     
-    func scaleBackgroundView(size: CGFloat) {
+    func scaleBackgroundView(_ size: CGFloat) {
         
-        var anim = backgroundView.pop_animationForKey("scale") as? POPSpringAnimation
-        let toValue = NSValue(CGPoint: CGPoint(x: size, y: size))
+        var anim = backgroundView.pop_animation(forKey: "scale") as? POPSpringAnimation
+        let toValue = NSValue(cgPoint: CGPoint(x: size, y: size))
         
         if ((anim) != nil) {
             anim!.toValue = toValue
         } else {
             anim = POPSpringAnimation(propertyNamed: kPOPViewScaleXY)
             anim!.toValue = toValue
-            backgroundView.pop_addAnimation(anim, forKey: "scale")
+            backgroundView.pop_add(anim, forKey: "scale")
         }
     }
     
@@ -340,58 +340,58 @@ public class RadialMenu: UIView, RadialSubMenuDelegate {
         }
     }
     
-    func moveSubMenuToPosition(subMenu: RadialSubMenu, pos: CGPoint) {
+    func moveSubMenuToPosition(_ subMenu: RadialSubMenu, pos: CGPoint) {
         
-        var anim = subMenu.pop_animationForKey("expand") as? POPSpringAnimation
-        let toValue = NSValue(CGPoint: pos)
+        var anim = subMenu.pop_animation(forKey: "expand") as? POPSpringAnimation
+        let toValue = NSValue(cgPoint: pos)
         
         if ((anim) != nil) {
             anim!.toValue = toValue
         } else {
             anim = POPSpringAnimation(propertyNamed: kPOPViewCenter)
             anim!.toValue = toValue
-            subMenu.pop_addAnimation(anim, forKey: "expand")
+            subMenu.pop_add(anim, forKey: "expand")
         }
     }
     
     // MARK: RadialSubMenuDelegate
     
-    public func subMenuDidOpen(subMenu: RadialSubMenu) {
+    open func subMenuDidOpen(_ subMenu: RadialSubMenu) {
         numOpenedSubMenus += 1
         if numOpenedSubMenus == numOpeningSubMenus {
-            state = .Opened
+            state = .opened
         }
     }
     
-    public func subMenuDidClose(subMenu: RadialSubMenu) {
+    open func subMenuDidClose(_ subMenu: RadialSubMenu) {
         numOpeningSubMenus -= 1
         numOpenedSubMenus -= 1
         if numOpeningSubMenus == 0 || numOpenedSubMenus == 0 {
             hide()
-            state = .Closed
+            state = .closed
         }
     }
     
-    public func subMenuDidHighlight(subMenu: RadialSubMenu) {
-        state = .Highlighted
-        onHighlight?(subMenu: subMenu)
+    open func subMenuDidHighlight(_ subMenu: RadialSubMenu) {
+        state = .highlighted
+        onHighlight?(subMenu)
         numHighlightedSubMenus += 1
         if numHighlightedSubMenus >= 1 {
             grow()
         }
     }
     
-    public func subMenuDidUnhighlight(subMenu: RadialSubMenu) {
-        state = .Unhighlighted
+    open func subMenuDidUnhighlight(_ subMenu: RadialSubMenu) {
+        state = .unhighlighted
         numHighlightedSubMenus -= 1
-        onUnhighlight?(subMenu: subMenu)
+        onUnhighlight?(subMenu)
         if numHighlightedSubMenus == 0 {
             shrink()
         }
     }
     
-    public func subMenuDidActivate(subMenu: RadialSubMenu) {
-        state = .Activated
-        onActivate?(subMenu: subMenu)
+    open func subMenuDidActivate(_ subMenu: RadialSubMenu) {
+        state = .activated
+        onActivate?(subMenu)
     }
 }
