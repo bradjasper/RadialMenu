@@ -1,6 +1,6 @@
 # RadialMenu
 
-**Looking for help?** For $50/hr I'll help with your RadialMenu problems including integrating it into your project. Email bjasper@gmail.com to get started!
+**Looking for help?** For $150/hr I'll help with your RadialMenu problems including integrating it into your project. Email bjasper@gmail.com to get started!
 
 **Experimental Software:** Fun to play with, but probably shouldn't put it in production (yet).
 
