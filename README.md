@@ -1,7 +1,5 @@
 # RadialMenu
 
-**Looking for help?** For $150/hr I'll help with your RadialMenu problems including integrating it into your project. Email bjasper@gmail.com to get started!
-
 **Experimental Software:** Fun to play with, but probably shouldn't put it in production (yet).
 
 RadialMenu is a custom control that allows you to provide a context menu to a user on a touch screen (generally after a long press). This is similar to the record functionality Apple introduced for iMessage in iOS 8.
